@@ -1,0 +1,6 @@
+{
+  "name": "Endomatics",
+  "description": "An intelligent Hospital Management System that unifies OPD, IPD, Emergency, and Billing into one adaptive operating layer.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
