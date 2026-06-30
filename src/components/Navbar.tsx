@@ -59,20 +59,6 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
           </span>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          id="mobile-menu-btn"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-          aria-label="Toggle mobile menu"
-        >
-          {isMobileMenuOpen ? (
-            <X className="h-6 w-6 text-ink" />
-          ) : (
-            <Menu className="h-6 w-6 text-muted-grey" />
-          )}
-        </button>
-
         {/* Links Center */}
         <div
           id="nav-links"
@@ -106,13 +92,25 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
           </div>
         </div>
 
-        {/* Book Demo Right */}
-        <div id="nav-actions">
+        {/* Book Demo + Mobile Menu Right */}
+        <div id="nav-actions" className="flex items-center gap-2">
           <button
             onClick={onOpenDemo}
             className="bg-steel-teal hover:bg-steel-teal/95 text-white font-sans text-xs font-semibold py-2.5 px-5 rounded-full shadow-sm hover:shadow transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
           >
             Book Demo
+          </button>
+          <button
+            id="mobile-menu-btn"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6 text-ink" />
+            ) : (
+              <Menu className="h-6 w-6 text-muted-grey" />
+            )}
           </button>
         </div>
       </div>
