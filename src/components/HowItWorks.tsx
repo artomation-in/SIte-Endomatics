@@ -71,7 +71,7 @@ export default function HowItWorks() {
       <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Header Block */}
-        <div className="max-w-[600px] text-left">
+        <div className="max-w-[600px] text-center sm:text-left">
           <span className="font-mono text-[9px] text-steel-teal tracking-[0.1em] uppercase font-bold bg-steel-teal/15 px-2 py-0.5 rounded">
             Patient Journey
           </span>
@@ -93,7 +93,7 @@ export default function HowItWorks() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-0 relative z-10 w-full"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-0 relative z-10 w-full"
           >
             {journeySteps.map((step, idx) => {
               const IconComponent = step.icon;
@@ -101,7 +101,7 @@ export default function HowItWorks() {
                 <motion.div
                   key={step.title}
                   variants={itemVariants}
-                  className="relative flex flex-col items-center text-center group flex-1 cursor-default"
+                  className="relative flex flex-col items-center text-center group flex-1 cursor-default sm:px-2 lg:px-0"
                 >
                   {/* Flat Icon Circle with clean cutout mask (no visible border) */}
                   <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-[#0B1628] shadow-[0_0_0_8px_#0B1628]">
@@ -109,10 +109,10 @@ export default function HowItWorks() {
                   </div>
 
                   {/* Text Content */}
-                  <h3 className="mt-4 text-[13px] font-bold text-white font-display transition-colors duration-300">
+                  <h3 className="mt-4 text-sm sm:text-[13px] font-bold text-white font-display transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="mt-1.5 text-[10px] leading-relaxed text-gray-400 font-medium px-2 max-w-[160px] transition-colors duration-300">
+                  <p className="mt-1.5 text-xs sm:text-[10px] leading-relaxed text-gray-400 font-medium sm:max-w-[160px] sm:mx-auto transition-colors duration-300">
                     {step.description}
                   </p>
                 </motion.div>

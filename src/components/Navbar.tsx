@@ -44,15 +44,17 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
       id="main-navbar"
       className="fixed top-0 left-0 right-0 z-40 bg-bg-light/90 border-b border-steel-teal/20 shadow-[0_1px_4px_rgba(0,0,0,0.01)] backdrop-blur-md py-1.5"
     >
-      <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo Left */}
         <div
           id="logo-wrap"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 sm:gap-3 cursor-pointer group"
         >
-          <Logo size={56} className="transition-transform group-hover:scale-105" />
-          <span className="font-sans font-black text-[42px] tracking-tighter text-steel-teal">
+          <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 transition-transform group-hover:scale-105">
+            <Logo size={56} className="w-full h-full" />
+          </div>
+          <span className="font-sans font-black text-2xl sm:text-[42px] tracking-tighter text-steel-teal">
             Endomatics
           </span>
         </div>
