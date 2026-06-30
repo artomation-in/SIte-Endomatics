@@ -533,8 +533,8 @@ export default function ModuleScreens() {
           </p>
         </div>
 
-        {/* Module Tab Selector */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 mb-8">
+        {/* Module Tab Selector - Enhanced for Mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-8">
           {modules.map((module) => {
             const isActive = selectedId === module.id;
             const IconComponent = module.icon;

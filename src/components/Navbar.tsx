@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
+import { X, Menu } from 'lucide-react';
 
 interface NavbarProps {
   onOpenDemo: () => void;
@@ -7,6 +8,7 @@ interface NavbarProps {
 
 export default function Navbar({ onOpenDemo }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +36,7 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
         behavior: 'smooth',
       });
     }
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -54,32 +57,51 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
           </span>
         </div>
 
+        {/* Mobile Menu Button */}
+        <button
+          id="mobile-menu-btn"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+          aria-label="Toggle mobile menu"
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6 text-ink" />
+          ) : (
+            <Menu className="h-6 w-6 text-muted-grey" />
+          )}
+        </button>
+
         {/* Links Center */}
-        <div id="nav-links" className="hidden md:flex items-center gap-1">
-          <button
-            onClick={() => scrollToSection('module-screens')}
-            className="font-mono text-base font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] px-4 py-2 rounded-lg tracking-wider transition-all cursor-pointer"
-          >
-            Modules
-          </button>
-          <button
-            onClick={() => scrollToSection('knowledge')}
-            className="font-mono text-base font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] px-4 py-2 rounded-lg tracking-wider transition-all cursor-pointer"
-          >
-            Insights
-          </button>
-          <button
-            onClick={() => scrollToSection('process')}
-            className="font-mono text-base font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] px-4 py-2 rounded-lg tracking-wider transition-all cursor-pointer"
-          >
-            Onboarding
-          </button>
-          <button
-            onClick={() => scrollToSection('testimonials')}
-            className="font-mono text-base font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] px-4 py-2 rounded-lg tracking-wider transition-all cursor-pointer"
-          >
-            Case Studies
-          </button>
+        <div
+          id="nav-links"
+          className={`fixed top-[72px] left-0 right-0 bg-white/95 backdrop-blur-lg border-b border-steel-teal/10 shadow-lg p-6 md:bg-transparent md:border-b-0 md:shadow-none md:p-0 md:static md:flex md:items-center md:gap-1 transition-all duration-300 ease-in-out z-30 ${isMobileMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-4 opacity-0 pointer-events-none md:translate-y-0 md:opacity-100 md:pointer-events-auto'}`}
+        >
+          <div className="flex flex-col md:flex-row md:items-center md:gap-1 gap-2">
+            <button
+              onClick={() => scrollToSection('module-screens')}
+              className="text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] rounded-lg transition-all cursor-pointer"
+            >
+              Modules
+            </button>
+            <button
+              onClick={() => scrollToSection('knowledge')}
+              className="text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] rounded-lg transition-all cursor-pointer"
+            >
+              Insights
+            </button>
+            <button
+              onClick={() => scrollToSection('process')}
+              className="text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] rounded-lg transition-all cursor-pointer"
+            >
+              Onboarding
+            </button>
+            <button
+              onClick={() => scrollToSection('testimonials')}
+              className="text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-muted-grey hover:text-ink hover:bg-ink/[0.04] rounded-lg transition-all cursor-pointer"
+            >
+              Case Studies
+            </button>
+          </div>
         </div>
 
         {/* Book Demo Right */}
@@ -92,6 +114,14 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-ink/30 backdrop-blur-sm z-20 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
     </nav>
   );
 }

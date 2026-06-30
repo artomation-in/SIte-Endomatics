@@ -25,7 +25,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
       <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-teal-500/[0.02] to-transparent rounded-full filter blur-[80px] pointer-events-none select-none" />
 
       <div className="max-w-[1400px] w-full mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           
           {/* Left Hero Text Panel */}
           <div id="hero-left-panel" className="lg:col-span-6 flex flex-col items-start text-left" itemScope itemType="https://schema.org/SoftwareApplication">
@@ -85,11 +85,11 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-6"
+              className="flex flex-wrap items-center gap-4 md:gap-6"
             >
               <button
                 onClick={onOpenDemo}
-                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-4 px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight"
+                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-4 px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight"
               >
                 Book a Demo
               </button>
@@ -103,7 +103,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* Right Hero Interactive Mockup Dashboard */}
+              {/* Right Hero Interactive Mockup Dashboard - Simplified for Mobile */}
           <div id="hero-right-panel" className="lg:col-span-6 relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
