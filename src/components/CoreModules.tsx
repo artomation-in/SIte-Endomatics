@@ -1,359 +1,504 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Sparkles, 
-  Pill, 
-  TrendingUp, 
-  DollarSign, 
-  FileText, 
+import {
+  Sparkles,
+  Pill,
+  TrendingUp,
+  DollarSign,
+  FileText,
   Layers,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Clock,
-  ArrowUpRight
+  CheckCircle2,
+  ShieldCheck,
+  ArrowRight,
+  AlertTriangle,
+  Activity,
 } from 'lucide-react';
 
-export default function CoreModules() {
-  const [selectedId, setSelectedId] = useState('ai-queue');
+const aiFeatures = [
+  {
+    id: 'ai-queue',
+    title: 'Queue Optimization',
+    description:
+      'Continuously parses patient registrations to dynamically optimize clinical triage paths, reducing average wait times across all departments.',
+    icon: Sparkles,
+  },
+  {
+    id: 'ai-med',
+    title: 'Medication Safety Guard',
+    description:
+      'Double-verifies electronic prescriptions against patient allergy profiles, medication history, and live inventory batch expiration dates before release.',
+    icon: Pill,
+  },
+  {
+    id: 'ai-capacity',
+    title: 'Capacity Forecasting',
+    description:
+      'Predicts bed, ward, and ICU occupancy up to 72 hours in advance, optimizing clinical discharge windows and nursing schedules.',
+    icon: TrendingUp,
+  },
+  {
+    id: 'ai-billing',
+    title: 'Smart Leakage Audit',
+    description:
+      'Tracks administered drugs, lab tests, and clinical bed-hours, automatically reconciling clinical action logs with billing ledgers.',
+    icon: DollarSign,
+  },
+  {
+    id: 'ai-handover',
+    title: 'Auto-Handover Summaries',
+    description:
+      'Converts complex patient telemetry and raw nursing logs into highly structured, peer-reviewed shift handover documents.',
+    icon: FileText,
+  },
+  {
+    id: 'ai-stock',
+    title: 'Active Stock Predictor',
+    description:
+      'Models department-level consumption patterns and medication burn rates to automatically trigger restocking orders of critical medical supplies.',
+    icon: Layers,
+  },
+];
 
-  const aiFeatures = [
-    {
-      id: 'ai-queue',
-      title: 'Queue Optimization',
-      badge: 'Real-Time Routing',
-      description: 'Continuously parses patient registrations to dynamically optimize clinical triage paths, reducing average wait times across all departments.',
-      icon: Sparkles,
-      metric: 'Delta: -14m wait time',
-      color: 'text-steel-teal',
-      bgColor: 'bg-steel-teal/[0.04]',
-      borderColor: 'border-steel-teal/10',
-    },
-    {
-      id: 'ai-med',
-      title: 'Medication Safety Guard',
-      badge: 'Clinical Verification',
-      description: 'Double-verifies electronic prescriptions against patient allergy profiles, medication history, and live inventory batch expiration dates before release.',
-      icon: Pill,
-      metric: 'Accuracy: 100% verified',
-      color: 'text-rose-600',
-      bgColor: 'bg-rose-50/50',
-      borderColor: 'border-rose-100',
-    },
-    {
-      id: 'ai-capacity',
-      title: 'Capacity Forecasting',
-      badge: 'Resource Efficiency',
-      description: 'Predicts bed, ward, and ICU occupancy up to 72 hours in advance, optimizing clinical discharge windows and nursing schedules.',
-      icon: TrendingUp,
-      metric: 'Forecast Horizon: 72 hours',
-      color: 'text-emerald-600',
-      bgColor: 'bg-emerald-50/50',
-      borderColor: 'border-emerald-100',
-    },
-    {
-      id: 'ai-billing',
-      title: 'Smart Leakage Audit',
-      badge: 'Financial Integrity',
-      description: 'Tracks administered drugs, lab tests, and clinical bed-hours, automatically reconciling clinical action logs with billing ledgers.',
-      icon: DollarSign,
-      metric: 'Revenue Leakage: 0.00%',
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50/50',
-      borderColor: 'border-blue-100',
-    },
-    {
-      id: 'ai-handover',
-      title: 'Auto-Handover Summaries',
-      badge: 'Documentation',
-      description: 'Converts complex patient telemetry and raw nursing logs into highly structured, peer-reviewed shift handover documents.',
-      icon: FileText,
-      metric: 'Synthesizer latency: < 2s',
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50/50',
-      borderColor: 'border-purple-100',
-    },
-    {
-      id: 'ai-stock',
-      title: 'Active Stock Predictor',
-      badge: 'Logistics',
-      description: 'Models department-level consumption patterns and medication burn rates to automatically trigger restocking orders of critical medical supplies.',
-      icon: Layers,
-      metric: 'Supply Confidence: 99.9%',
-      color: 'text-amber-600',
-      bgColor: 'bg-amber-50/50',
-      borderColor: 'border-amber-100',
-    },
+const AUTO_ADVANCE_MS = 5500;
+
+/* ─── Per-feature clean HMS screens ──────────────────────────────────── */
+
+function QueueScreen() {
+  const patients = [
+    { name: 'Amara Diop', dept: 'OPD-Cardiology', token: 'T-042', status: 'checked-in', initials: 'AD' },
+    { name: 'Raj Patel', dept: 'Lab Collection', token: 'T-043', status: 'ai-routed', initials: 'RP' },
+    { name: 'Eva Müller', dept: 'OPD-General', token: 'T-044', status: 'waiting', initials: 'EM' },
   ];
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-steel-teal opacity-40" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-steel-teal" />
+          </span>
+          Live Triage Queue
+        </span>
+        <span className="font-mono text-[11px] text-muted-grey">3 Active</span>
+      </div>
+      <div className="space-y-2">
+        {patients.map((p) => (
+          <div
+            key={p.token}
+            className={`p-2.5 rounded-lg border flex items-center justify-between ${
+              p.status === 'ai-routed'
+                ? 'bg-steel-teal/[0.03] border-steel-teal/15'
+                : 'bg-white border-gray-100'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-bg-light border border-gray-100 flex items-center justify-center text-[11px] font-bold text-ink font-mono">
+                {p.initials}
+              </div>
+              <div>
+                <p className="font-semibold text-[13px] text-ink">{p.name}</p>
+                <p className="font-mono text-[11px] text-muted-grey">{p.dept} • {p.token}</p>
+              </div>
+            </div>
+            {p.status === 'ai-routed' ? (
+              <span className="text-[11px] font-mono text-steel-teal font-bold bg-steel-teal/5 px-2 py-1 rounded border border-steel-teal/10 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" /> Routed
+              </span>
+            ) : p.status === 'checked-in' ? (
+              <span className="text-[11px] font-mono text-emerald-600 font-bold bg-emerald-50/50 px-2 py-1 rounded border border-emerald-100/30">
+                Checked In
+              </span>
+            ) : (
+              <span className="text-[11px] font-mono text-amber-600 font-bold bg-amber-50/50 px-2 py-1 rounded border border-amber-100/30">
+                Waiting
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-3 flex items-start gap-2">
+        <Clock className="w-4 h-4 text-steel-teal shrink-0 mt-0.5" />
+        <div>
+          <p className="text-[11px] font-mono text-steel-teal font-bold uppercase tracking-wider">AI Route Applied</p>
+          <p className="text-[13px] text-ink/80 font-medium mt-0.5">Raj Patel redirected to Lab Wing B — wait reduced from 18m to 4m.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-  const activeFeature = aiFeatures.find(f => f.id === selectedId) || aiFeatures[0];
+function MedicationScreen() {
+  return (
+    <div className="space-y-3">
+      <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+        <ShieldCheck className="w-4 h-4 text-steel-teal" />
+        Prescription Safety Check
+      </span>
+      <div className="bg-white rounded-lg border border-gray-100 p-3.5 space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="font-semibold text-[15px] text-ink">Ceftriaxone IV (2g)</p>
+            <p className="font-mono text-[11px] text-muted-grey mt-0.5">Patient: Liam Vance • #ER-204</p>
+          </div>
+          <div className="w-10 h-10 rounded-lg bg-steel-teal/10 flex items-center justify-center">
+            <Pill className="w-5 h-5 text-steel-teal" />
+          </div>
+        </div>
+        <div className="border-t border-gray-100 pt-3 space-y-2">
+          {[
+            { label: 'Allergy Profile', value: 'No matches', passed: true },
+            { label: 'Drug Interaction', value: 'Clear', passed: true },
+            { label: 'Inventory Batch', value: 'Valid • expires 2026', passed: true },
+          ].map((c) => (
+            <div key={c.label} className="flex items-center justify-between">
+              <span className="text-[13px] text-muted-grey font-medium">{c.label}</span>
+              <span className="flex items-center gap-1.5 text-[13px] text-emerald-600 font-semibold">
+                <CheckCircle2 className="w-4 h-4" />
+                {c.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="bg-emerald-50/40 border border-emerald-100/30 rounded-lg p-3 flex items-center gap-2">
+        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+        <p className="text-[13px] text-emerald-700 font-medium">Verified — auto-approved for pharmacy release.</p>
+      </div>
+    </div>
+  );
+}
+
+function CapacityScreen() {
+  const days = [
+    { label: 'Sat', load: 78, peak: false },
+    { label: 'Sun', load: 85, peak: false },
+    { label: 'Mon', load: 94, peak: true },
+  ];
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+          <TrendingUp className="w-4 h-4 text-steel-teal" />
+          72h Occupancy Forecast
+        </span>
+        <span className="font-mono text-[11px] text-steel-teal font-bold">AI Predicted</span>
+      </div>
+      <div className="bg-white rounded-lg border border-gray-100 p-4">
+        <div className="flex items-end justify-between gap-4 h-32">
+          {days.map((d) => (
+            <div key={d.label} className="flex-1 flex flex-col items-center gap-2">
+              <span className={`font-display text-sm font-bold ${d.peak ? 'text-steel-teal' : 'text-ink'}`}>{d.load}%</span>
+              <div className="w-full bg-bg-light rounded-t-md overflow-hidden flex items-end h-20">
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: `${d.load}%` }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className={`w-full rounded-t-md ${d.peak ? 'bg-steel-teal' : 'bg-steel-teal/30'}`}
+                />
+              </div>
+              <span className="font-mono text-[11px] text-muted-grey uppercase font-semibold">{d.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-3 flex items-start gap-2">
+        <AlertTriangle className="w-4 h-4 text-steel-teal shrink-0 mt-0.5" />
+        <div>
+          <p className="text-[11px] font-mono text-steel-teal font-bold uppercase tracking-wider">Peak Alert</p>
+          <p className="text-[13px] text-ink/80 font-medium mt-0.5">Monday hits 94% — AI recommends expediting 12 Sunday discharges.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BillingScreen() {
+  const charges = [
+    { item: 'OPD Consultation', source: 'EHR', amount: '$150.00' },
+    { item: 'Hematology Panel', source: 'LIS', amount: '$85.00' },
+    { item: 'Ceftriaxone IV (2g)', source: 'Rx', amount: '$42.50' },
+    { item: 'IPD Bed — Room 402', source: 'ADT', amount: '$600.00' },
+  ];
+  return (
+    <div className="space-y-3">
+      <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+        <DollarSign className="w-4 h-4 text-steel-teal" />
+        Auto-Captured Charges
+      </span>
+      <div className="bg-white rounded-lg border border-gray-100 p-3 space-y-2">
+        {charges.map((c) => (
+          <div key={c.item} className="flex items-center justify-between py-1">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span className="text-[13px] text-ink font-medium">{c.item}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono text-muted-grey bg-bg-light px-1.5 py-0.5 rounded border border-gray-100">{c.source}</span>
+              <span className="text-[13px] font-mono text-ink font-bold">{c.amount}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-between bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-3">
+        <div>
+          <p className="text-[11px] font-mono text-steel-teal font-bold uppercase tracking-wider">Leakage Audit</p>
+          <p className="text-[13px] text-ink/80 font-medium mt-0.5">2 unlogged bed-hours recovered</p>
+        </div>
+        <span className="font-display text-lg font-bold text-steel-teal">+$200.00</span>
+      </div>
+    </div>
+  );
+}
+
+function HandoverScreen() {
+  return (
+    <div className="space-y-3">
+      <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+        <FileText className="w-4 h-4 text-steel-teal" />
+        ICU Shift Handover
+      </span>
+      <div className="bg-white rounded-lg border border-gray-100 p-3.5">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <p className="font-semibold text-[15px] text-ink">Patient #12 — Marcus B.</p>
+            <p className="font-mono text-[11px] text-muted-grey mt-0.5">MRN: #20241204 • ICU-12</p>
+          </div>
+          <span className="text-[11px] font-mono text-steel-teal font-bold bg-steel-teal/10 px-2 py-1 rounded">Stable</span>
+        </div>
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          {[
+            { label: 'HR', value: '72 bpm' },
+            { label: 'SpO₂', value: '98%' },
+            { label: 'BP', value: '120/80' },
+          ].map((v) => (
+            <div key={v.label} className="bg-bg-light rounded-md border border-gray-100 p-2 text-center">
+              <p className="font-mono text-[11px] text-muted-grey uppercase tracking-wider font-bold">{v.label}</p>
+              <p className="font-display text-sm font-bold text-ink mt-0.5">{v.value}</p>
+            </div>
+          ))}
+        </div>
+        <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-md p-2.5">
+          <p className="text-[11px] font-mono text-steel-teal font-bold uppercase tracking-wider mb-1">AI Synthesized Summary</p>
+          <p className="text-[13px] text-ink/80 font-medium leading-relaxed italic">
+            "Post-op state stable. Normal sinus rhythm, SpO₂ sustained on room air. Plan: transition to standard ward AM."
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StockScreen() {
+  return (
+    <div className="space-y-3">
+      <span className="font-mono text-[11px] text-ink font-semibold uppercase tracking-wider flex items-center gap-1.5">
+        <Layers className="w-4 h-4 text-steel-teal" />
+        Pharmacy Stock Monitor
+      </span>
+      <div className="bg-white rounded-lg border border-gray-100 p-3.5 space-y-3">
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-semibold text-[15px] text-ink">Ceftriaxone IV</p>
+            <span className="text-[13px] font-mono text-amber-600 font-bold">14% remaining</span>
+          </div>
+          <div className="h-2.5 bg-bg-light rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: '14%' }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full bg-amber-500 rounded-full"
+            />
+          </div>
+          <p className="font-mono text-[11px] text-muted-grey mt-1.5">Threshold: 15% • 21 vials left</p>
+        </div>
+        <div className="border-t border-gray-100 pt-3">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-semibold text-[15px] text-ink">Normal Saline</p>
+            <span className="text-[13px] font-mono text-emerald-600 font-bold">82% remaining</span>
+          </div>
+          <div className="h-2.5 bg-bg-light rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: '82%' }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full bg-emerald-500 rounded-full"
+            />
+          </div>
+          <p className="font-mono text-[11px] text-muted-grey mt-1.5">Healthy stock • 410 units</p>
+        </div>
+      </div>
+      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-3 flex items-center gap-2">
+        <Activity className="w-4 h-4 text-steel-teal shrink-0" />
+        <p className="text-[13px] text-ink/80 font-medium">Auto-PO <strong className="text-steel-teal">#9403</strong> triggered — 200 vials approved.</p>
+      </div>
+    </div>
+  );
+}
+
+const screenMap: Record<string, React.FC> = {
+  'ai-queue': QueueScreen,
+  'ai-med': MedicationScreen,
+  'ai-capacity': CapacityScreen,
+  'ai-billing': BillingScreen,
+  'ai-handover': HandoverScreen,
+  'ai-stock': StockScreen,
+};
+
+/* ─── Main component ──────────────────────────────────────────────────── */
+
+export default function CoreModules() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const goTo = useCallback(
+    (index: number) => {
+      const next = (index + aiFeatures.length) % aiFeatures.length;
+      setDirection(next >= activeIndex ? 1 : -1);
+      setActiveIndex(next);
+    },
+    [activeIndex]
+  );
+
+  const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setActiveIndex((prev) => (prev + 1) % aiFeatures.length);
+    }, AUTO_ADVANCE_MS);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const active = aiFeatures[activeIndex];
+  const ActiveIcon = active.icon;
+  const ScreenComponent = screenMap[active.id];
 
   return (
-    <section id="features" className="py-10 lg:py-12 bg-white border-t border-gray-150/40 relative overflow-hidden">
-      {/* Soft background grid accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.25] pointer-events-none" />
-      
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        
+    <section
+      id="features"
+      className="py-14 sm:py-16 lg:py-20 bg-white border-t border-gray-150/40 relative overflow-hidden"
+    >
+      {/* Soft background grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.2] pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
-        <div id="features-header" className="max-w-2xl mb-8 text-left">
-          <span id="features-badge" className="font-mono text-[9px] text-steel-teal tracking-[0.1em] uppercase font-bold bg-steel-teal/[0.05] px-2 py-0.5 rounded">
+        <div className="max-w-2xl mx-auto mb-8 sm:mb-10 text-center">
+          <span className="font-mono text-[10px] text-steel-teal tracking-[0.12em] uppercase font-bold bg-steel-teal/[0.06] px-2.5 py-1 rounded">
             AI-Native Operations
           </span>
-          <h2 id="features-title" className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-ink mt-2">
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-ink mt-3 leading-tight">
             Autonomous intelligence at every care point.
           </h2>
-          <p id="features-desc" className="font-sans text-xs text-muted-grey mt-1.5 leading-relaxed font-medium max-w-xl">
+          <p className="font-sans text-sm sm:text-base text-muted-grey mt-3 leading-relaxed font-medium">
             Endomatics replaces disconnected systems with real-time clinical intelligence, anticipating patient flows and securing operational integrity.
           </p>
         </div>
 
-        {/* 2-Column Split Explorer View */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          {/* Left Column: Interactive Tab Menu Stack */}
-          <div className="lg:col-span-5 flex flex-col gap-1.5 justify-center">
-            {aiFeatures.map((feature) => {
-              const IconComponent = feature.icon;
-              const isSelected = selectedId === feature.id;
+        {/* Full-width carousel */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Arrow Controls */}
+          <button
+            onClick={goPrev}
+            aria-label="Previous feature"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-5 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-muted-grey hover:text-steel-teal hover:border-steel-teal/30 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          >
+            <ChevronLeft className="h-5 w-5" strokeWidth={2.5} />
+          </button>
+          <button
+            onClick={goNext}
+            aria-label="Next feature"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-5 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-muted-grey hover:text-steel-teal hover:border-steel-teal/30 transition-all cursor-pointer hover:scale-105 active:scale-95"
+          >
+            <ChevronRight className="h-5 w-5" strokeWidth={2.5} />
+          </button>
 
-              return (
-                <button
-                  key={feature.id}
-                  onClick={() => setSelectedId(feature.id)}
-                  className={`w-full text-left p-2.5 sm:px-3.5 sm:py-2.5 rounded-lg border transition-all duration-200 flex items-center justify-between group cursor-pointer ${
-                    isSelected 
-                      ? 'bg-bg-light border-steel-teal/15 shadow-[0_2px_12px_rgba(38,97,156,0.015)] text-steel-teal' 
-                      : 'bg-white border-gray-100 hover:border-gray-150 hover:bg-bg-light/30'
-                  }`}
-                  style={{ outline: 'none' }}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className={`w-7.5 h-7.5 rounded-md flex items-center justify-center transition-colors duration-200 ${
-                      isSelected ? 'bg-steel-teal text-white' : 'bg-bg-light text-steel-teal group-hover:bg-steel-teal/5'
-                    }`}>
-                      <IconComponent className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className={`font-display text-xs sm:text-[13px] font-bold transition-colors ${
-                        isSelected ? 'text-steel-teal' : 'text-ink'
-                      }`}>
-                        {feature.title}
-                      </p>
-                      <p className="font-mono text-[8px] text-muted-grey mt-0.5 tracking-wider uppercase">
-                        {feature.badge}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-mono text-[8.5px] text-steel-teal font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      View
-                    </span>
-                    <ArrowRight className={`w-3 h-3 transition-all duration-200 ${
-                      isSelected ? 'text-steel-teal transform translate-x-0.5' : 'text-muted-grey group-hover:text-steel-teal group-hover:translate-x-0.5'
-                    }`} />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Right Column: Dynamic Deep-Dive Showcase Card */}
-          <div className="lg:col-span-7">
-            <div className="bg-bg-light rounded-xl p-5 sm:p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.01)] h-full flex flex-col justify-between min-h-[320px]">
-              <AnimatePresence mode="wait">
+          {/* Panel Stage */}
+          <div className="overflow-hidden rounded-2xl">
+            <div className="relative">
+              <AnimatePresence mode="wait" custom={direction}>
                 <motion.div
-                  key={selectedId}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col justify-between h-full space-y-4"
+                  key={active.id}
+                  custom={direction}
+                  initial={{ opacity: 0, x: direction > 0 ? 80 : -80 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction > 0 ? -80 : 80 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.15}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -80) goNext();
+                    else if (info.offset.x > 80) goPrev();
+                  }}
+                  className="w-full"
                 >
-                  {/* Badge & Meta Row */}
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[9px] tracking-wider uppercase text-steel-teal font-bold bg-steel-teal/10 px-2 py-0.5 rounded">
-                        {activeFeature.badge}
-                      </span>
-                      <span className="font-mono text-[9px] text-muted-grey font-semibold">
-                        System Module // Core
-                      </span>
+                  <div className="flex flex-col lg:flex-row rounded-2xl border border-gray-100 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.04)] overflow-hidden min-h-[420px] lg:min-h-[440px]">
+                    {/* Left: HMS Screen */}
+                    <div className="relative w-full lg:w-[45%] min-h-[280px] lg:min-h-full bg-bg-light/50 overflow-hidden border-b lg:border-b-0 lg:border-r border-gray-100 p-5 sm:p-6 flex items-center">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`screen-${active.id}`}
+                          initial={{ opacity: 0, y: 12 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -12 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          className="w-full"
+                        >
+                          {ScreenComponent && <ScreenComponent />}
+                        </motion.div>
+                      </AnimatePresence>
                     </div>
 
-                    {/* Main Showcase Header */}
-                    <div>
-                      <h3 className="font-display text-base sm:text-lg font-bold text-ink">
-                        {activeFeature.title}
+                    {/* Right: Content */}
+                    <div className="relative w-full lg:w-[55%] flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-10 lg:py-12">
+                      {/* Icon */}
+                      <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-steel-teal/10 to-pulse-teal/15 mb-6 shadow-[0_4px_16px_rgba(38,97,156,0.08)]">
+                        <ActiveIcon className="h-8 w-8 sm:h-9 sm:w-9 text-steel-teal" strokeWidth={1.75} />
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="font-display text-2xl sm:text-3xl font-bold text-ink tracking-tight leading-tight">
+                        {active.title}
                       </h3>
-                      <p className="font-sans text-[11px] sm:text-xs text-muted-grey leading-relaxed mt-1 font-medium">
-                        {activeFeature.description}
+
+                      {/* Description */}
+                      <p className="font-sans text-base sm:text-lg text-muted-grey leading-relaxed mt-4 max-w-lg font-medium">
+                        {active.description}
                       </p>
-                    </div>
-                  </div>
 
-                  {/* Dynamic Showcase Visual Dashboard Widget */}
-                  <div className="bg-white rounded-lg p-3.5 border border-gray-100/80 shadow-[0_2px_10px_rgba(0,0,0,0.005)] w-full">
-                    
-                    {activeFeature.id === 'ai-queue' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-steel-teal font-bold flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-steel-teal animate-ping" />
-                            Live Triage Routing Agent
-                          </span>
-                          <span className="text-muted-grey bg-bg-light px-1.5 py-0.5 rounded text-[8px] border border-gray-100">
-                            Confidence: 97%
-                          </span>
-                        </div>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between text-[10px]">
-                            <span className="font-semibold text-ink">Sarah Lin (Pediatrics)</span>
-                            <span className="text-muted-grey">OPD-A3 Queue</span>
-                          </div>
-                          <div className="bg-bg-light p-2 rounded border border-gray-100/60 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="w-3 h-3 text-steel-teal" />
-                              <span className="text-ink font-medium">Optimized Route:</span>
-                            </div>
-                            <span className="text-steel-teal font-bold uppercase tracking-wider text-[9px]">
-                              Box 3 → Room 4 (Specialist)
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center text-[8.5px] text-emerald-600 font-bold bg-emerald-50/40 p-1.5 rounded border border-emerald-100/20">
-                            <span>Clinical Bottleneck Avoidance:</span>
-                            <span>-14 min Wait Time Savings</span>
-                          </div>
-                        </div>
+                      {/* Counter + Progress */}
+                      <div className="mt-8 flex items-center gap-3">
+                        <span className="font-mono text-xs text-steel-teal uppercase tracking-[0.15em] font-bold">
+                          {String(activeIndex + 1).padStart(2, '0')}
+                        </span>
+                        <span className="w-8 h-px bg-gray-200" />
+                        <span className="font-mono text-xs text-muted-grey/60 uppercase tracking-[0.15em] font-bold">
+                          {String(aiFeatures.length).padStart(2, '0')}
+                        </span>
                       </div>
-                    )}
 
-                    {activeFeature.id === 'ai-med' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-rose-600 font-bold flex items-center gap-1.5">
-                            <ShieldCheck className="w-3.5 h-3.5 text-rose-600" />
-                            Rx Allergy & Safety Guard
-                          </span>
-                          <span className="text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded text-[8px] border border-emerald-100/30">
-                            Active Sync
-                          </span>
-                        </div>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between text-[10px]">
-                            <span className="font-semibold text-ink">Ceftriaxone IV (2g)</span>
-                            <span className="text-muted-grey">Patient ID: #ER-204</span>
-                          </div>
-                          <div className="bg-emerald-50/20 p-2 rounded border border-emerald-100/20 flex items-center gap-1.5 text-emerald-700">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
-                            <span className="font-medium text-[8.5px]">Zero allergen matches detected. Auto-approved for pharmacy release.</span>
-                          </div>
-                        </div>
+                      {/* Auto-advance progress bar */}
+                      <div className="mt-3 h-0.5 w-40 bg-gray-100 rounded-full overflow-hidden">
+                        <motion.div
+                          key={activeIndex}
+                          className="h-full bg-steel-teal rounded-full"
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ duration: AUTO_ADVANCE_MS / 1000, ease: 'linear' }}
+                          style={{ width: '100%', transformOrigin: 'left' }}
+                        />
                       </div>
-                    )}
-
-                    {activeFeature.id === 'ai-capacity' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-emerald-600 font-bold flex items-center gap-1.5">
-                            <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
-                            Predictive Capacity Planner
-                          </span>
-                          <span className="text-muted-grey font-semibold">Ward & ICU Beds</span>
-                        </div>
-                        <div className="grid grid-cols-3 gap-1.5">
-                          <div className="bg-bg-light p-1.5 rounded border border-gray-100/60 text-center">
-                            <p className="text-muted-grey text-[7.5px] uppercase font-bold">Saturday</p>
-                            <p className="text-ink font-bold text-[10px] mt-0.5">78% Load</p>
-                          </div>
-                          <div className="bg-bg-light p-1.5 rounded border border-gray-100/60 text-center">
-                            <p className="text-muted-grey text-[7.5px] uppercase font-bold">Sunday</p>
-                            <p className="text-ink font-bold text-[10px] mt-0.5">85% Load</p>
-                          </div>
-                          <div className="bg-emerald-50/20 p-1.5 rounded border border-emerald-100/20 text-center">
-                            <p className="text-emerald-600 text-[7.5px] uppercase font-bold">Monday (Peak)</p>
-                            <p className="text-emerald-600 font-bold text-[10px] mt-0.5">94% Occupancy</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeFeature.id === 'ai-billing' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-blue-600 font-bold flex items-center gap-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-                            Smart Audit Reconciliation
-                          </span>
-                          <span className="text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded text-[8px] border border-emerald-100">
-                            0.00% Leakage
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-[10px] font-semibold text-ink">
-                          <span>Auto-ICD-10 Diagnostic Mapping</span>
-                          <span className="text-blue-600 font-bold">Active</span>
-                        </div>
-                        <div className="bg-bg-light p-1.5 rounded border border-gray-100/60 flex justify-between items-center text-[8px]">
-                          <span className="text-muted-grey">Unlogged clinical bed-hours audited & logged:</span>
-                          <span className="font-bold text-blue-600">+$1,250.00 recovered</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeFeature.id === 'ai-handover' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-purple-600 font-bold flex items-center gap-1.5">
-                            <FileText className="w-3.5 h-3.5 text-purple-600" />
-                            ICU Shift Handover Synthesizer
-                          </span>
-                          <span className="text-muted-grey">Latency: 1.4s</span>
-                        </div>
-                        <div className="bg-bg-light p-2 rounded border border-gray-100/60 font-sans text-[11px] italic text-ink/90 leading-relaxed">
-                          "Patient #12 post-operative state is stable. Normal sinus rhythm at 72 bpm, oxygen saturation sustained at 98% on room air. Plan: Transition to standard ward in AM."
-                        </div>
-                      </div>
-                    )}
-
-                    {activeFeature.id === 'ai-stock' && (
-                      <div className="font-mono text-[9.5px] space-y-2.5 text-left">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-1.5">
-                          <span className="text-amber-600 font-bold flex items-center gap-1.5">
-                            <Layers className="w-3.5 h-3.5 text-amber-600" />
-                            Pharmacy Supply Predictor
-                          </span>
-                          <span className="text-amber-600 font-bold bg-amber-50 px-1.5 py-0.5 rounded text-[8px] border border-amber-100/30">
-                            Auto-Restock
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-[10px]">
-                          <span className="text-ink font-semibold">Critical IV Antibiotics Stock Level:</span>
-                          <span className="text-rose-600 font-bold">&lt; 15% threshold reached</span>
-                        </div>
-                        <div className="bg-amber-50/10 p-1.5 rounded border border-amber-100/50 flex items-center justify-between text-[8px] text-amber-700">
-                          <span>Purchase Order PO-#9403 triggered:</span>
-                          <span className="font-bold">200 vials approved</span>
-                        </div>
-                      </div>
-                    )}
-
-                  </div>
-
-                  {/* Metric Ribbon & CTA Link */}
-                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                    <div className="flex flex-col text-left">
-                      <span className="text-[9px] font-mono text-muted-grey uppercase tracking-wider">
-                        Operational Metric
-                      </span>
-                      <span className="text-xs sm:text-sm font-bold text-steel-teal mt-0.5 font-display">
-                        {activeFeature.metric}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-1 text-[11px] font-mono text-steel-teal font-bold group cursor-pointer hover:text-black transition-colors">
-                      <span>Explore workflow integration</span>
-                      <ArrowUpRight className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
                 </motion.div>
@@ -361,8 +506,22 @@ export default function CoreModules() {
             </div>
           </div>
 
+          {/* Dot Indicators */}
+          <div className="flex items-center justify-center gap-2.5 mt-6">
+            {aiFeatures.map((feature, idx) => (
+              <button
+                key={feature.id}
+                onClick={() => goTo(idx)}
+                aria-label={`Go to ${feature.title}`}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === activeIndex
+                    ? 'w-8 bg-steel-teal'
+                    : 'w-2 bg-gray-200 hover:bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
         </div>
-
       </div>
     </section>
   );
