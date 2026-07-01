@@ -11,3 +11,8 @@ coverage/
 .vscode/
 .idea/
 coverage/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
