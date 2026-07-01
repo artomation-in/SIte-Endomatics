@@ -4,7 +4,7 @@ import { TESTIMONIALS } from '../data';
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-12 lg:py-16 bg-white overflow-hidden border-t border-gray-100">
+    <section id="testimonials" className="py-8 lg:py-16 bg-white overflow-hidden border-t border-gray-100">
       <div className="max-w-[1400px] mx-auto px-6">
         
         {/* Section Header */}
@@ -21,7 +21,7 @@ export default function Testimonials() {
         </div>
 
         {/* 2-Column Grid */}
-        <div id="testimonials-grid" className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <div id="testimonials-grid" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-stretch">
           {TESTIMONIALS.map((t, idx) => (
             <motion.div
               key={t.id}

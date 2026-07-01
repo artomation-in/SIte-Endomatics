@@ -19,7 +19,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
   ];
 
   return (
-    <section id="hero-section" className="relative min-h-screen lg:h-screen lg:min-h-[720px] flex items-center pt-20 pb-10 lg:pt-24 lg:pb-14 overflow-hidden bg-bg-light bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
+    <section id="hero-section" className="relative min-h-[auto] lg:h-screen lg:min-h-[720px] flex items-center pt-14 pb-6 lg:pt-24 lg:pb-14 overflow-hidden bg-bg-light bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
       {/* Premium ambient light flare backdrop */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-steel-teal/[0.03] to-transparent rounded-full filter blur-[120px] pointer-events-none select-none" />
       <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-teal-500/[0.02] to-transparent rounded-full filter blur-[80px] pointer-events-none select-none" />

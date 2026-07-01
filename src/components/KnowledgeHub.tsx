@@ -50,7 +50,7 @@ export default function KnowledgeHub() {
   }, []);
 
   return (
-    <section id="knowledge" className="py-16 lg:py-20 bg-bg-light relative overflow-hidden">
+    <section id="knowledge" className="py-10 lg:py-20 bg-bg-light relative overflow-hidden">
       {/* Dot grid */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
       {/* Ambient flares */}
@@ -60,7 +60,7 @@ export default function KnowledgeHub() {
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
         {/* Header */}
-        <div className="max-w-2xl mb-10 lg:mb-12">
+        <div className="max-w-2xl mb-6 lg:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

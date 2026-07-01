@@ -568,7 +568,7 @@ export default function ModuleScreens() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col gap-4 h-full"
+                className="flex flex-col gap-4 h-auto lg:h-full"
               >
                 {/* Unified Module Info + AI Features Card */}
                 {/* Unified Module Info + AI Features Card */}
@@ -643,7 +643,7 @@ export default function ModuleScreens() {
 
           {/* Right Column: Interactive Dashboard Mockup */}
           <div className="lg:col-span-5">
-            <div className="bg-white rounded-xl shadow-[0_24px_70px_rgba(0,0,0,0.04)] border border-gray-100/90 overflow-hidden h-full flex flex-col">
+            <div className="bg-white rounded-xl shadow-[0_24px_70px_rgba(0,0,0,0.04)] border border-gray-100/90 overflow-hidden h-auto lg:h-full flex flex-col">
               {/* Mockup window header */}
               <div className="bg-steel-teal px-4 py-2 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2">

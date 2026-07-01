@@ -7,7 +7,7 @@ export default function StatsBar() {
   return (
     <section id="stats-bar-section" className="w-full bg-[#0B1628] py-10 overflow-hidden relative border-y border-white/[0.06]">
       <div className="max-w-[1400px] mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 items-center">
           {STATS_DATA.map((stat, idx) => (
             <React.Fragment key={stat.id}>
               <div className="flex flex-col items-center text-center px-4" itemScope itemType="https://schema.org/PropertyValue">

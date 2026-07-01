@@ -8,7 +8,7 @@ interface CTASectionProps {
 
 export default function CTASection({ onOpenDemo }: CTASectionProps) {
   return (
-    <section id="cta-section" className="w-full bg-steel-teal text-white py-24 relative overflow-hidden">
+    <section id="cta-section" className="w-full bg-steel-teal text-white py-14 sm:py-20 lg:py-24 relative overflow-hidden">
       
       {/* Heartbeat pulse ambient glow in corner */}
       <div className="absolute -bottom-20 -right-20 w-[400px] h-[400px] rounded-full bg-pulse-teal/10 blur-3xl pointer-events-none select-none" />
@@ -45,7 +45,7 @@ export default function CTASection({ onOpenDemo }: CTASectionProps) {
         </div>
 
         {/* Quality Guarantees */}
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-12 text-xs text-white/75 font-mono">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:gap-x-8 md:gap-y-4 mt-8 lg:mt-12 text-xs text-white/75 font-mono">
           <span className="flex items-center gap-1.5">✓ No Setup Fees</span>
           <span className="flex items-center gap-1.5">✓ Sandbox Ready in 4h</span>
           <span className="flex items-center gap-1.5">✓ HIPAA Compliant Cloud</span>

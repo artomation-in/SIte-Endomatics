@@ -382,7 +382,7 @@ export default function CoreModules() {
   return (
     <section
       id="features"
-      className="py-14 sm:py-16 lg:py-20 bg-white border-t border-gray-150/40 relative overflow-hidden"
+      className="py-10 sm:py-16 lg:py-20 bg-white border-t border-gray-150/40 relative overflow-hidden"
     >
       {/* Soft background grid */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.2] pointer-events-none" />
@@ -443,9 +443,9 @@ export default function CoreModules() {
                   }}
                   className="w-full"
                 >
-                  <div className="flex flex-col lg:flex-row rounded-2xl border border-gray-100 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.04)] overflow-hidden min-h-[420px] lg:min-h-[440px]">
+                  <div className="flex flex-col lg:flex-row rounded-2xl border border-gray-100 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.04)] overflow-hidden min-h-[320px] lg:min-h-[440px]">
                     {/* Left: HMS Screen */}
-                    <div className="relative w-full lg:w-[45%] min-h-[280px] lg:min-h-full bg-bg-light/50 overflow-hidden border-b lg:border-b-0 lg:border-r border-gray-100 p-5 sm:p-6 flex items-center">
+                    <div className="relative w-full lg:w-[45%] min-h-[180px] lg:min-h-full bg-bg-light/50 overflow-hidden border-b lg:border-b-0 lg:border-r border-gray-100 p-5 sm:p-6 flex items-center">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={`screen-${active.id}`}
@@ -461,7 +461,7 @@ export default function CoreModules() {
                     </div>
 
                     {/* Right: Content */}
-                    <div className="relative w-full lg:w-[55%] flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-10 lg:py-12">
+                    <div className="relative w-full lg:w-[55%] flex flex-col justify-center px-5 sm:px-12 lg:px-16 py-6 sm:py-8 lg:py-12">
                       {/* Icon */}
                       <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-steel-teal/10 to-pulse-teal/15 mb-6 shadow-[0_4px_16px_rgba(38,97,156,0.08)]">
                         <ActiveIcon className="h-8 w-8 sm:h-9 sm:w-9 text-steel-teal" strokeWidth={1.75} />
