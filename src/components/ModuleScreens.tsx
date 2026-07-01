@@ -560,7 +560,7 @@ export default function ModuleScreens() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
           {/* Left Column: Module Info + AI Features */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          <div className="hidden lg:flex lg:col-span-7 lg:flex-col lg:gap-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedId}
@@ -642,7 +642,7 @@ export default function ModuleScreens() {
           </div>
 
           {/* Right Column: Interactive Dashboard Mockup */}
-          <div className="lg:col-span-5">
+          <div className="col-span-1 lg:col-span-5">
             <div className="bg-white rounded-xl shadow-[0_24px_70px_rgba(0,0,0,0.04)] border border-gray-100/90 overflow-hidden h-auto lg:h-full flex flex-col">
               {/* Mockup window header */}
               <div className="bg-steel-teal px-4 py-2 flex items-center justify-between shrink-0">
@@ -670,7 +670,7 @@ export default function ModuleScreens() {
               </div>
 
               {/* Mockup content area */}
-              <div className="p-4 flex-1">
+              <div className="p-3 lg:p-4 flex-1">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedId}

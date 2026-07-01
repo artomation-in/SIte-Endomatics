@@ -47,7 +47,8 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             </motion.div>
 
             {/* Main Headline */}
-            <h1 id="hero-headline" className="font-display text-4xl sm:text-5xl lg:text-[68px] leading-[1.02] font-extrabold tracking-[-0.04em] text-ink mb-4">
+            <h1 id="hero-headline" className="font-display relative text-3xl sm:text-4xl lg:text-[68px] leading-[1.02] font-extrabold tracking-[-0.04em] text-ink mb-3 sm:mb-4 lg:mb-4">
+              <div className="absolute -top-5 -left-5 w-36 h-36 bg-gradient-to-br from-steel-teal/[0.06] to-transparent rounded-full blur-[40px] pointer-events-none" />
               <motion.span
                 className="block"
                 itemProp="name"
@@ -63,6 +64,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
               >
+                <span className="block w-12 h-[2px] bg-steel-teal/40 rounded-full mb-1.5 lg:hidden" />
                 Built for Humans.
               </motion.span>
             </h1>
@@ -127,8 +129,8 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                 </div>
               </div>
               {/* Dashboard Content Container */}
-              <div className="p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div className="p-3 lg:p-4">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-4">
                   
                   {/* Left Column: Minimal Triage Queue Sidebar */}
                   <div className="lg:col-span-5 lg:border-r lg:border-gray-100 lg:pr-4 space-y-3">
@@ -220,8 +222,8 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                     </div>
                   </div>
 
-                  {/* Right Column: Key Stats & AI Assistant Panel */}
-                  <div className="lg:col-span-7 flex flex-col justify-between space-y-3.5">
+                  {/* Right Column: Key Stats & AI Assistant Panel — hidden on mobile */}
+                  <div className="hidden lg:flex lg:col-span-7 flex-col justify-between space-y-3.5">
                     
                     {/* Key Stats Row (KPI Cards) */}
                     <div>
