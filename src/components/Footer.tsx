@@ -83,22 +83,22 @@ export default function Footer({ onOpenDemo }: FooterProps) {
           {/* Right Column: Contact & Social */}
           <div className="md:col-span-4 flex flex-col items-start">
             <h4 className="font-mono text-[10px] font-bold text-muted-grey uppercase tracking-[0.08em] mb-3">
-              Clinical HQ
+              Global Presence
             </h4>
             <div className="space-y-2 text-sm sm:text-base text-muted-grey">
               <div className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-steel-teal shrink-0 mt-0.5" />
-                <span className="font-semibold">One Medical Plaza, Suite 412, San Francisco, CA</span>
+                <span className="font-semibold">Every ward. Every moment. Everywhere.</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-steel-teal shrink-0" />
-                <a href="mailto:integrations@endomatics.com" className="hover:text-steel-teal transition-all duration-300 font-semibold break-all">
-                  integrations@endomatics.com
+                <a href="mailto:connect@endomatics.com" className="hover:text-steel-teal transition-all duration-300 font-semibold break-all">
+                  connect@endomatics.com
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-steel-teal shrink-0" />
-                <span className="font-semibold">+1 (800) 555-0144</span>
+                <span className="font-semibold">mob +91 8555036954</span>
               </div>
               <div className="flex items-center gap-3">
                 <Globe className="h-4 w-4 text-steel-teal shrink-0" />
