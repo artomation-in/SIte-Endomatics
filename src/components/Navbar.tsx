@@ -103,7 +103,7 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
           >
             <button
               onClick={onOpenDemo}
-              className="bg-steel-teal hover:bg-steel-teal/95 text-white font-sans text-xs font-semibold py-2.5 px-5 rounded-full shadow-sm hover:shadow transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="bg-steel-teal hover:bg-steel-teal/95 text-white font-sans text-[11px] sm:text-xs font-semibold py-2 sm:py-2.5 px-3.5 sm:px-5 rounded-full shadow-sm hover:shadow transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
               Book Demo
             </button>
