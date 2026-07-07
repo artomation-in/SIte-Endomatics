@@ -39,7 +39,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
               <Logo size={32} className="sm:hidden transition-transform group-hover:scale-105" />
               <Logo size={40} className="hidden sm:block transition-transform group-hover:scale-105" />
               <span className="font-display font-black text-2xl sm:text-3xl tracking-tight text-ink">
-                Endomatics
+                ENDOMATICS
               </span>
             </div>
             <p className="font-sans text-sm sm:text-base lg:text-lg text-muted-grey leading-relaxed max-w-sm font-semibold">
@@ -112,7 +112,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
         {/* Bottom bar: copyright in muted mono */}
         <div className="border-t border-gray-200/50 pt-5 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 text-center">
           <p className="font-mono text-xs sm:text-sm font-bold text-muted-grey">
-            © {currentYear} Endomatics Inc. All Rights Reserved.
+            © {currentYear} ENDOMATICS Inc. All Rights Reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs sm:text-sm text-muted-grey">
             <a href="#privacy" className="hover:text-steel-teal transition-all duration-300 font-semibold">Privacy Charter</a>

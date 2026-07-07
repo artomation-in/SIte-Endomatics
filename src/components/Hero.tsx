@@ -78,7 +78,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="font-sans text-sm sm:text-base lg:text-lg text-muted-grey leading-relaxed max-w-[560px] font-medium mb-6"
             >
-              Endomatics unifies OPD, IPD, Emergency, and Billing into one beautifully cohesive, adaptive operating system.
+              ENDOMATICS unifies OPD, IPD, Emergency, and Billing into one beautifully cohesive, adaptive operating system.
             </motion.p>
 
             {/* Action Buttons */}
@@ -355,7 +355,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             {/* Elegant high fidelity presentation fallback instead of raw video */}
             <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center text-white bg-gradient-to-br from-[#0B1513] to-ink">
               <Activity className="h-16 w-16 text-steel-teal animate-pulse mb-6" />
-              <h3 className="font-display text-3xl font-bold mb-3">Endomatics Clinical Operating Core</h3>
+              <h3 className="font-display text-3xl font-bold mb-3">ENDOMATICS Clinical Operating Core</h3>
               <p className="text-sm text-muted-grey max-w-lg mb-8 leading-relaxed">
                 Watch how our system orchestrates live queues, bed sensors, automated stock logs, and touchless charge captures in real time.
               </p>

@@ -27,14 +27,14 @@ export default function Logo({ className = '', size = 32 }: LogoProps) {
           <stop offset="0%" stopColor="#A8D6CF" />
           <stop offset="100%" stopColor="#90C1B8" />
         </linearGradient>
-        
+
         {/* Deep intersecting core shadow/gradient */}
         <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#1D4A77" />
           <stop offset="100%" stopColor="#143659" />
         </linearGradient>
       </defs>
-      
+
       {/* Background soft shadow glow */}
       <circle cx="50" cy="50" r="42" fill="#26619C" opacity="0.06" />
 

@@ -392,7 +392,7 @@ export default function BillingIntelligence() {
             <span>HIPAA, SOC2 Type II verified</span>
           </div>
           <div className="font-medium">
-            Endomatics Hospital Management System
+            ENDOMATICS Hospital Management System
           </div>
         </div>
 

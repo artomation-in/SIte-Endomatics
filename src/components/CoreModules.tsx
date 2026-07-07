@@ -397,7 +397,7 @@ export default function CoreModules() {
             Autonomous intelligence at every care point.
           </h2>
           <p className="font-sans text-sm sm:text-base text-muted-grey mt-3 leading-relaxed font-medium">
-            Endomatics replaces disconnected systems with real-time clinical intelligence, anticipating patient flows and securing operational integrity.
+            ENDOMATICS replaces disconnected systems with real-time clinical intelligence, anticipating patient flows and securing operational integrity.
           </p>
         </div>
 

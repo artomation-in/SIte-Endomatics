@@ -55,7 +55,7 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
             <Logo size={56} className="w-full h-full" />
           </div>
           <span className="font-sans font-black text-2xl sm:text-[42px] tracking-tighter text-steel-teal">
-            Endomatics
+            ENDOMATICS
           </span>
         </div>
 

@@ -65,7 +65,7 @@ const LOCAL_MDX_ARTICLES: MDXArticle[] = [
 
 Traditional healthcare management systems operate on a delayed, disconnected architecture. Clinical charts, nursing logs, laboratory orders, and bedside medications reside in disconnected software silos, requiring intensive manual coding and retroactive billing audits. This structural delay accounts for an average of **3% to 8% in hospital revenue leakage** globally.
 
-**Endomatics** solves this structural failure through a unified, event-driven ledger. By treating clinical actions and financial items as a single atomic transaction, we reduce revenue leakage to exactly **0.00%**.
+**ENDOMATICS** solves this structural failure through a unified, event-driven ledger. By treating clinical actions and financial items as a single atomic transaction, we reduce revenue leakage to exactly **0.00%**.
 
 ## 1. The Silo Problem in Legacy Hospital IT
 In a standard legacy hospital IT ecosystem:
@@ -74,7 +74,7 @@ In a standard legacy hospital IT ecosystem:
 3. The pharmacy releases the stock, creating an inventory discrepancy.
 4. The patient is discharged with an incomplete invoice, resulting in retroactive audits or complete revenue write-offs.
 
-## 2. The Endomatics Unified Transaction Layer
+## 2. The ENDOMATICS Unified Transaction Layer
 Our HMS integrates an adaptive transaction protocol. When a medical action is logged:
 - **Instant Allocation**: Every administered IV dose, diagnostic scan, and active ward bed-hour is assigned to the patient's unified account ledger in **real-time**.
 - **Double-Verification Safety**: Cross-references patient allergy records with pharmaceutical batch expiration limits prior to releasing the ledger event.
@@ -110,12 +110,12 @@ True clinical optimization is not just about digital screens; it is about absolu
 Emergency departments are highly dynamic, non-linear environments. Patient arrival rates, acuity level mixes, and active bed availability fluctuate unpredictably. Traditional static triage protocols (e.g., paper-based emergency scales) fail to adapt to live hospital bottlenecks, resulting in increased wait times, physician burnout, and delayed clinical care.
 
 ## 1. Dynamic Routing Algorithms
-The Endomatics Emergency Triage Engine acts as an adaptive router:
+The ENDOMATICS Emergency Triage Engine acts as an adaptive router:
 - **Continuous Intake Parsing**: Parses active registration streams and symptom reports in real-time.
 - **Dynamic Prioritization**: Moves away from strict "first-come, first-served" queues to focus on pediatric safety, cardiac warning signs, and critical respiratory metrics.
 - **Wait Time Savings**: Triggers predictive routing to save an average of **14 minutes** per critical triage case.
 
-| Metric | Legacy HMS | Endomatics HMS | Improvement |
+| Metric | Legacy HMS | ENDOMATICS HMS | Improvement |
 | :--- | :--- | :--- | :--- |
 | **Admission Intake** | 12 minutes | **4 minutes** | **3x Faster** |
 | **Critical Triage Routing** | 22 minutes | **8 minutes** | **14 min saved** |
@@ -175,7 +175,7 @@ Cloud-hosted solutions eliminate expensive hardware overhead and prevent operati
 - **High-Performance Telemetry**: Real-time bed occupancy dashboards and critical care vitals alerts.
 - **Interoperability**: Standardized API integrations allowing third-party laboratory and radiology connectivity.
 
-Choosing a modern **clinic management system** built on native cloud technologies like Endomatics ensures your medical institution remains agile, responsive, and secure.
+Choosing a modern **clinic management system** built on native cloud technologies like ENDOMATICS ensures your medical institution remains agile, responsive, and secure.
 `
   },
   {
@@ -205,7 +205,7 @@ Integrating **electronic medical billing software** directly with clinical EHR s
 - **Zero Retroactive Audits**: Because coding happens in real-time at the bedside, billing mismatches are caught before claim submission.
 - **Faster Reconciliations**: Discharges that previously took hours are completed in under 15 minutes, resulting in a **3.2x faster outpatient cycle**.
 
-By partnering with Endomatics, hospitals utilize enterprise-grade **medical billing software for small practices** and large hospital networks alike to secure maximum financial integrity.
+By partnering with ENDOMATICS, hospitals utilize enterprise-grade **medical billing software for small practices** and large hospital networks alike to secure maximum financial integrity.
 `
   }
 ];
