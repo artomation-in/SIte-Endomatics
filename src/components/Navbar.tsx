@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
-import { X, Menu } from 'lucide-react';
+import { X, Menu, ShieldCheck, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface NavbarProps {
   onOpenDemo: () => void;
@@ -9,6 +10,7 @@ interface NavbarProps {
 export default function Navbar({ onOpenDemo }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,12 +96,52 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
 
         {/* Book Demo + Mobile Menu Right */}
         <div id="nav-actions" className="flex items-center gap-2">
-          <button
-            onClick={onOpenDemo}
-            className="bg-steel-teal hover:bg-steel-teal/95 text-white font-sans text-xs font-semibold py-2.5 px-5 rounded-full shadow-sm hover:shadow transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+          <div
+            className="relative"
+            onMouseEnter={() => setIsPreviewOpen(true)}
+            onMouseLeave={() => setIsPreviewOpen(false)}
           >
-            Book Demo
-          </button>
+            <button
+              onClick={onOpenDemo}
+              className="bg-steel-teal hover:bg-steel-teal/95 text-white font-sans text-xs font-semibold py-2.5 px-5 rounded-full shadow-sm hover:shadow transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Book Demo
+            </button>
+
+            <AnimatePresence>
+              {isPreviewOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.97 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute top-full right-0 mt-3 w-[290px] bg-white rounded-xl shadow-[0_16px_48px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50"
+                >
+                  <div className="p-4">
+                    <p className="text-[13px] font-bold text-ink mb-3">
+                      What to expect
+                    </p>
+
+                    <div className="space-y-2.5">
+                      {['Tailored to your hospital', 'Live sandbox with your data', 'Zero downtime migration', 'Dedicated integration architect'].map((item, i) => (
+                        <div key={i} className="flex items-center gap-2.5">
+                          <div className="h-4 w-4 rounded-full bg-steel-teal/10 flex items-center justify-center shrink-0">
+                            <Check className="h-2.5 w-2.5 text-steel-teal" strokeWidth={3} />
+                          </div>
+                          <span className="text-[12px] text-ink/70">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-gray-100 bg-bg-light px-4 py-2.5 flex items-center gap-2">
+                    <ShieldCheck className="h-3.5 w-3.5 text-steel-teal shrink-0" />
+                    <span className="font-mono text-[9px] text-muted-grey">HIPAA Compliant · SOC2 Type II Certified</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
           <button
             id="mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

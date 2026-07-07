@@ -87,17 +87,17 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-4 md:gap-6"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 w-full sm:w-auto"
             >
               <button
                 onClick={onOpenDemo}
-                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-4 px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight"
+                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-3.5 px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight text-center"
               >
                 Book a Demo
               </button>
               <button
                 onClick={() => setShowVideo(true)}
-                className="inline-flex items-center gap-2 text-muted-grey hover:text-ink font-sans text-sm sm:text-base font-semibold group transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 text-muted-grey hover:text-ink font-sans text-sm sm:text-base font-semibold group transition-all duration-300 cursor-pointer py-2"
               >
                 <span>Watch Overview</span>
                 <span className="group-hover:translate-x-1.5 transition-transform duration-300 text-lg font-normal">→</span>
@@ -347,44 +347,44 @@ export default function Hero({ onOpenDemo }: HeroProps) {
           <div className="relative w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
             <button
               onClick={() => setShowVideo(false)}
-              className="absolute top-4 right-4 p-2 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 rounded-full transition-colors z-10 cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 rounded-full transition-colors z-10 cursor-pointer"
             >
               <X className="h-6 w-6" />
             </button>
             
             {/* Elegant high fidelity presentation fallback instead of raw video */}
-            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center text-white bg-gradient-to-br from-[#0B1513] to-ink">
-              <Activity className="h-16 w-16 text-steel-teal animate-pulse mb-6" />
-              <h3 className="font-display text-3xl font-bold mb-3">ENDOMATICS Clinical Operating Core</h3>
-              <p className="text-sm text-muted-grey max-w-lg mb-8 leading-relaxed">
+            <div className="w-full h-full flex flex-col items-center justify-center p-5 sm:p-8 text-center text-white bg-gradient-to-br from-[#0B1513] to-ink">
+              <Activity className="h-10 w-10 sm:h-16 sm:w-16 text-steel-teal animate-pulse mb-4 sm:mb-6" />
+              <h3 className="font-display text-xl sm:text-3xl font-bold mb-2 sm:mb-3">ENDOMATICS Clinical Operating Core</h3>
+              <p className="text-xs sm:text-sm text-muted-grey max-w-lg mb-5 sm:mb-8 leading-relaxed">
                 Watch how our system orchestrates live queues, bed sensors, automated stock logs, and touchless charge captures in real time.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl w-full text-left">
-                <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 max-w-2xl w-full text-left">
+                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
                   <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
                     <Shield className="h-4 w-4" />
                     <span>01 // Clinical</span>
                   </div>
-                  <p className="text-xs text-muted-grey">Prescriptions seamlessly route into nurse rosters and bedside diagnostics dashboards instantly.</p>
+                  <p className="text-[11px] sm:text-xs text-muted-grey">Prescriptions seamlessly route into nurse rosters and bedside diagnostics dashboards instantly.</p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
                   <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
                     <DollarSign className="h-4 w-4" />
                     <span>02 // Financial</span>
                   </div>
-                  <p className="text-xs text-muted-grey">Real-time charge triggers map every syringe, bedside hour, and lab assay straight to the patient ledger.</p>
+                  <p className="text-[11px] sm:text-xs text-muted-grey">Real-time charge triggers map every syringe, bedside hour, and lab assay straight to the patient ledger.</p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
                   <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
                     <Clock className="h-4 w-4" />
                     <span>03 // Operations</span>
                   </div>
-                  <p className="text-xs text-muted-grey">Predictive queues balance nurse shifts and expedite inpatient transfers with zero delay bottlenecks.</p>
+                  <p className="text-[11px] sm:text-xs text-muted-grey">Predictive queues balance nurse shifts and expedite inpatient transfers with zero delay bottlenecks.</p>
                 </div>
               </div>
               <button
                 onClick={onOpenDemo}
-                className="mt-8 bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-xs font-semibold py-3 px-6 rounded-lg transition-colors cursor-pointer"
+                className="mt-5 sm:mt-8 bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-xs font-semibold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg transition-colors cursor-pointer"
               >
                 Schedule Interactive Demonstration Walkthrough
               </button>
