@@ -19,7 +19,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
   ];
 
   return (
-    <section id="hero-section" className="relative min-h-[auto] lg:h-screen lg:min-h-[720px] flex items-center pt-14 pb-6 lg:pt-24 lg:pb-14 overflow-hidden bg-bg-light bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
+    <section id="hero-section" className="relative min-h-[auto] lg:h-screen lg:min-h-[720px] flex items-center pt-24 pb-6 lg:pt-24 lg:pb-14 overflow-hidden bg-bg-light bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
       {/* Premium ambient light flare backdrop */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-steel-teal/[0.03] to-transparent rounded-full filter blur-[120px] pointer-events-none select-none" />
       <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-teal-500/[0.02] to-transparent rounded-full filter blur-[80px] pointer-events-none select-none" />
@@ -33,21 +33,23 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             <meta itemProp="operatingSystem" content="Web-based, Cloud-Native" />
             
             {/* Highly converting enterprise trust validation badge */}
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.02 }}
-              className="inline-flex items-center gap-2 px-3 py-1 bg-steel-teal/[0.06] border border-steel-teal/10 rounded-full mb-6"
-              id="hero-trust-badge"
-            >
-              <Sparkles className="h-3 w-3 text-steel-teal animate-pulse" />
-              <span className="font-mono text-[9px] font-bold tracking-wider text-steel-teal uppercase">
-                AI-Native Core • HIPAA compliant • SOC2 Certified
-              </span>
-            </motion.div>
+            <div className="flex justify-center max-sm:justify-start mb-4 sm:mb-4 lg:mb-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.02 }}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-steel-teal/[0.08] border border-steel-teal/15 rounded-2xl"
+                id="hero-trust-badge"
+              >
+                <Sparkles className="h-3 w-3 text-steel-teal animate-pulse" />
+                <span className="font-mono text-[9px] font-bold tracking-wider text-steel-teal">
+                  AI-NATIVE CORE
+                </span>
+              </motion.div>
+            </div>
 
             {/* Main Headline */}
-            <h1 id="hero-headline" className="font-display relative text-3xl sm:text-4xl lg:text-[68px] leading-[1.02] font-extrabold tracking-[-0.04em] text-ink mb-3 sm:mb-4 lg:mb-4">
+            <h1 id="hero-headline" className="font-display relative text-4xl sm:text-5xl lg:text-[68px] leading-[1.08] sm:leading-[1.06] lg:leading-[1.02] font-extrabold tracking-[-0.03em] text-ink mb-4 sm:mb-5 lg:mb-4">
               <div className="absolute -top-5 -left-5 w-36 h-36 bg-gradient-to-br from-steel-teal/[0.06] to-transparent rounded-full blur-[40px] pointer-events-none" />
               <motion.span
                 className="block"
@@ -87,17 +89,17 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-6 w-full sm:w-auto"
+              className="flex flex-row items-center gap-3 sm:gap-6"
             >
               <button
                 onClick={onOpenDemo}
-                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-3.5 px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight text-center"
+                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-3 px-5 sm:py-3.5 sm:px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight text-center"
               >
                 Book a Demo
               </button>
               <button
                 onClick={() => setShowVideo(true)}
-                className="inline-flex items-center justify-center gap-2 text-muted-grey hover:text-ink font-sans text-sm sm:text-base font-semibold group transition-all duration-300 cursor-pointer py-2"
+                className="inline-flex items-center justify-center gap-2 text-muted-grey hover:text-ink font-sans text-sm sm:text-base font-semibold group transition-all duration-300 cursor-pointer py-2 pl-1"
               >
                 <span>Watch Overview</span>
                 <span className="group-hover:translate-x-1.5 transition-transform duration-300 text-lg font-normal">→</span>
