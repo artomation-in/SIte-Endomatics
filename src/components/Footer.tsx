@@ -38,7 +38,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
             >
               <Logo size={32} className="sm:hidden transition-transform group-hover:scale-105" />
               <Logo size={40} className="hidden sm:block transition-transform group-hover:scale-105" />
-              <span className="font-display font-black text-2xl sm:text-3xl tracking-tight text-ink">
+              <span className="font-sans font-black text-2xl sm:text-3xl tracking-tighter text-steel-teal">
                 ENDOMATICS
               </span>
             </div>
