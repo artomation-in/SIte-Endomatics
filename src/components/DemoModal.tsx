@@ -26,16 +26,54 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     'Dedicated integration architect assigned',
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
       return;
     }
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      // We use Web3Forms to send emails directly from the frontend.
+      // Get your free access key at https://web3forms.com and add it to a .env file.
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+      if (accessKey) {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `New Demo Lead: ${formData.hospitalName || formData.name}`,
+            from_name: "Endomatics Website",
+            Name: formData.name,
+            Email: formData.email,
+            Phone: formData.phone,
+            Hospital: formData.hospitalName,
+            "Primary Need": formData.primaryNeed
+          }),
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+          throw new Error("Failed to submit form");
+        }
+      } else {
+        // Fallback simulation if no key is provided yet
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        console.warn("No VITE_WEB3FORMS_ACCESS_KEY found. Form submission simulated.");
+      }
+
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 1200);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setIsSubmitting(false);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
