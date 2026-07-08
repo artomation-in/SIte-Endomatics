@@ -34,9 +34,9 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     setIsSubmitting(true);
 
     try {
-      // We use Web3Forms to send emails directly from the frontend.
-      // Get your free access key at https://web3forms.com and add it to a .env file.
-      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      // Web3Forms access keys are public by design, so it is perfectly safe to hardcode it here.
+      // This bypasses the Cloudflare environment variable restriction for static sites.
+      const accessKey = "b8390335-cd57-4d3d-9485-9e7e4af0b7d7";
 
       if (accessKey) {
         const response = await fetch("https://api.web3forms.com/submit", {
