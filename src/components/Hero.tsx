@@ -49,7 +49,7 @@ export default function Hero({ onOpenDemo }: HeroProps) {
             </div>
 
             {/* Main Headline */}
-            <h1 id="hero-headline" className="font-display relative text-4xl sm:text-5xl lg:text-[68px] leading-[1.08] sm:leading-[1.06] lg:leading-[1.02] font-extrabold tracking-[-0.03em] text-ink mb-4 sm:mb-5 lg:mb-4">
+            <h1 id="hero-headline" className="font-brand relative text-4xl sm:text-5xl lg:text-[68px] leading-[1.08] sm:leading-[1.06] lg:leading-[1.02] font-extrabold tracking-[-0.03em] text-ink mb-4 sm:mb-5 lg:mb-4">
               <div className="absolute -top-5 -left-5 w-36 h-36 bg-gradient-to-br from-steel-teal/[0.06] to-transparent rounded-full blur-[40px] pointer-events-none" />
               <motion.span
                 className="block"
