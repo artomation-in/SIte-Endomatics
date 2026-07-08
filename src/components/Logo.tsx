@@ -27,57 +27,19 @@ export default function Logo({ className = '', size = 32 }: LogoProps) {
           <stop offset="0%" stopColor="#A8D6CF" />
           <stop offset="100%" stopColor="#90C1B8" />
         </linearGradient>
-
-        {/* Deep intersecting core shadow/gradient */}
-        <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#1D4A77" />
-          <stop offset="100%" stopColor="#143659" />
-        </linearGradient>
       </defs>
 
-      {/* Background soft shadow glow */}
-      <circle cx="50" cy="50" r="42" fill="#26619C" opacity="0.06" />
-
       {/* Bottom segment of the vertical capsule (Mint Teal) */}
-      <rect
-        x="32"
-        y="32"
-        width="36"
-        height="66"
-        rx="14"
-        fill="url(#mintWingGrad)"
-      />
+      <rect x="32" y="32" width="36" height="66" rx="14" fill="url(#mintWingGrad)" />
 
       {/* Top segment of the vertical capsule (Top Wing - Brand Blue) */}
-      <rect
-        x="32"
-        y="2"
-        width="36"
-        height="66"
-        rx="14"
-        fill="url(#blueWingGrad)"
-      />
+      <rect x="32" y="2" width="36" height="66" rx="14" fill="url(#blueWingGrad)" />
 
       {/* Horizontal capsule (Left and Right Wings - Brand Blue) */}
-      <rect
-        x="2"
-        y="32"
-        width="96"
-        height="36"
-        rx="14"
-        fill="url(#blueWingGrad)"
-        opacity="0.95"
-      />
+      <rect x="2" y="32" width="96" height="36" rx="14" fill="url(#blueWingGrad)" opacity="0.95" />
 
-      {/* Intersecting central core (Solid brand blue to match the 3 wings) */}
-      <rect
-        x="32"
-        y="32"
-        width="36"
-        height="36"
-        rx="10"
-        fill="url(#blueWingGrad)"
-      />
+      {/* Intersecting central core */}
+      <rect x="32" y="32" width="36" height="36" rx="10" fill="url(#blueWingGrad)" />
     </svg>
   );
 }

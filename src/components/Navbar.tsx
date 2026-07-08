@@ -64,30 +64,30 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
         {/* Links Center */}
         <div
           id="nav-links"
-          className={`fixed top-[72px] left-0 right-0 bg-bg-light/90 backdrop-blur-md border-b border-steel-teal/20 shadow-[0_1px_4px_rgba(0,0,0,0.01)] p-4 md:bg-transparent md:border-b-0 md:shadow-none md:p-0 md:static md:flex md:items-center md:gap-1 transition-all duration-300 ease-in-out z-30 ${isMobileMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-4 opacity-0 pointer-events-none md:translate-y-0 md:opacity-100 md:pointer-events-auto'}`}
+          className={`fixed top-[72px] left-0 right-0 bg-transparent border-0 shadow-none backdrop-blur-none p-4 md:p-0 md:static md:flex md:items-center md:gap-1 transition-all duration-300 ease-in-out z-30 ${isMobileMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-4 opacity-0 pointer-events-none md:translate-y-0 md:opacity-100 md:pointer-events-auto'}`}
         >
           <div className="flex flex-col md:flex-row md:items-center md:gap-1 gap-2">
             <button
               onClick={() => scrollToSection('module-screens')}
-              className="bg-transparent text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal rounded-lg transition-all cursor-pointer"
+              className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Modules
             </button>
             <button
               onClick={() => scrollToSection('knowledge')}
-              className="bg-transparent text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal rounded-lg transition-all cursor-pointer"
+              className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Insights
             </button>
             <button
               onClick={() => scrollToSection('process')}
-              className="bg-transparent text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal rounded-lg transition-all cursor-pointer"
+              className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Onboarding
             </button>
             <button
               onClick={() => scrollToSection('testimonials')}
-              className="bg-transparent text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal rounded-lg transition-all cursor-pointer"
+              className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Case Studies
             </button>
