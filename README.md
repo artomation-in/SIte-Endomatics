@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ENDOMATICS — Cloud-Based Hospital Management System & Medical Billing Software
 
-# Run and deploy your AI Studio app
+Official web presence for **ENDOMATICS** (`https://endomatics.com`), built with React 19, TypeScript, Vite, Tailwind CSS v4, and Cloudflare Pages.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/44392b16-324f-4bf8-ba47-d99d160c02fc
+## Key Architecture & SEO / AEO / GEO Foundations
 
-## Run Locally
+- **SSR Pre-rendering**: Automatically generates static, crawlable HTML files for all routes (`/`, `/features`, `/insights`, articles, `/privacy`, `/terms`) at build time.
+- **Answer Engine Optimization (AEO)**: Interconnected Schema.org Knowledge Graph (`MedicalOrganization`, `SoftwareApplication`, `WebSite`, `FAQPage`, `BreadcrumbList`, and `SpeakableSpecification` for voice and AI answer engines).
+- **Generative Engine Optimization (GEO)**: Machine-readable documentation standard files deployed at:
+  - `/llms.txt`: Concise platform context for AI models and search agents.
+  - `/llms-full.txt`: Comprehensive full-text knowledge graph with all 5 clinical research articles.
+  - `/ai.txt` & `/.well-known/ai-instructions.txt`: Verified operational fact sheet and citation directives.
+- **Real-Time Indexing (IndexNow)**: Direct submission to Bing, Yandex, Seznam, and Naver with a single command.
+- **Dynamic XML Sitemap**: Automated generation of `sitemap.xml` with Google image metadata and ISO timestamps.
 
-**Prerequisites:**  Node.js
+---
 
+## Available Scripts
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+| Script | Command | Purpose |
+| :--- | :--- | :--- |
+| **Development** | `npm run dev` | Starts the Vite dev server at `http://localhost:3000`. |
+| **Production Build** | `npm run build` | Builds client bundle, executes SSR prerendering, and generates sitemap. |
+| **Sitemap Generator** | `npm run sitemap` | Regenerates `public/sitemap.xml` and `dist/sitemap.xml`. |
+| **IndexNow Broadcast** | `npm run indexnow` | Submits all canonical URLs to the IndexNow endpoint for instant search engine indexing. |
+| **Type Check** | `npm run lint` | Runs TypeScript compiler checks without emitting files. |
+| **Preview** | `npm run preview` | Previews the production build locally. |
+
+---
+
+## Indexing & Verification Playbook
+
+For step-by-step instructions on verifying domain ownership in Google Search Console and Bing Webmaster Tools, requesting priority indexing, and monitoring AI search citations, see [docs/INDEXING_PLAYBOOK.md](docs/INDEXING_PLAYBOOK.md).

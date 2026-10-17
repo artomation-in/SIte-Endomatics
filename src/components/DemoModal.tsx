@@ -26,6 +26,26 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     'Dedicated integration architect assigned',
   ];
 
+  const getLeadContext = () => {
+    if (typeof window === 'undefined') return {};
+    const params = new URLSearchParams(window.location.search);
+    const get = (k: string) => params.get(k) || '';
+    const referrer = document.referrer || '';
+    const utmSource = get('utm_source');
+    const leadSource = utmSource || (referrer ? 'Referral' : 'Direct');
+    return {
+      'Lead Source': leadSource,
+      Referrer: referrer,
+      'Landing Page': window.location.pathname + window.location.search,
+      'UTM Source': utmSource,
+      'UTM Medium': get('utm_medium'),
+      'UTM Campaign': get('utm_campaign'),
+      'UTM Term': get('utm_term'),
+      'UTM Content': get('utm_content'),
+      'GCLID': get('gclid'),
+    };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
@@ -53,7 +73,8 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             Email: formData.email,
             Phone: formData.phone,
             Hospital: formData.hospitalName,
-            "Primary Need": formData.primaryNeed
+            "Primary Need": formData.primaryNeed,
+            ...getLeadContext(),
           }),
         });
 

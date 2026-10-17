@@ -260,3 +260,10 @@ export async function getMDXArticles(): Promise<MDXArticle[]> {
   const query = `*[_type == "article"] | order(publishedAt desc) { id, slug, title, category, summary, content, publishedAt, readTime, image }`;
   return querySanity<MDXArticle[]>(query, LOCAL_MDX_ARTICLES);
 }
+
+export async function getArticleBySlug(slug: string): Promise<MDXArticle | undefined> {
+  const all = await getMDXArticles();
+  return all.find((a) => a.slug === slug);
+}
+
+export { LOCAL_MDX_ARTICLES };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import { X, Menu, ShieldCheck, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -11,6 +12,8 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +44,15 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
     setIsMobileMenuOpen(false);
   };
 
+  const goToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      scrollToSection(id);
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
+
   return (
     <nav
       id="main-navbar"
@@ -68,25 +80,26 @@ export default function Navbar({ onOpenDemo }: NavbarProps) {
         >
           <div className="flex flex-col md:flex-row md:items-center md:gap-1 gap-2">
             <button
-              onClick={() => scrollToSection('module-screens')}
+              onClick={() => goToSection('module-screens')}
               className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Modules
             </button>
-            <button
-              onClick={() => scrollToSection('knowledge')}
+            <Link
+              to="/insights"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Insights
-            </button>
+            </Link>
             <button
-              onClick={() => scrollToSection('process')}
+              onClick={() => goToSection('process')}
               className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Onboarding
             </button>
             <button
-              onClick={() => scrollToSection('testimonials')}
+              onClick={() => goToSection('testimonials')}
               className="bg-none border-0 outline-none text-left px-4 py-3 md:py-2 md:px-4 font-sans text-sm md:font-mono md:text-base md:font-black text-steel-teal/70 hover:text-steel-teal transition-all cursor-pointer"
             >
               Case Studies

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Globe } from 'lucide-react';
 import Logo from './Logo';
 
@@ -8,6 +9,8 @@ interface FooterProps {
 
 export default function Footer({ onOpenDemo }: FooterProps) {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -22,6 +25,14 @@ export default function Footer({ onOpenDemo }: FooterProps) {
         top: offsetPosition,
         behavior: 'smooth',
       });
+    }
+  };
+
+  const goToSection = (id: string) => {
+    if (location.pathname === '/') {
+      scrollToSection(id);
+    } else {
+      navigate(`/#${id}`);
     }
   };
 
@@ -54,19 +65,19 @@ export default function Footer({ onOpenDemo }: FooterProps) {
             </h4>
             <div className="flex flex-col gap-2 text-sm sm:text-base">
               <button
-                onClick={() => scrollToSection('module-screens')}
+                onClick={() => goToSection('module-screens')}
                 className="text-left text-muted-grey hover:text-steel-teal transition-all duration-300 cursor-pointer font-semibold"
               >
                 Workflow Modules
               </button>
-              <button
-                onClick={() => scrollToSection('knowledge')}
+              <Link
+                to="/insights"
                 className="text-left text-muted-grey hover:text-steel-teal transition-all duration-300 cursor-pointer font-semibold"
               >
                 Insights
-              </button>
+              </Link>
               <button
-                onClick={() => scrollToSection('process')}
+                onClick={() => goToSection('process')}
                 className="text-left text-muted-grey hover:text-steel-teal transition-all duration-300 cursor-pointer font-semibold"
               >
                 Onboarding Pathway
@@ -115,8 +126,8 @@ export default function Footer({ onOpenDemo }: FooterProps) {
             © {currentYear} ENDOMATICS Inc. All Rights Reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs sm:text-sm text-muted-grey">
-            <a href="#privacy" className="hover:text-steel-teal transition-all duration-300 font-semibold">Privacy Charter</a>
-            <a href="#terms" className="hover:text-steel-teal transition-all duration-300 font-semibold">Service Level Agreement (SLA)</a>
+            <Link to="/privacy" className="hover:text-steel-teal transition-all duration-300 font-semibold">Privacy Charter</Link>
+            <Link to="/terms" className="hover:text-steel-teal transition-all duration-300 font-semibold">Service Level Agreement (SLA)</Link>
           </div>
         </div>
 

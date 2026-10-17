@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1628"/>
+      <stop offset="1" stop-color="#12203A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#26619C"/>
+      <stop offset="1" stop-color="#3E9CBF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.05">
+    <path d="M0 63h1200M0 126h1200M0 189h1200M0 252h1200M0 315h1200M0 378h1200M0 441h1200M0 504h1200M0 567h1200"/>
+    <path d="M60 0v630M120 0v630M180 0v630M240 0v630M300 0v630M360 0v630M420 0v630M480 0v630M540 0v630M600 0v630M660 0v630M720 0v630M780 0v630M840 0v630M900 0v630M960 0v630M1020 0v630M1080 0v630M1140 0v630"/>
+  </g>
+  <rect x="80" y="80" width="360" height="470" rx="28" fill="#0B1628" stroke="url(#accent)" stroke-opacity="0.35"/>
+  <circle cx="140" cy="140" r="28" fill="#26619C"/>
+  <circle cx="212" cy="140" r="28" fill="#26619C" fill-opacity="0.5"/>
+  <circle cx="284" cy="140" r="28" fill="#26619C" fill-opacity="0.25"/>
+  <g>
+    <rect x="120" y="210" width="280" height="46" rx="12" fill="#ffffff" fill-opacity="0.06"/>
+    <circle cx="146" cy="233" r="8" fill="#26619C"/>
+    <rect x="168" y="222" width="140" height="10" rx="5" fill="#ffffff" fill-opacity="0.4"/>
+    <rect x="168" y="240" width="90" height="8" rx="4" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="352" y="223" width="34" height="20" rx="6" fill="#C94B2C" fill-opacity="0.8"/>
+    <rect x="120" y="276" width="280" height="46" rx="12" fill="#26619C" fill-opacity="0.25"/>
+    <circle cx="146" cy="299" r="8" fill="#26619C"/>
+    <rect x="168" y="288" width="120" height="10" rx="5" fill="#ffffff" fill-opacity="0.5"/>
+    <rect x="168" y="306" width="80" height="8" rx="4" fill="#ffffff" fill-opacity="0.25"/>
+    <rect x="330" y="289" width="56" height="20" rx="6" fill="#26619C"/>
+    <rect x="120" y="342" width="280" height="46" rx="12" fill="#ffffff" fill-opacity="0.06"/>
+    <circle cx="146" cy="365" r="8" fill="#3E9CBF"/>
+    <rect x="168" y="354" width="160" height="10" rx="5" fill="#ffffff" fill-opacity="0.4"/>
+    <rect x="168" y="372" width="110" height="8" rx="4" fill="#ffffff" fill-opacity="0.2"/>
+    <rect x="120" y="408" width="280" height="90" rx="14" fill="url(#accent)" fill-opacity="0.9"/>
+    <text x="140" y="446" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">AI Queue Optimizer</text>
+    <text x="140" y="472" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" fill-opacity="0.85">Re-routed Sarah Lin to Room 4 · −14 min wait</text>
+  </g>
+  <g transform="translate(520,240)">
+    <text font-family="Arial, sans-serif" font-size="76" font-weight="900" fill="#ffffff" letter-spacing="-2">ENDOMATICS</text>
+    <rect x="4" y="96" width="120" height="6" rx="3" fill="url(#accent)"/>
+    <text y="150" font-family="Arial, sans-serif" font-size="30" font-weight="600" fill="#ffffff" fill-opacity="0.9">Cloud-Based Hospital Management</text>
+    <text y="192" font-family="Arial, sans-serif" font-size="30" font-weight="600" fill="#ffffff" fill-opacity="0.9">System &amp; Medical Billing Software</text>
+    <text y="248" font-family="Arial, sans-serif" font-size="20" fill="#ffffff" fill-opacity="0.55">OPD · IPD · Emergency Triage · RCM · Pharmacy</text>
+    <text y="286" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#3E9CBF">0.00% Revenue Leakage · 3.2x Faster Discharges · 14-Day Deployment</text>
+  </g>
+</svg>
