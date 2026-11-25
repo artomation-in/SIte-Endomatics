@@ -186,14 +186,23 @@ const PAGES = [
   },
 ];
 
+function escapeXml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 function generateSitemapXml() {
   const urls = PAGES.map((p) => {
-    const loc = `${SITE_URL}${p.path}`;
+    const loc = escapeXml(`${SITE_URL}${p.path}`);
     const imagesXml = (p.images || [])
       .map(
         (img) => `    <image:image>
-      <image:loc>${img.loc}</image:loc>
-      <image:title>${img.title.replace(/&/g, '&amp;')}</image:title>
+      <image:loc>${escapeXml(img.loc)}</image:loc>
+      <image:title>${escapeXml(img.title)}</image:title>
     </image:image>`,
       )
       .join('\n');
