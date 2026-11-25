@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Play, Shield, Activity, Users, DollarSign, Clock, X, Check, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  Play,
+  Shield,
+  Activity,
+  DollarSign,
+  Clock,
+  X,
+  Sparkles,
+  CheckCircle2,
+  ArrowRight,
+  Cpu,
+  Zap,
+  ShieldCheck,
+} from 'lucide-react';
+import { LivePulseWaveform } from './motion/ClinicalMotion';
 
 interface HeroProps {
   onOpenDemo: () => void;
@@ -10,213 +24,324 @@ export default function Hero({ onOpenDemo }: HeroProps) {
   const [showVideo, setShowVideo] = useState(false);
   const [aiSuggestionApplied, setAiSuggestionApplied] = useState(false);
 
-  // Fictional live patient status data for the interactive mockup
-  const patients = [
-    { name: 'Liam Vance', ward: 'ER-04', status: 'critical', pulse: 104, oxygen: '91%' },
-    { name: 'Marcus Brody', ward: 'ICU-12', status: 'stable', pulse: 72, oxygen: '98%' },
-    { name: 'Sarah Lin', ward: 'OPD-A3', status: 'transitional', pulse: 84, oxygen: '96%' },
-    { name: 'Amara Diop', ward: 'IPD-402', status: 'stable', pulse: 68, oxygen: '99%' },
-  ];
-
   return (
-    <section id="hero-section" className="relative min-h-[auto] lg:h-screen lg:min-h-[720px] flex items-center pt-24 pb-6 lg:pt-24 lg:pb-14 overflow-hidden bg-bg-light bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px]">
-      {/* Premium ambient light flare backdrop */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-steel-teal/[0.03] to-transparent rounded-full filter blur-[120px] pointer-events-none select-none" />
-      <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-gradient-to-tr from-teal-500/[0.02] to-transparent rounded-full filter blur-[80px] pointer-events-none select-none" />
+    <section
+      id="hero-section"
+      className="relative min-h-[auto] lg:min-h-[780px] flex items-center pt-24 pb-14 lg:pt-28 lg:pb-20 overflow-hidden bg-bg-light"
+    >
+      {/* Architectural Clinical Backdrop: Soft Mesh + Precision Grid */}
+      <div className="absolute inset-0 clinical-grid-bg opacity-45 pointer-events-none" />
+      <div
+        aria-hidden="true"
+        className="absolute -top-32 right-[-8%] w-[680px] h-[680px] rounded-full bg-[radial-gradient(circle_at_center,rgba(38,97,156,0.10)_0%,rgba(43,179,163,0.06)_45%,transparent_72%)] blur-2xl pointer-events-none select-none"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-28 left-[-6%] w-[460px] h-[460px] rounded-full bg-[radial-gradient(circle_at_center,rgba(43,179,163,0.08)_0%,transparent_70%)] blur-2xl pointer-events-none select-none"
+      />
 
-      <div className="max-w-[1400px] w-full mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-          
-          {/* Left Hero Text Panel */}
-          <div id="hero-left-panel" className="lg:col-span-6 flex flex-col items-start text-left" itemScope itemType="https://schema.org/SoftwareApplication">
+      {/* Precision Concentric SVG Rings behind Right Stage */}
+      <svg
+        aria-hidden="true"
+        className="hidden lg:block absolute right-[2%] top-1/2 -translate-y-1/2 w-[640px] h-[640px] pointer-events-none select-none opacity-60"
+        viewBox="0 0 600 600"
+        fill="none"
+      >
+        <circle cx="300" cy="300" r="190" stroke="rgba(38,97,156,0.08)" strokeWidth="1" strokeDasharray="4 6" />
+        <motion.circle
+          cx="300"
+          cy="300"
+          r="250"
+          stroke="rgba(43,179,163,0.12)"
+          strokeWidth="1"
+          strokeDasharray="8 10"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '300px 300px' }}
+        />
+        <circle cx="300" cy="300" r="295" stroke="rgba(148,163,184,0.12)" strokeWidth="1" />
+      </svg>
+
+      <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Left Panel: Editorial Designer Typography */}
+          <div
+            id="hero-left-panel"
+            className="lg:col-span-6 flex flex-col items-start text-left"
+            itemScope
+            itemType="https://schema.org/SoftwareApplication"
+          >
             <meta itemProp="applicationCategory" content="BusinessApplication" />
             <meta itemProp="operatingSystem" content="Web-based, Cloud-Native" />
-            
-            {/* Highly converting enterprise trust validation badge */}
-            <div className="flex justify-center max-sm:justify-start mb-4 sm:mb-4 lg:mb-6">
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.02 }}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-steel-teal/[0.08] border border-steel-teal/15 rounded-2xl"
-                id="hero-trust-badge"
-              >
-                <Sparkles className="h-3 w-3 text-steel-teal animate-pulse" />
-                <span className="font-mono text-[9px] font-bold tracking-wider text-steel-teal">
-                  AI-NATIVE CORE
-                </span>
-              </motion.div>
-            </div>
 
-            {/* Main Headline */}
-            <h1 id="hero-headline" className="font-brand relative text-4xl sm:text-5xl lg:text-[68px] leading-[1.08] sm:leading-[1.06] lg:leading-[1.02] font-black tracking-[-0.03em] text-ink mb-4 sm:mb-5 lg:mb-4">
-              <div className="absolute -top-5 -left-5 w-36 h-36 bg-gradient-to-br from-steel-teal/[0.06] to-transparent rounded-full blur-[40px] pointer-events-none" />
+            {/* Clinical OS Status Pill */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              id="hero-trust-badge"
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-sm border border-steel-teal/15 shadow-[0_4px_16px_rgba(38,97,156,0.07)] mb-6"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-clinical-mint opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-clinical-mint" />
+              </span>
+              <span className="font-sans text-xs font-semibold text-steel-teal tracking-tight">
+                Autonomous Hospital Operating System
+              </span>
+            </motion.div>
+
+            {/* Editorial Headline */}
+            <h1
+              id="hero-headline"
+              className="font-display text-[42px] sm:text-[54px] lg:text-[66px] leading-[1.03] font-extrabold tracking-[-0.035em] text-ink mb-6"
+            >
               <motion.span
                 className="block"
                 itemProp="name"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               >
-                Hospital Intelligence,
+                Hospital{' '}
+                <span className="bg-gradient-to-r from-steel-teal via-[#2B7A9E] to-clinical-mint bg-clip-text text-transparent">
+                  Intelligence,
+                </span>
               </motion.span>
               <motion.span
-                className="block text-steel-teal"
+                className="block mt-1 font-bold text-ink/90"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.55, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="block w-12 h-[2px] bg-steel-teal/40 rounded-full mb-1.5 lg:hidden" />
-                Built for Humans.
+                Built for{' '}
+                <span className="relative inline-block">
+                  Humans.
+                  <motion.svg
+                    viewBox="0 0 220 12"
+                    fill="none"
+                    className="absolute -bottom-1.5 left-0 w-full h-2.5 overflow-visible"
+                    aria-hidden="true"
+                  >
+                    <motion.path
+                      d="M2 8 C 60 2, 160 2, 218 8"
+                      stroke="#2BB3A3"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.85, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  </motion.svg>
+                </span>
               </motion.span>
             </h1>
 
-            {/* Descriptive Subtext */}
+            {/* Subtext */}
             <motion.p
               id="hero-subtext"
               itemProp="description"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="font-sans text-sm sm:text-base lg:text-lg text-muted-grey leading-relaxed max-w-[560px] font-medium mb-6"
+              transition={{ duration: 0.55, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans text-base sm:text-lg text-slate-600 leading-relaxed max-w-[520px] font-medium mb-8"
             >
-              ENDOMATICS unifies OPD, IPD, Emergency, and Billing into one beautifully cohesive, adaptive operating system.
+              Unify OPD, IPD, Emergency, Pharmacy, and Revenue Cycle Management inside one calm, AI-native operating layer—engineered for zero leakage and human speed.
             </motion.p>
 
-            {/* Action Buttons */}
+            {/* Material 3 Action Cluster */}
             <motion.div
               id="hero-actions"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-row items-center gap-3 sm:gap-6"
+              transition={{ duration: 0.55, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap items-center gap-3.5 sm:gap-4 mb-9"
             >
-              <button
+              <motion.button
+                type="button"
                 onClick={onOpenDemo}
-                className="bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-sm sm:text-base font-semibold py-3 px-5 sm:py-3.5 sm:px-6 md:px-8 rounded-full shadow-[0_10px_30px_rgba(38,97,156,0.25)] hover:shadow-[0_15px_35px_rgba(38,97,156,0.35)] transition-all duration-300 cursor-pointer hover:-translate-y-0.5 active:translate-y-0 tracking-tight text-center"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2.5 bg-steel-teal hover:bg-steel-teal-dark text-white font-sans text-sm sm:text-[15px] font-semibold py-3.5 px-7 rounded-full shadow-[0_12px_28px_rgba(38,97,156,0.28)] hover:shadow-[0_16px_36px_rgba(38,97,156,0.36)] transition-all cursor-pointer"
               >
-                Book a Demo
-              </button>
-              <button
+                <span>Book a Demo</span>
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+
+              <motion.button
+                type="button"
                 onClick={() => setShowVideo(true)}
-                className="inline-flex items-center justify-center gap-2 text-muted-grey hover:text-ink font-sans text-sm sm:text-base font-semibold group transition-all duration-300 cursor-pointer py-2 pl-1"
+                whileHover={{ y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2.5 bg-white/90 hover:bg-white text-ink font-sans text-sm sm:text-[15px] font-semibold py-3 px-5 rounded-full border border-slate-200/90 shadow-xs transition-all cursor-pointer group"
               >
+                <span className="w-7 h-7 rounded-full bg-surface-tonal flex items-center justify-center text-steel-teal group-hover:bg-steel-teal group-hover:text-white transition-colors">
+                  <Play className="w-3 h-3 fill-current ml-0.5" />
+                </span>
                 <span>Watch Overview</span>
-                <span className="group-hover:translate-x-1.5 transition-transform duration-300 text-lg font-normal">→</span>
-              </button>
+              </motion.button>
+            </motion.div>
+
+            {/* Editorial KPI Strip */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="w-full max-w-[520px] pt-6 border-t border-slate-200/80 grid grid-cols-3 gap-4"
+            >
+              {[
+                { value: '0.00%', label: 'Revenue Leakage' },
+                { value: '14 Days', label: 'Full Go-Live' },
+                { value: '98.4%', label: 'Billing Accuracy' },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-display text-lg sm:text-xl font-extrabold text-ink tracking-tight">
+                    {stat.value}
+                  </p>
+                  <p className="font-mono text-[10px] text-muted-grey uppercase tracking-wider mt-0.5">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </motion.div>
           </div>
 
-              {/* Right Hero Interactive Mockup Dashboard - Simplified for Mobile */}
-          <div id="hero-right-panel" className="lg:col-span-6 relative">
+          {/* Right Panel: Spatial Layered AI Command Center */}
+          <div id="hero-right-panel" className="lg:col-span-6 relative lg:py-6">
+            {/* Top-Right Floating Satellite: Autonomous Claim Scrub */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full bg-white rounded-2xl shadow-[0_24px_70px_rgba(0,0,0,0.06)] border border-gray-100/90 overflow-hidden relative"
+              initial={{ opacity: 0, y: -12, scale: 0.95 }}
+              animate={{ opacity: 1, y: [0, -5, 0], scale: 1 }}
+              transition={{
+                opacity: { duration: 0.5, delay: 0.45 },
+                scale: { duration: 0.5, delay: 0.45 },
+                y: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+              }}
+              className="hidden sm:flex items-center gap-3 m3-surface-elevated rounded-2xl px-4 py-2.5 absolute -top-2 right-2 lg:-right-3 z-20"
             >
-              {/* Dashboard Mockup Header */}
-              <div className="bg-steel-teal px-4 py-2.5 border-b border-steel-teal/10 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <span className="font-mono text-[9px] text-white/70 uppercase tracking-wider ml-2">
-                    Console // reception-panel
+              <div className="w-8 h-8 rounded-xl bg-clinical-mint/15 flex items-center justify-center text-clinical-mint">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="font-mono text-[9px] text-muted-grey uppercase font-bold tracking-wider">
+                  Claim Scrub AI
+                </p>
+                <p className="font-display text-xs font-extrabold text-ink">
+                  99.4% Clean · <span className="text-clinical-mint">$0 Leakage</span>
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Primary Elevated Clinical Console */}
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full m3-surface-elevated rounded-3xl overflow-hidden relative z-10"
+            >
+              {/* Console Top Bar */}
+              <div className="bg-surface-tonal/95 px-4 sm:px-5 py-3 border-b border-slate-200/70 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                  </div>
+                  <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider font-semibold">
+                    Console // AI-Triage-Core
                   </span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/10 px-2.5 py-0.5 rounded border border-white/15 text-[9px] font-mono text-white">
-                  <Sparkles className="h-2.5 w-2.5 text-white/90" />
-                  <span>AI Copilot Active</span>
+
+                <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded-full border border-steel-teal/15 shadow-2xs">
+                  <Cpu className="h-3 w-3 text-steel-teal" />
+                  <span className="font-mono text-[9px] font-bold text-steel-teal uppercase tracking-wider">
+                    AI Copilot Active
+                  </span>
                 </div>
               </div>
-              {/* Dashboard Content Container */}
-              <div className="p-3 lg:p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-4">
-                  
-                  {/* Left Column: Minimal Triage Queue Sidebar */}
-                  <div className="lg:col-span-5 lg:border-r lg:border-gray-100 lg:pr-4 space-y-3">
-                    {/* Queue Header */}
-                    <div className="flex items-center justify-between pb-1.5 border-b border-gray-100">
-                      <div className="flex items-center gap-1.5">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-steel-teal opacity-40"></span>
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-steel-teal"></span>
+
+              {/* Console Body */}
+              <div className="p-4 sm:p-5 bg-white">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                  {/* Left: Live Triage Queue */}
+                  <div className="lg:col-span-5 lg:border-r lg:border-slate-100 lg:pr-4 space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-clinical-mint opacity-50" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-clinical-mint" />
                         </span>
-                        <span className="font-mono text-[9px] text-ink font-semibold uppercase tracking-wider">Live Triage Queue</span>
+                        <span className="font-mono text-[10px] text-ink font-bold uppercase tracking-wider">
+                          Live Triage
+                        </span>
                       </div>
-                      <span className="text-[8px] font-mono text-muted-grey">
-                        3 Active
-                      </span>
+                      <span className="font-mono text-[9px] text-muted-grey">3 Active</span>
                     </div>
 
-                    {/* Highly minimal, dense queue layout */}
-                    <div className="space-y-1.5">
-                      {/* Patient 1 - Critical */}
-                      <div className="py-1.5 border-b border-gray-50">
+                    <div className="space-y-2">
+                      {/* Patient 1 - Critical with ECG */}
+                      <div className="p-2.5 rounded-xl bg-alert-danger/[0.03] border border-alert-danger/15">
                         <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-alert-danger shrink-0 mt-1" />
-                            <div>
-                              <p className="font-semibold text-xs text-ink">Liam Vance</p>
-                              <div className="flex items-center gap-1 font-mono text-[8px] text-muted-grey mt-0.5">
-                                <span>ER-04</span>
-                                <span className="text-gray-300">•</span>
-                                <span className="text-alert-danger font-medium">104 bpm</span>
-                                <span className="text-gray-300">•</span>
-                                <span>91% O₂</span>
-                              </div>
-                            </div>
+                          <div>
+                            <p className="font-semibold text-xs text-ink">Liam Vance</p>
+                            <p className="font-mono text-[9px] text-muted-grey mt-0.5">
+                              ER-04 • <span className="text-alert-danger font-semibold">104 bpm</span> • 91% O₂
+                            </p>
                           </div>
-                          <span className="bg-alert-danger/5 text-alert-danger text-[8px] font-mono px-1.5 py-0.5 rounded border border-alert-danger/10 font-semibold uppercase">
+                          <span className="bg-alert-danger/10 text-alert-danger text-[8px] font-mono px-2 py-0.5 rounded-full font-bold uppercase">
                             Critical
                           </span>
                         </div>
+                        <div className="mt-1.5">
+                          <LivePulseWaveform color="#C94B2C" height={18} speedSec={1.8} className="w-full" />
+                        </div>
                       </div>
 
-                      {/* Patient 2 - Urgent (Interactive) */}
-                      <div className={`p-2 rounded-lg border transition-all duration-300 ${aiSuggestionApplied ? 'bg-steel-teal/[0.02] border-steel-teal/15' : 'border-gray-100/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.01)]'}`}>
+                      {/* Patient 2 - Interactive AI Re-routed Card */}
+                      <motion.div
+                        layout
+                        className={`p-2.5 rounded-xl border transition-colors duration-300 ${
+                          aiSuggestionApplied
+                            ? 'bg-clinical-mint/[0.06] border-clinical-mint/30'
+                            : 'bg-bg-light border-slate-200/70'
+                        }`}
+                      >
                         <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-1" />
-                            <div>
-                              <p className="font-semibold text-xs text-ink">Sarah Lin</p>
-                              <div className="flex items-center gap-1 font-mono text-[8px] text-muted-grey mt-0.5">
-                                <span>OPD-A3</span>
-                                <span className="text-gray-300">•</span>
-                                <span className="text-amber-500 font-medium">84 bpm</span>
-                                <span className="text-gray-300">•</span>
-                                <span>96% O₂</span>
-                              </div>
-                            </div>
+                          <div>
+                            <p className="font-semibold text-xs text-ink">Sarah Lin</p>
+                            <p className="font-mono text-[9px] text-muted-grey mt-0.5">
+                              OPD-A3 • <span className="text-amber-600 font-semibold">84 bpm</span> • 96% O₂
+                            </p>
                           </div>
-                          <span className={`text-[8px] font-mono px-1.5 py-0.5 rounded border transition-all duration-300 font-semibold uppercase ${aiSuggestionApplied ? 'bg-steel-teal/10 text-steel-teal border-steel-teal/10' : 'bg-amber-500/5 text-amber-600 border-amber-500/10'}`}>
+                          <span
+                            className={`text-[8px] font-mono px-2 py-0.5 rounded-full font-bold uppercase transition-colors ${
+                              aiSuggestionApplied
+                                ? 'bg-clinical-mint/15 text-clinical-mint'
+                                : 'bg-amber-500/10 text-amber-700'
+                            }`}
+                          >
                             {aiSuggestionApplied ? 'Optimized' : 'Urgent'}
                           </span>
                         </div>
-                        {/* Status detail when applied */}
-                        <p className={`text-[8px] font-mono mt-1 transition-colors duration-300 ${aiSuggestionApplied ? 'text-steel-teal' : 'text-muted-grey'}`}>
-                          {aiSuggestionApplied ? 'Re-routed: Room 4 (Peds)' : 'Assigned: Box 3 (Std)'}
+                        <p
+                          className={`text-[9px] font-mono mt-1.5 font-medium ${
+                            aiSuggestionApplied ? 'text-steel-teal' : 'text-muted-grey'
+                          }`}
+                        >
+                          {aiSuggestionApplied ? '✓ Routed: Room 4 (Peds Fast-Track)' : 'Assigned: Box 3 (Standard)'}
                         </p>
-                      </div>
+                      </motion.div>
 
-                      {/* Patient 3 - Standard */}
-                      <div className="py-1.5">
+                      {/* Patient 3 - Stable */}
+                      <div className="p-2.5 rounded-xl bg-bg-light/70 border border-slate-100">
                         <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-steel-teal shrink-0 mt-1" />
-                            <div>
-                              <p className="font-semibold text-xs text-ink">Marcus Brody</p>
-                              <div className="flex items-center gap-1 font-mono text-[8px] text-muted-grey mt-0.5">
-                                <span>ICU-12</span>
-                                <span className="text-gray-300">•</span>
-                                <span className="text-steel-teal font-medium">72 bpm</span>
-                                <span className="text-gray-300">•</span>
-                                <span>98% O₂</span>
-                              </div>
-                            </div>
+                          <div>
+                            <p className="font-semibold text-xs text-ink">Marcus Brody</p>
+                            <p className="font-mono text-[9px] text-muted-grey mt-0.5">
+                              ICU-12 • <span className="text-steel-teal font-semibold">72 bpm</span> • 98% O₂
+                            </p>
                           </div>
-                          <span className="bg-steel-teal/5 text-steel-teal text-[8px] font-mono px-1.5 py-0.5 rounded border border-steel-teal/10 font-semibold uppercase">
+                          <span className="bg-steel-teal/10 text-steel-teal text-[8px] font-mono px-2 py-0.5 rounded-full font-bold uppercase">
                             Stable
                           </span>
                         </div>
@@ -224,176 +349,223 @@ export default function Hero({ onOpenDemo }: HeroProps) {
                     </div>
                   </div>
 
-                  {/* Right Column: Key Stats & AI Assistant Panel — hidden on mobile */}
+                  {/* Right: KPI Strip + AI Optimizer Card */}
                   <div className="hidden lg:flex lg:col-span-7 flex-col justify-between space-y-3.5">
-                    
-                    {/* Key Stats Row (KPI Cards) */}
                     <div>
-                      <p className="font-mono text-[8px] text-muted-grey uppercase tracking-wider mb-1.5 font-bold">Patient Data Overview</p>
-                      <div className="grid grid-cols-3 gap-2">
-                        <div className="p-2 bg-bg-light rounded border border-gray-100 flex flex-col justify-between">
-                          <span className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-semibold">Patient Load</span>
-                          <p className="font-display text-sm font-bold text-ink mt-0.5">142</p>
-                          <span className="text-[7px] text-muted-grey mt-0.5">Admitted</span>
+                      <p className="font-mono text-[9px] text-muted-grey uppercase tracking-wider mb-2 font-bold">
+                        Real-Time Telemetry
+                      </p>
+                      <div className="grid grid-cols-3 gap-2.5">
+                        <div className="p-2.5 bg-bg-light rounded-xl border border-slate-100">
+                          <span className="font-mono text-[8px] text-muted-grey uppercase font-bold">Patient Load</span>
+                          <p className="font-display text-lg font-extrabold text-ink mt-0.5">142</p>
+                          <span className="text-[9px] text-muted-grey">Admitted</span>
                         </div>
-                        <div className="p-2 bg-bg-light rounded border border-gray-100 flex flex-col justify-between">
-                          <span className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-semibold">Emergency (ER)</span>
-                          <p className="font-display text-sm font-bold text-ink mt-0.5">1 <span className="text-[8px] font-sans font-semibold text-alert-danger">Critical</span></p>
-                          <span className="text-[7px] text-muted-grey mt-0.5">Liam Vance (Active)</span>
+                        <div className="p-2.5 bg-bg-light rounded-xl border border-slate-100">
+                          <span className="font-mono text-[8px] text-muted-grey uppercase font-bold">Emergency</span>
+                          <p className="font-display text-lg font-extrabold text-ink mt-0.5">
+                            1 <span className="text-[10px] font-sans font-semibold text-alert-danger">Crit</span>
+                          </p>
+                          <span className="text-[9px] text-muted-grey">ER-04 Active</span>
                         </div>
-                        <div className="p-2 bg-bg-light rounded border border-gray-100 flex flex-col justify-between">
-                          <span className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-semibold">Walk-ins (OPD)</span>
-                          <p className="font-display text-sm font-bold text-ink mt-0.5">2 <span className="text-[8px] font-sans font-semibold text-amber-500">Wait</span></p>
-                          <span className="text-[7px] text-muted-grey mt-0.5">Avg: 12m</span>
+                        <div className="p-2.5 bg-bg-light rounded-xl border border-slate-100">
+                          <span className="font-mono text-[8px] text-muted-grey uppercase font-bold">OPD Wait</span>
+                          <p className="font-display text-lg font-extrabold text-steel-teal mt-0.5">
+                            {aiSuggestionApplied ? '4m' : '12m'}
+                          </p>
+                          <span className="text-[9px] text-clinical-mint font-semibold">
+                            {aiSuggestionApplied ? '-66% AI Saved' : '2 Waiting'}
+                          </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Active Staff & Allocation */}
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="font-mono text-[8px] text-muted-grey uppercase tracking-wider font-bold">Active Staff & Patient Allocation</span>
-                        <span className="text-[8px] font-mono text-steel-teal font-semibold uppercase">88% Live Coverage</span>
+                    {/* Telemetry Waveform Strip */}
+                    <div className="p-3 rounded-xl bg-bg-light/80 border border-slate-100 flex items-center justify-between gap-4">
+                      <div>
+                        <p className="font-mono text-[8px] text-muted-grey uppercase tracking-wider font-bold">
+                          Autonomous Ledger &amp; Vitals Sync
+                        </p>
+                        <p className="text-[11px] font-semibold text-ink mt-0.5">
+                          1,420 Allergy Checks · 100% Verified
+                        </p>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 bg-bg-light/80 p-2 rounded border border-gray-100">
-                        {/* Stat 1 */}
-                        <div className="bg-white p-2 rounded border border-gray-50 flex items-center gap-2">
-                          <div className="h-6.5 w-6.5 rounded bg-steel-teal/10 flex items-center justify-center text-steel-teal font-bold text-[10px]">
-                            12
-                          </div>
-                          <div className="text-left leading-none">
-                            <p className="font-semibold text-[10px] text-ink">Physicians On-Duty</p>
-                            <p className="text-[7.5px] text-muted-grey mt-0.5 font-mono">3 on standby/on-call</p>
-                          </div>
-                        </div>
-                        {/* Stat 2 */}
-                        <div className="bg-white p-2 rounded border border-gray-50 flex items-center gap-2">
-                          <div className="h-6.5 w-6.5 rounded bg-amber-500/10 flex items-center justify-center text-amber-600 font-bold text-[10px]">
-                            1:4
-                          </div>
-                          <div className="text-left leading-none">
-                            <p className="font-semibold text-[10px] text-ink">Doc-Patient Ratio</p>
-                            <p className="text-[7.5px] text-muted-grey mt-0.5 font-mono">Optimal safety range</p>
-                          </div>
-                        </div>
-                        {/* Stat 3 */}
-                        <div className="bg-white p-2 rounded border border-gray-50 flex items-center gap-2">
-                          <div className="h-6.5 w-6.5 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-600 font-bold text-[10px]">
-                            18
-                          </div>
-                          <div className="text-left leading-none">
-                            <p className="font-semibold text-[10px] text-ink">Active Consults</p>
-                            <p className="text-[7.5px] text-muted-grey mt-0.5 font-mono">Real-time OPD lines</p>
-                          </div>
-                        </div>
-                        {/* Stat 4 */}
-                        <div className="bg-white p-2 rounded border border-gray-50 flex items-center gap-2">
-                          <div className="h-6.5 w-6.5 rounded bg-blue-500/10 flex items-center justify-center text-blue-600 font-bold text-[10px]">
-                            94%
-                          </div>
-                          <div className="text-left leading-none">
-                            <p className="font-semibold text-[10px] text-ink">Response SLA</p>
-                            <p className="text-[7.5px] text-muted-grey mt-0.5 font-mono">Avg triage response &lt;3m</p>
-                          </div>
-                        </div>
-                      </div>
+                      <LivePulseWaveform color="#26619C" height={24} className="w-24 shrink-0" />
                     </div>
 
-                    {/* Integrated AI Assistant */}
-                    <div className={`p-3 rounded-lg border transition-all duration-300 ${aiSuggestionApplied ? 'bg-steel-teal/[0.01] border-steel-teal/15' : 'bg-bg-light border-gray-100'}`}>
-                      <div className="flex items-start gap-2.5">
-                        <div className={`h-7 w-7 rounded flex items-center justify-center shrink-0 transition-all duration-300 ${aiSuggestionApplied ? 'bg-steel-teal/10 text-steel-teal' : 'bg-ink/5 text-ink'}`}>
-                          <Sparkles className="h-3.5 w-3.5" />
+                    {/* Interactive AI Queue Optimizer Card */}
+                    <div
+                      className={`p-3.5 rounded-2xl border transition-all duration-300 ${
+                        aiSuggestionApplied
+                          ? 'bg-clinical-mint/[0.06] border-clinical-mint/30'
+                          : 'm3-surface-tonal'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`h-8 w-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                            aiSuggestionApplied
+                              ? 'bg-clinical-mint text-white'
+                              : 'bg-steel-teal text-white'
+                          }`}
+                        >
+                          <Sparkles className="h-4 w-4" />
                         </div>
-                        <div className="space-y-2 w-full">
-                          <div className="text-left">
-                            <p className="text-[9px] font-mono uppercase tracking-wider text-steel-teal font-bold">AI Queue Optimizer Recommendation</p>
-                            <p className="text-[11px] text-ink/80 mt-1 font-medium leading-relaxed">
+                        <div className="w-full space-y-2">
+                          <div>
+                            <p className="text-[9px] font-mono uppercase tracking-wider text-steel-teal font-bold">
+                              AI Queue Optimizer Recommendation
+                            </p>
+                            <p className="text-xs text-ink/85 mt-1 font-medium leading-relaxed">
                               {aiSuggestionApplied ? (
-                                <span>OPD flow optimized. Re-routed <strong className="text-steel-teal font-semibold">Sarah Lin</strong> to Room 4 to minimize pediatric waiting times by <span className="text-steel-teal font-bold">14m</span>.</span>
+                                <span>
+                                  OPD flow balanced. <strong className="text-steel-teal">Sarah Lin</strong> routed to Room 4 — pediatric wait reduced by <strong className="text-clinical-mint">14m</strong>.
+                                </span>
                               ) : (
-                                <span>Re-route <strong className="text-steel-teal font-semibold">Sarah Lin</strong> (Pediatric Walk-In) from Box 3 to Room 4 for immediate specialist consult.</span>
+                                <span>
+                                  Re-route <strong className="text-steel-teal">Sarah Lin</strong> (Pediatric Walk-In) from Box 3 to Room 4 for immediate specialist consult.
+                                </span>
                               )}
                             </p>
                           </div>
-                          
-                          <div className="flex items-center justify-between border-t border-gray-100 pt-2">
-                            <div className="flex items-center gap-1">
-                              <span className="w-1 h-1 rounded-full bg-steel-teal animate-pulse" />
-                              <span className="text-[8px] font-mono text-muted-grey">Confidence Level: 97%</span>
-                            </div>
-                            
-                            <button 
+
+                          <div className="flex items-center justify-between border-t border-steel-teal/10 pt-2">
+                            <span className="text-[9px] font-mono text-slate-500 flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-clinical-mint" />
+                              Confidence: 97%
+                            </span>
+
+                            <motion.button
+                              type="button"
+                              whileTap={{ scale: 0.96 }}
                               onClick={() => setAiSuggestionApplied(!aiSuggestionApplied)}
-                              className={`text-[8px] font-mono font-bold py-1 px-3 rounded-full uppercase tracking-wider transition-all duration-300 cursor-pointer border ${aiSuggestionApplied ? 'bg-steel-teal/10 hover:bg-steel-teal/20 text-steel-teal border-steel-teal/10' : 'bg-ink hover:bg-black text-white border-ink'}`}
+                              className={`text-[10px] font-mono font-bold py-1.5 px-3.5 rounded-full uppercase tracking-wider transition-all cursor-pointer ${
+                                aiSuggestionApplied
+                                  ? 'bg-white text-steel-teal border border-steel-teal/20 hover:bg-slate-50'
+                                  : 'bg-ink text-white hover:bg-steel-teal shadow-xs'
+                              }`}
                             >
-                              {aiSuggestionApplied ? 'Restore' : 'Apply'}
-                            </button>
+                              {aiSuggestionApplied ? 'Restore' : 'Apply AI Route'}
+                            </motion.button>
                           </div>
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </motion.div>
-          </div>
 
+            {/* Bottom-Left Floating Satellite: ICU Shift Synthesis */}
+            <motion.div
+              initial={{ opacity: 0, y: 12, scale: 0.95 }}
+              animate={{ opacity: 1, y: [0, 5, 0], scale: 1 }}
+              transition={{
+                opacity: { duration: 0.5, delay: 0.55 },
+                scale: { duration: 0.5, delay: 0.55 },
+                y: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' },
+              }}
+              className="hidden sm:flex items-center gap-3 m3-surface-elevated rounded-2xl px-4 py-2.5 absolute -bottom-2 left-2 lg:-left-4 z-20"
+            >
+              <div className="w-8 h-8 rounded-xl bg-surface-tonal flex items-center justify-center text-steel-teal">
+                <Zap className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="font-mono text-[9px] text-muted-grey uppercase font-bold tracking-wider">
+                  ICU Handover AI
+                </p>
+                <p className="font-display text-xs font-extrabold text-ink">
+                  &lt; 2.0s <span className="text-steel-teal font-semibold">Auto-Synthesized</span>
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Lightbox Video Player Modal for Overview Video */}
-      {showVideo && (
-        <div id="video-lightbox" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/90 backdrop-blur-md">
-          <div className="relative w-full max-w-4xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl">
-            <button
-              onClick={() => setShowVideo(false)}
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 rounded-full transition-colors z-10 cursor-pointer"
+      {/* Overview Lightbox */}
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            id="video-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/80 backdrop-blur-md"
+            onClick={() => setShowVideo(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 12 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl bg-[#0B1628] border border-white/10 p-6 sm:p-10 text-center text-white"
             >
-              <X className="h-6 w-6" />
-            </button>
-            
-            {/* Elegant high fidelity presentation fallback instead of raw video */}
-            <div className="w-full h-full flex flex-col items-center justify-center p-5 sm:p-8 text-center text-white bg-gradient-to-br from-[#0B1513] to-ink">
-              <Activity className="h-10 w-10 sm:h-16 sm:w-16 text-steel-teal animate-pulse mb-4 sm:mb-6" />
-              <h3 className="font-display text-xl sm:text-3xl font-bold mb-2 sm:mb-3">ENDOMATICS Clinical Operating Core</h3>
-              <p className="text-xs sm:text-sm text-muted-grey max-w-lg mb-5 sm:mb-8 leading-relaxed">
-                Watch how our system orchestrates live queues, bed sensors, automated stock logs, and touchless charge captures in real time.
+              <button
+                type="button"
+                onClick={() => setShowVideo(false)}
+                aria-label="Close overview"
+                className="absolute top-4 right-4 p-2 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-steel-teal/20 border border-steel-teal/30 mb-5">
+                <Activity className="h-7 w-7 text-clinical-mint animate-pulse" />
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">
+                ENDOMATICS Clinical Operating Core
+              </h3>
+              <p className="text-sm text-slate-300 max-w-xl mx-auto mb-8 leading-relaxed">
+                See how our AI-native architecture orchestrates live queues, bed sensors, automated stock logs, and touchless charge captures in real time.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 max-w-2xl w-full text-left">
-                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
-                  <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
+                <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2 text-clinical-mint font-mono text-xs uppercase font-semibold">
                     <Shield className="h-4 w-4" />
                     <span>01 // Clinical</span>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-muted-grey">Prescriptions seamlessly route into nurse rosters and bedside diagnostics dashboards instantly.</p>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Prescriptions seamlessly route into nurse rosters and bedside diagnostics dashboards instantly.
+                  </p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
-                  <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
+                <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2 text-clinical-mint font-mono text-xs uppercase font-semibold">
                     <DollarSign className="h-4 w-4" />
                     <span>02 // Financial</span>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-muted-grey">Real-time charge triggers map every syringe, bedside hour, and lab assay straight to the patient ledger.</p>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Real-time charge triggers map every syringe, bedside hour, and lab assay straight to the patient ledger.
+                  </p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
-                  <div className="flex items-center gap-2 mb-2 text-steel-teal font-mono text-xs uppercase font-semibold">
+                <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-4">
+                  <div className="flex items-center gap-2 mb-2 text-clinical-mint font-mono text-xs uppercase font-semibold">
                     <Clock className="h-4 w-4" />
                     <span>03 // Operations</span>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-muted-grey">Predictive queues balance nurse shifts and expedite inpatient transfers with zero delay bottlenecks.</p>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Predictive queues balance nurse shifts and expedite inpatient transfers with zero delay bottlenecks.
+                  </p>
                 </div>
               </div>
+
               <button
-                onClick={onOpenDemo}
-                className="mt-5 sm:mt-8 bg-steel-teal hover:bg-steel-teal/90 text-white font-sans text-xs font-semibold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg transition-colors cursor-pointer"
+                type="button"
+                onClick={() => {
+                  setShowVideo(false);
+                  onOpenDemo();
+                }}
+                className="mt-8 inline-flex items-center gap-2 bg-steel-teal hover:bg-steel-teal-dark text-white font-sans text-sm font-semibold py-3.5 px-7 rounded-full transition-colors cursor-pointer"
               >
-                Schedule Interactive Demonstration Walkthrough
+                <span>Schedule Interactive Walkthrough</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

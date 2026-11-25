@@ -1,37 +1,115 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-brand: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-brand: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 
+  /* Core Clinical Material 3 Palette */
   --color-steel-teal: #26619C;
+  --color-steel-teal-dark: #1B4978;
+  --color-clinical-mint: #2BB3A3;
   --color-pulse-teal: #EBF2FA;
+  --color-surface: #FFFFFF;
+  --color-surface-tonal: #EEF3F9;
+  --color-bg-light: #F6F8FB;
   --color-ink: #0A0C10;
-  --color-muted-grey: #8A8F9E;
-  --color-bg-light: #F7F8FA;
+  --color-muted-grey: #64748B;
   --color-alert-danger: #C94B2C;
 }
 
-/* Custom styles for animations or overrides */
+/* Base Clinical Canvas */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  background-color: #F7F8FA;
-  color: #0A0C10;
+  background-color: var(--color-bg-light);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
-/* Hide scrollbars globally for an ultra-slick, app-like presentation while keeping scroll functionality */
-* {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+/* Material 3 Clinical Elevation & Surface Helpers */
+.m3-surface {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow:
+    0 1px 2px rgba(10, 12, 16, 0.03),
+    0 4px 16px rgba(38, 97, 156, 0.04);
+  transition: box-shadow 260ms cubic-bezier(0.2, 0, 0, 1), border-color 260ms cubic-bezier(0.2, 0, 0, 1), transform 260ms cubic-bezier(0.2, 0, 0, 1);
 }
 
-*::-webkit-scrollbar {
+.m3-surface-elevated {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  box-shadow:
+    0 2px 6px rgba(10, 12, 16, 0.04),
+    0 16px 40px -8px rgba(38, 97, 156, 0.09);
+}
+
+.m3-surface-tonal {
+  background-color: #EEF3F9;
+  border: 1px solid rgba(38, 97, 156, 0.12);
+}
+
+/* Subtle Clinical Dot Grid */
+.clinical-grid-bg {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.28) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Hide scrollbars globally while preserving scroll functionality */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari and Opera */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

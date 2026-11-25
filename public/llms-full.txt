@@ -144,3 +144,17 @@ ENDOMATICS is deployed without disrupting active patient care through a structur
 - **HITECH**: Health Information Technology for Economic and Clinical Health Act
 - **SOC2 Type II**: Certified cloud hosting and telemetry auditing
 - **JCI**: Joint Commission International patient handover standard alignment
+
+
+---
+
+## 6. India Healthcare Edition (ABDM, ABHA, NABH & RCM)
+- **Target Region**: India (Hyderabad, Bengaluru, Mumbai, Delhi NCR, Chennai, Pune, Tier-2/3 hospital networks)
+- **ABDM & ABHA Readiness**: Supports M1 (ABHA creation & Scan-and-Share OPD registration), M2 (FHIR HIP/HIU health record exchange), and M3 (Unified Health Interface).
+- **NABH & Clinical Safety**: Automated drug-allergy cross-checks, critical lab value escalation, and under-2-second ICU shift handover logs.
+- **Indian Financial & Insurance Workflows**: GST-compliant hospital invoicing, TPA & Ayushman Bharat (PM-JAY) split billing, and 0.00% revenue leakage reconciliation.
+- **Dedicated India Pages**:
+  - https://endomatics.com/hms-india
+  - https://endomatics.com/abdm-integration
+  - https://endomatics.com/insights/eliminating-revenue-leakage-indian-hospitals-tpa-pmjay
+  - https://endomatics.com/insights/abdm-nabh-digital-readiness-checklist-india

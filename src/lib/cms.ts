@@ -207,6 +207,51 @@ Integrating **electronic medical billing software** directly with clinical EHR s
 
 By partnering with ENDOMATICS, hospitals utilize enterprise-grade **medical billing software for small practices** and large hospital networks alike to secure maximum financial integrity.
 `
+  },
+  {
+    id: 'art-india-revenue-leakage',
+    slug: 'eliminating-revenue-leakage-indian-hospitals-tpa-pmjay',
+    title: 'How Indian Multi-Specialty Hospitals Eliminate 4–8% Revenue Leakage Across TPA & PM-JAY Billing',
+    category: 'Revenue Cycle Management',
+    summary: 'A practical blueprint for Indian hospital CFOs and medical directors to stop unbilled consumables, speed up TPA/PM-JAY settlements, and enforce GST-compliant billing.',
+    publishedAt: 'November 25, 2026',
+    readTime: '5 min read',
+    image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1200&h=600&fit=crop&auto=format',
+    content: `Indian multi-specialty hospitals lose **4% to 8% of annual revenue** to unbilled ward consumables, delayed IPD discharge reconciliations, and TPA/Ayushman Bharat (PM-JAY) claim deductions. ENDOMATICS eliminates this leakage by binding bedside EHR charting directly to a real-time, GST-compliant financial ledger.
+
+## 1. Where Revenue Leaks in Indian Hospitals
+- **Unbilled Bedside Consumables**: Syringes, surgical packs, and ICU infusions administered during shift changes often never reach the billing desk.
+- **TPA & PM-JAY Package Mismatches**: Missing pre-authorization documents or ICD-10/ICD-11 coding errors cause preventable insurer queries and deductions.
+- **Slow IPD Discharge Clearances**: Retroactive multi-department bill compilation delays bed turnover by 3 to 5 hours per patient.
+
+## 2. Real-Time Clinical-to-Financial Reconciliation
+ENDOMATICS connects **OPD, IPD, Pharmacy, Laboratory, and Billing** on one atomic ledger:
+- **0.00% Revenue Leakage**: Every drug dispensed, lab panel ordered, and ICU bed-hour posts automatically to the patient invoice.
+- **Automated TPA Split Billing**: Separates cash co-pays, corporate tariffs, and insurer-covered packages in real time.
+- **3.2x Faster Discharge Cycles**: Patients clear discharge in minutes, increasing daily bed availability across high-occupancy wards.
+`
+  },
+  {
+    id: 'art-abdm-nabh-readiness-india',
+    slug: 'abdm-nabh-digital-readiness-checklist-india',
+    title: 'ABDM & NABH Digital Readiness Checklist for 50–500 Bed Hospitals in India',
+    category: 'Clinical Operations',
+    summary: 'Step-by-step technical guide to implementing ABHA Health ID Scan-and-Share, M1/M2/M3 FHIR exchange, and NABH-aligned clinical safety workflows in 14 days.',
+    publishedAt: 'November 25, 2026',
+    readTime: '6 min read',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=600&fit=crop&auto=format',
+    content: `To achieve full **ABDM (Ayushman Bharat Digital Mission)** interoperability and **NABH accreditation** readiness, Indian hospitals must unify ABHA Health ID registration, FHIR-compliant clinical records, and audited medication safety checks inside one cloud HMS—without disrupting active wards.
+
+## 1. ABDM Milestones (M1, M2, M3) Explained
+- **M1 — ABHA Creation & Scan-and-Share**: Instant 14-digit ABHA verification and QR-based express OPD token generation under 15 seconds.
+- **M2 — HIP/HIU Consent Exchange**: Structured FHIR discharge summaries, e-prescriptions, and lab reports linked directly to the patient's ABHA locker.
+- **M3 — Unified Health Interface (UHI)**: Interoperable teleconsultation and appointment discovery across India's digital health network.
+
+## 2. NABH-Aligned Clinical Safety Inside ENDOMATICS
+- **Medication Safety Guard**: Cross-checks every prescription against patient allergy profiles and live pharmacy batch expiry dates.
+- **Under 2s ICU Shift Handovers**: Generates standardized, peer-reviewed nursing and physician handover logs with complete audit trails.
+- **14-Day Zero-Downtime Go-Live**: Migrates legacy hospital databases, tariffs, and ward maps in three structured phases.
+`
   }
 ];
 

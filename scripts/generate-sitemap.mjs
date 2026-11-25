@@ -32,6 +32,61 @@ const PAGES = [
     ],
   },
   {
+    path: '/hms-india',
+    changefreq: 'weekly',
+    priority: '0.95',
+    images: [
+      {
+        loc: `${SITE_URL}/og-image.svg`,
+        title: 'ENDOMATICS AI-Native Hospital Management System India (ABDM & NABH Ready)',
+      },
+    ],
+  },
+  ...['hyderabad', 'bengaluru', 'mumbai', 'delhi-ncr', 'chennai', 'pune', 'ahmedabad', 'kolkata'].map((city) => ({
+    path: `/hms-india/${city}`,
+    changefreq: 'monthly',
+    priority: '0.85',
+    images: [
+      {
+        loc: `${SITE_URL}/og-image.svg`,
+        title: `Hospital Management System Software in ${city.toUpperCase()} | ENDOMATICS`,
+      },
+    ],
+  })),
+  {
+    path: '/abdm-integration',
+    changefreq: 'weekly',
+    priority: '0.9',
+    images: [
+      {
+        loc: `${SITE_URL}/og-image.svg`,
+        title: 'ENDOMATICS ABDM & ABHA Health ID Integration for Indian Hospitals',
+      },
+    ],
+  },
+  {
+    path: '/compare',
+    changefreq: 'weekly',
+    priority: '0.9',
+    images: [
+      {
+        loc: `${SITE_URL}/og-image.svg`,
+        title: 'Compare ENDOMATICS AI HMS vs Traditional Indian Hospital Software',
+      },
+    ],
+  },
+  {
+    path: '/clinic-management-software-india',
+    changefreq: 'weekly',
+    priority: '0.9',
+    images: [
+      {
+        loc: `${SITE_URL}/og-image.svg`,
+        title: 'Best Cloud Clinic Management Software in India | ENDOMATICS',
+      },
+    ],
+  },
+  {
     path: '/insights',
     changefreq: 'weekly',
     priority: '0.8',
@@ -39,6 +94,28 @@ const PAGES = [
       {
         loc: `${SITE_URL}/og-image.svg`,
         title: 'ENDOMATICS Hospital Management System Insights & Guides',
+      },
+    ],
+  },
+  {
+    path: '/insights/eliminating-revenue-leakage-indian-hospitals-tpa-pmjay',
+    changefreq: 'monthly',
+    priority: '0.9',
+    images: [
+      {
+        loc: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1200&h=600&fit=crop&auto=format',
+        title: 'How Indian Multi-Specialty Hospitals Eliminate 4-8% Revenue Leakage Across TPA & PM-JAY Billing',
+      },
+    ],
+  },
+  {
+    path: '/insights/abdm-nabh-digital-readiness-checklist-india',
+    changefreq: 'monthly',
+    priority: '0.9',
+    images: [
+      {
+        loc: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=600&fit=crop&auto=format',
+        title: 'ABDM & NABH Digital Readiness Checklist for 50-500 Bed Hospitals in India',
       },
     ],
   },

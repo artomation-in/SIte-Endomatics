@@ -43,9 +43,9 @@ const articleJsonLd = (article: MDXArticle) => ({
       'description': article.summary,
       'image': article.image || 'https://endomatics.com/og-image.svg',
       'datePublished': article.publishedAt,
-      'dateModified': '2026-10-17',
+      'dateModified': '2026-11-25',
       'articleSection': article.category,
-      'inLanguage': 'en',
+      'inLanguage': 'en-IN',
       'author': {
         '@type': 'Organization',
         'name': 'ENDOMATICS Clinical Systems Group',

@@ -7,6 +7,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 
 const ARTICLE_SLUGS = [
+  'eliminating-revenue-leakage-indian-hospitals-tpa-pmjay',
+  'abdm-nabh-digital-readiness-checklist-india',
   'eliminating-hospital-revenue-leakage-via-realtime-reconciliation',
   'optimizing-emergency-room-throughput-with-predictive-triage',
   'reducing-clinical-prescription-errors-via-automated-cross-verification',
@@ -14,9 +16,16 @@ const ARTICLE_SLUGS = [
   'best-medical-billing-and-coding-software-rcm',
 ];
 
+const INDIA_CITIES = ['hyderabad', 'bengaluru', 'mumbai', 'delhi-ncr', 'chennai', 'pune', 'ahmedabad', 'kolkata'];
+
 const ROUTES = [
   '/',
   '/features',
+  '/hms-india',
+  ...INDIA_CITIES.map((c) => `/hms-india/${c}`),
+  '/abdm-integration',
+  '/compare',
+  '/clinic-management-software-india',
   '/insights',
   '/privacy',
   '/terms',
@@ -30,6 +39,7 @@ function stripRouteHeadTags(html) {
     .replace(/\s*<title>.*?<\/title>/s, '')
     .replace(/\s*<meta[^>]*name="description"[^>]*\/?\s*>/i, '')
     .replace(/\s*<link[^>]*rel="canonical"[^>]*\/?\s*>/i, '')
+    .replace(/\s*<link[^>]*rel="alternate"[^>]*hreflang="[^"]*"[^>]*\/?\s*>/gi, '')
     .replace(/\s*<meta[^>]*property="og:[^"]*"[^>]*\/?\s*>/gi, '')
     .replace(/\s*<meta[^>]*name="twitter:[^"]*"[^>]*\/?\s*>/gi, '')
     .replace(/\s*<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/i, '');
@@ -45,6 +55,8 @@ function buildRouteHead(head, route) {
   return [
     `\n    <title>${title}</title>`,
     `    <link rel="canonical" href="${url}" />`,
+    `    <link rel="alternate" hreflang="en-IN" href="${url}" />`,
+    `    <link rel="alternate" hreflang="x-default" href="${url}" />`,
     `    <meta name="description" content="${description}" />`,
     `    <meta property="og:title" content="${title}" />`,
     `    <meta property="og:description" content="${description}" />`,

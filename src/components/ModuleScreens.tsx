@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Users,
@@ -9,17 +9,16 @@ import {
   BarChart3,
   Sparkles,
   ShieldCheck,
-  ArrowUpRight,
-  Clock,
-  CheckCircle2,
   AlertTriangle,
   TrendingUp,
-  FileText,
-  Search,
   Activity,
-  Zap,
   Brain,
-  Eye,
+  CheckCircle2,
+  Search,
+  Plus,
+  Clock,
+  FileCheck2,
+  ScanBarcode,
 } from 'lucide-react';
 
 interface ModuleScreen {
@@ -27,206 +26,248 @@ interface ModuleScreen {
   label: string;
   fullTitle: string;
   icon: React.ElementType;
-  tagline: string;
-  aiFeatures: { title: string; description: string }[];
+  subtitle: string;
+  aiCapabilities: { title: string; summary: string }[];
 }
 
 const modules: ModuleScreen[] = [
   {
     id: 'reception',
     label: 'Reception',
-    fullTitle: 'Smart Reception Console',
+    fullTitle: 'Front Desk & Queue',
     icon: Users,
-    tagline: 'AI-Powered Patient Flow & Registration',
-    aiFeatures: [
-      { title: 'Auto-Registration', description: 'OCR reads ID cards and populates patient forms in under 3 seconds.' },
-      { title: 'Queue Intelligence', description: 'Predicts department wait times and routes patients to fastest path.' },
-      { title: 'Repeat Visitor Recognition', description: 'Biometric and history matching pre-fills returning patient records instantly.' },
+    subtitle: 'Patient intake, OCR registration, and dynamic token routing',
+    aiCapabilities: [
+      { title: 'OCR Auto-Registration', summary: 'Populates demographics from ID scans in under 3 seconds.' },
+      { title: 'Queue Balancing', summary: 'Redirects walk-ins to open consultation rooms automatically.' },
     ],
   },
   {
     id: 'clinical',
     label: 'Clinical',
-    fullTitle: 'Clinical Workspace',
+    fullTitle: 'Doctor EHR Workspace',
     icon: Stethoscope,
-    tagline: 'Unified EHR & Decision Support',
-    aiFeatures: [
-      { title: 'SOAP Note Synthesizer', description: 'AI transcribes consultations into structured clinical notes in real-time.' },
-      { title: 'Differential Diagnosis', description: 'Suggests top differential diagnoses ranked by symptom-pattern matching.' },
-      { title: 'Drug Interaction Guard', description: 'Screens prescriptions against patient history and allergy profiles.' },
+    subtitle: 'Unified patient chart, ambient SOAP scribe, and decision support',
+    aiCapabilities: [
+      { title: 'Ambient SOAP Scribe', summary: 'Structures live consultation notes into S/O/A/P fields.' },
+      { title: 'Differential Assistant', summary: 'Ranks likely diagnoses from vitals, labs, and symptoms.' },
     ],
   },
   {
     id: 'pharmacy',
     label: 'Pharmacy',
-    fullTitle: 'Pharmacy Operations Hub',
+    fullTitle: 'Dispensing & Inventory',
     icon: Pill,
-    tagline: 'Medication Safety & Inventory Intelligence',
-    aiFeatures: [
-      { title: 'Batch Expiry Predictor', description: 'Forecasts drug expiry risk and auto-triggers FIFO redistribution.' },
-      { title: 'Smart Dispensing', description: 'Double-verification AI matches barcode scans to prescription orders.' },
-      { title: 'Restock Optimizer', description: 'ML models consumption patterns and generates purchase orders proactively.' },
+    subtitle: 'Barcode verification, allergy screening, and batch expiry control',
+    aiCapabilities: [
+      { title: 'Allergy & Interaction Guard', summary: 'Cross-checks every e-Rx against patient allergy history.' },
+      { title: 'FIFO Expiry Predictor', summary: 'Flags near-expiry batches for ward redistribution.' },
     ],
   },
   {
     id: 'laboratory',
     label: 'Laboratory',
-    fullTitle: 'Laboratory Information System',
+    fullTitle: 'LIS Sample Workbench',
     icon: FlaskConical,
-    tagline: 'Sample Tracking & Result Intelligence',
-    aiFeatures: [
-      { title: 'Specimen Tracker', description: 'Real-time barcode chain-of-custody from collection to result delivery.' },
-      { title: 'Abnormal Value Flagging', description: 'AI flags critical lab values and auto-notifies attending physician.' },
-      { title: 'Trend Analysis', description: 'Longitudinal patient lab trends visualized with predictive markers.' },
+    subtitle: 'Specimen chain-of-custody, turnaround tracking, and critical alerts',
+    aiCapabilities: [
+      { title: 'Critical Value Escalation', summary: 'Notifies attending physicians immediately on abnormal results.' },
+      { title: 'Longitudinal Trends', summary: 'Surfaces multi-visit biomarker shifts automatically.' },
     ],
   },
   {
     id: 'billing',
     label: 'Billing',
-    fullTitle: 'Revenue Cycle Command',
+    fullTitle: 'RCM & Claim Scrubber',
     icon: DollarSign,
-    tagline: 'Zero-Leakage Financial Intelligence',
-    aiFeatures: [
-      { title: 'Auto Charge Capture', description: 'Every clinical action auto-maps to billing codes with 0.00% leakage.' },
-      { title: 'Claim Scrubber', description: 'Pre-submission AI audits insurance claims for denial-prone errors.' },
-      { title: 'Revenue Forecasting', description: 'Predicts monthly revenue streams by department and payer mix.' },
+    subtitle: 'Real-time charge capture, CPT coding, and zero-leakage auditing',
+    aiCapabilities: [
+      { title: 'Auto Charge Capture', summary: 'Maps clinical events, drugs, and bed-hours directly to ledger.' },
+      { title: 'Pre-Submission Scrub', summary: 'Catches coding mismatches before payer submission.' },
     ],
   },
   {
     id: 'analytics',
     label: 'Analytics',
-    fullTitle: 'Intelligence Analytics Dashboard',
+    fullTitle: 'Operations Command',
     icon: BarChart3,
-    tagline: 'Predictive Insights & Operational Intelligence',
-    aiFeatures: [
-      { title: 'Occupancy Forecasting', description: '72-hour bed and ICU occupancy prediction with 94% accuracy.' },
-      { title: 'Department Benchmarking', description: 'Cross-department KPI comparison with automated anomaly detection.' },
-      { title: 'Custom Report Builder', description: 'Natural language queries generate compliance-ready clinical reports.' },
+    subtitle: '72-hour bed forecasting, department throughput, and margin insights',
+    aiCapabilities: [
+      { title: '72h Capacity Forecast', summary: 'Predicts ICU and ward occupancy with 94% accuracy.' },
+      { title: 'Anomaly Detection', summary: 'Identifies discharge bottlenecks across shifts.' },
     ],
   },
 ];
 
-/* ─── Mini dashboard mockup components for each module ────────────────── */
+/* ─── 1. Reception: Realistic OPD Check-In Table & Token Desk ──────────── */
+function ReceptionApp() {
+  const rows = [
+    { token: 'T-041', name: 'Amara Diop', mrn: 'MRN-8841', dept: 'Cardiology · Rm 2B', wait: '2m', status: 'In Room' },
+    { token: 'T-042', name: 'Raj Patel', mrn: 'MRN-8842', dept: 'Lab Wing B (AI Routed)', wait: '4m', status: 'Routed' },
+    { token: 'T-043', name: 'Eva Müller', mrn: 'MRN-8843', dept: 'General OPD · Box 1', wait: '9m', status: 'Waiting' },
+    { token: 'T-044', name: 'Noah Kim', mrn: 'MRN-8844', dept: 'Pediatrics · Rm 4', wait: '6m', status: 'Checked In' },
+  ];
 
-function ReceptionScreen() {
   return (
-    <div className="space-y-3">
-      {/* Header bar */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-steel-teal opacity-40" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-steel-teal" />
-          </span>
-          <span className="font-mono text-[9px] text-ink font-semibold uppercase tracking-wider">Live Check-In Queue</span>
-        </div>
-        <span className="font-mono text-[8px] text-muted-grey">Today • 12 registrations</span>
-      </div>
-
-      {/* Queue items */}
-      <div className="space-y-1.5">
-        {[
-          { name: 'Amara Diop', dept: 'OPD-Cardiology', time: '2 min ago', status: 'checked-in', token: 'T-042' },
-          { name: 'Raj Patel', dept: 'Lab Collection', time: 'Just now', status: 'ai-routed', token: 'T-043' },
-          { name: 'Eva Müller', dept: 'OPD-General', time: 'Pending', status: 'scanning', token: 'T-044' },
-        ].map((p, i) => (
-          <div key={i} className="bg-white p-2 rounded-lg border border-gray-100/80 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-bg-light border border-gray-100 flex items-center justify-center text-[8px] font-bold text-ink font-mono">
-                {p.name.split(' ').map(n => n[0]).join('')}
-              </div>
-              <div>
-                <p className="font-semibold text-[10px] text-ink">{p.name}</p>
-                <p className="font-mono text-[8px] text-muted-grey">{p.dept} • {p.token}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              {p.status === 'ai-routed' && (
-                <span className="text-[7px] font-mono text-steel-teal font-bold bg-steel-teal/5 px-1.5 py-0.5 rounded border border-steel-teal/10 flex items-center gap-0.5">
-                  <Sparkles className="w-2 h-2" /> AI Routed
-                </span>
-              )}
-              {p.status === 'checked-in' && (
-                <span className="text-[7px] font-mono text-emerald-600 font-bold bg-emerald-50/50 px-1.5 py-0.5 rounded border border-emerald-100/30">
-                  Checked In
-                </span>
-              )}
-              {p.status === 'scanning' && (
-                <span className="text-[7px] font-mono text-amber-600 font-bold bg-amber-50/50 px-1.5 py-0.5 rounded border border-amber-100/30 flex items-center gap-0.5">
-                  <Eye className="w-2 h-2" /> ID Scan
-                </span>
-              )}
-              <span className="text-[7px] font-mono text-muted-grey">{p.time}</span>
-            </div>
+    <div className="space-y-4">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="relative flex-1 min-w-[200px]">
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="w-full pl-8 pr-3 py-2 rounded-xl bg-bg-light border border-slate-200/80 text-xs text-slate-400">
+            Search patient name, MRN, or phone...
           </div>
-        ))}
+        </div>
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-steel-teal text-white text-xs font-semibold shadow-2xs">
+          <Plus className="w-3.5 h-3.5" />
+          <span>New Check-In</span>
+        </div>
       </div>
 
-      {/* AI Insight */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2.5 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-steel-teal font-bold uppercase tracking-wider">Smart Route Suggestion</p>
-          <p className="text-[10px] text-ink/80 font-medium mt-0.5">Raj Patel redirected to Lab Wing B — estimated wait reduced from 18m to 4m based on current queue density.</p>
+      {/* Queue Table */}
+      <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2.5 bg-bg-light border-b border-slate-200/70 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="col-span-2">Token</div>
+          <div className="col-span-4">Patient</div>
+          <div className="col-span-4">Assignment</div>
+          <div className="col-span-2 text-right">Status</div>
         </div>
+        <div className="divide-y divide-slate-100">
+          {rows.map((r, i) => (
+            <motion.div
+              key={r.token}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: i * 0.04 }}
+              className={`grid grid-cols-12 gap-2 px-4 py-3 items-center text-xs ${
+                r.status === 'Routed' ? 'bg-surface-tonal/50' : ''
+              }`}
+            >
+              <div className="col-span-2 font-mono font-bold text-ink">{r.token}</div>
+              <div className="col-span-4">
+                <p className="font-semibold text-ink">{r.name}</p>
+                <p className="text-[10px] text-muted-grey">{r.mrn}</p>
+              </div>
+              <div className="col-span-4 text-slate-600 font-medium flex items-center gap-1.5">
+                {r.status === 'Routed' && <Sparkles className="w-3 h-3 text-steel-teal shrink-0" />}
+                <span className="truncate">{r.dept}</span>
+              </div>
+              <div className="col-span-2 text-right">
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                    r.status === 'Routed'
+                      ? 'bg-steel-teal/10 text-steel-teal'
+                      : r.status === 'In Room'
+                        ? 'bg-clinical-mint/15 text-clinical-mint'
+                        : 'bg-slate-100 text-slate-600'
+                  }`}
+                >
+                  {r.status}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom AI Bar */}
+      <div className="rounded-xl bg-surface-tonal/70 border border-steel-teal/15 px-4 py-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5 text-xs text-ink">
+          <Clock className="w-4 h-4 text-steel-teal shrink-0" />
+          <span>
+            <strong>AI Queue Balancer:</strong> Redirected Raj Patel to Lab Wing B, cutting wait from 18m to 4m.
+          </span>
+        </div>
+        <span className="text-[11px] font-semibold text-steel-teal shrink-0">Avg Wait: 5m</span>
       </div>
     </div>
   );
 }
 
-function ClinicalScreen() {
+/* ─── 2. Clinical: Realistic Doctor EHR Chart & SOAP Scribe ────────────── */
+function ClinicalApp() {
   return (
-    <div className="space-y-3">
-      {/* Patient header */}
-      <div className="bg-white rounded-lg border border-gray-100/80 p-2.5">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-steel-teal/10 flex items-center justify-center text-[9px] font-bold text-steel-teal font-mono">LV</div>
+    <div className="space-y-4">
+      {/* Patient Chart Header */}
+      <div className="rounded-2xl bg-bg-light border border-slate-200/80 p-3.5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-steel-teal text-white flex items-center justify-center font-bold text-xs">
+            LV
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <p className="font-bold text-sm text-ink">Liam Vance</p>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-alert-danger/10 text-alert-danger">
+                Allergy: Penicillin
+              </span>
+            </div>
+            <p className="text-[11px] text-muted-grey">34y Male · MRN #20241204 · Bed ER-04</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 text-xs">
+          <div className="px-2.5 py-1 rounded-lg bg-white border border-slate-200/80">
+            <span className="text-muted-grey">HR </span>
+            <strong className="text-alert-danger">104</strong>
+          </div>
+          <div className="px-2.5 py-1 rounded-lg bg-white border border-slate-200/80">
+            <span className="text-muted-grey">SpO₂ </span>
+            <strong className="text-alert-danger">91%</strong>
+          </div>
+          <div className="px-2.5 py-1 rounded-lg bg-white border border-slate-200/80">
+            <span className="text-muted-grey">BP </span>
+            <strong className="text-ink">148/92</strong>
+          </div>
+        </div>
+      </div>
+
+      {/* 2-Column EHR Body: SOAP Note + AI Decision Support */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+        <div className="md:col-span-7 rounded-2xl border border-slate-200/80 bg-white p-4 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+              <Brain className="w-3.5 h-3.5 text-steel-teal" />
+              SOAP Clinical Note
+            </span>
+            <span className="text-[10px] text-clinical-mint font-semibold">Ambient Scribe Active</span>
+          </div>
+          <div className="space-y-2.5 text-xs text-slate-600 leading-relaxed">
             <div>
-              <p className="font-semibold text-[11px] text-ink">Liam Vance</p>
-              <p className="font-mono text-[8px] text-muted-grey">MRN: #20241204 • Male, 34y • ER-04</p>
+              <span className="font-bold text-ink">Subjective:</span> Acute substernal chest pain radiating to left arm; onset 45m prior.
+            </div>
+            <div>
+              <span className="font-bold text-ink">Objective:</span> Diaphoretic, mild tachypnea. ECG shows 1.5mm ST depression in V4–V6.
+            </div>
+            <div>
+              <span className="font-bold text-ink">Plan:</span> Stat high-sensitivity Troponin I, Cardiology consult, Aspirin 325mg PO.
             </div>
           </div>
-          <span className="text-[7px] font-mono text-alert-danger font-bold bg-alert-danger/5 px-1.5 py-0.5 rounded border border-alert-danger/10 uppercase">Critical</span>
         </div>
-        {/* Vitals strip */}
-        <div className="grid grid-cols-4 gap-1.5">
-          {[
-            { label: 'Heart Rate', value: '104 bpm', danger: true },
-            { label: 'SpO₂', value: '91%', danger: true },
-            { label: 'BP', value: '148/92', danger: false },
-            { label: 'Temp', value: '38.2°C', danger: false },
-          ].map((v, i) => (
-            <div key={i} className={`p-1.5 rounded border text-center ${v.danger ? 'bg-alert-danger/[0.03] border-alert-danger/10' : 'bg-bg-light border-gray-100/60'}`}>
-              <p className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-bold">{v.label}</p>
-              <p className={`font-display text-[10px] font-bold mt-0.5 ${v.danger ? 'text-alert-danger' : 'text-ink'}`}>{v.value}</p>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* AI SOAP Note */}
-      <div className="bg-bg-light rounded-lg border border-gray-100/60 p-2.5">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="font-mono text-[8px] text-steel-teal font-bold uppercase tracking-wider flex items-center gap-1">
-            <Brain className="w-3 h-3" /> AI-Generated SOAP Note
+        <div className="md:col-span-5 rounded-2xl bg-surface-tonal/70 border border-steel-teal/15 p-4 space-y-3">
+          <span className="text-xs font-bold text-steel-teal flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            Differential Ranking
           </span>
-          <span className="font-mono text-[7px] text-muted-grey">Auto-transcribed • 1.2s</span>
-        </div>
-        <div className="font-sans text-[10px] text-ink/80 leading-relaxed italic bg-white p-2 rounded border border-gray-100/40">
-          <p><strong className="text-ink not-italic">S:</strong> Patient presents with acute chest pain radiating to left arm, onset 45 min prior.</p>
-          <p className="mt-1"><strong className="text-ink not-italic">A:</strong> Suspected NSTEMI — troponin pending, ECG shows ST depression in V4-V6.</p>
-        </div>
-      </div>
-
-      {/* AI differential */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2.5 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-steel-teal font-bold uppercase tracking-wider">Differential Diagnosis Engine</p>
-          <div className="flex items-center gap-2 mt-1 flex-wrap">
-            {['NSTEMI (87%)', 'Unstable Angina (9%)', 'PE (4%)'].map((d, i) => (
-              <span key={i} className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border ${i === 0 ? 'text-steel-teal bg-steel-teal/10 border-steel-teal/15' : 'text-muted-grey bg-white border-gray-100'}`}>{d}</span>
+          <div className="space-y-2">
+            {[
+              { dx: 'NSTEMI', prob: 87 },
+              { dx: 'Unstable Angina', prob: 9 },
+              { dx: 'Pulmonary Embolism', prob: 4 },
+            ].map((item) => (
+              <div key={item.dx} className="bg-white rounded-xl p-2.5 border border-slate-200/70">
+                <div className="flex justify-between text-xs font-semibold text-ink mb-1">
+                  <span>{item.dx}</span>
+                  <span className="text-steel-teal">{item.prob}%</span>
+                </div>
+                <div className="h-1.5 bg-bg-light rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${item.prob}%` }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="h-full bg-steel-teal rounded-full"
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -235,449 +276,408 @@ function ClinicalScreen() {
   );
 }
 
-function PharmacyScreen() {
+/* ─── 3. Pharmacy: Realistic e-Rx Dispensing & Batch Counter ──────────── */
+function PharmacyApp() {
+  const orders = [
+    { rx: 'RX-9041', drug: 'Ceftriaxone IV 2g', patient: 'Liam Vance', batch: 'B-2026A', check: 'Cleared', state: 'Dispensed' },
+    { rx: 'RX-9042', drug: 'Metformin 500mg', patient: 'Amara Diop', batch: 'B-2025K', check: 'Verifying', state: 'In Queue' },
+    { rx: 'RX-9043', drug: 'Atorvastatin 20mg', patient: 'Marcus Brody', batch: 'B-2026C', check: 'Cleared', state: 'Ready' },
+  ];
+
   return (
-    <div className="space-y-3">
-      {/* Dispensing queue */}
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-ink font-semibold uppercase tracking-wider">Active Prescriptions</span>
-        <span className="font-mono text-[8px] text-emerald-600 font-bold bg-emerald-50/50 px-1.5 py-0.5 rounded border border-emerald-100/30">All Verified</span>
+        <div className="flex items-center gap-2 text-xs font-semibold text-ink">
+          <ScanBarcode className="w-4 h-4 text-steel-teal" />
+          <span>e-Prescription Verification Queue</span>
+        </div>
+        <span className="text-[11px] font-semibold text-clinical-mint bg-clinical-mint/10 px-2.5 py-1 rounded-full">
+          98.4% Stock Readiness
+        </span>
       </div>
 
-      <div className="space-y-1.5">
-        {[
-          { drug: 'Ceftriaxone IV 2g', patient: 'Liam Vance', status: 'dispensed', safety: 'passed' },
-          { drug: 'Metformin 500mg', patient: 'Amara Diop', status: 'verifying', safety: 'checking' },
-          { drug: 'Atorvastatin 20mg', patient: 'Marcus Brody', status: 'queued', safety: 'passed' },
-        ].map((rx, i) => (
-          <div key={i} className="bg-white p-2 rounded-lg border border-gray-100/80 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Pill className={`w-3.5 h-3.5 ${rx.status === 'dispensed' ? 'text-emerald-600' : rx.status === 'verifying' ? 'text-amber-500' : 'text-muted-grey'}`} />
-              <div>
-                <p className="font-semibold text-[10px] text-ink">{rx.drug}</p>
-                <p className="font-mono text-[8px] text-muted-grey">{rx.patient}</p>
+      <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2.5 bg-bg-light border-b border-slate-200/70 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="col-span-2">Rx ID</div>
+          <div className="col-span-4">Medication</div>
+          <div className="col-span-3">Batch</div>
+          <div className="col-span-3 text-right">Safety</div>
+        </div>
+        <div className="divide-y divide-slate-100">
+          {orders.map((o) => (
+            <div key={o.rx} className="grid grid-cols-12 gap-2 px-4 py-3 items-center text-xs">
+              <div className="col-span-2 font-mono font-bold text-ink">{o.rx}</div>
+              <div className="col-span-4">
+                <p className="font-semibold text-ink">{o.drug}</p>
+                <p className="text-[10px] text-muted-grey">{o.patient}</p>
               </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              {rx.safety === 'passed' && <ShieldCheck className="w-3 h-3 text-emerald-600" />}
-              {rx.safety === 'checking' && <Activity className="w-3 h-3 text-amber-500 animate-pulse" />}
-              <span className={`text-[7px] font-mono font-bold px-1.5 py-0.5 rounded border uppercase ${
-                rx.status === 'dispensed' ? 'text-emerald-600 bg-emerald-50/50 border-emerald-100/30' :
-                rx.status === 'verifying' ? 'text-amber-600 bg-amber-50/50 border-amber-100/30' :
-                'text-muted-grey bg-bg-light border-gray-100'
-              }`}>
-                {rx.status}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Stock alert */}
-      <div className="grid grid-cols-3 gap-1.5">
-        {[
-          { label: 'Stock Level', value: '98.4%', color: 'text-ink' },
-          { label: 'Expiring (30d)', value: '12 items', color: 'text-amber-600' },
-          { label: 'Auto-Orders', value: '3 POs', color: 'text-steel-teal' },
-        ].map((s, i) => (
-          <div key={i} className="bg-bg-light p-1.5 rounded border border-gray-100/60 text-center">
-            <p className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-bold">{s.label}</p>
-            <p className={`font-display text-[10px] font-bold mt-0.5 ${s.color}`}>{s.value}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* AI insight */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2.5 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-steel-teal font-bold uppercase tracking-wider">Expiry Risk Alert</p>
-          <p className="text-[10px] text-ink/80 font-medium mt-0.5">12 Amoxicillin batches expire in 28 days — AI recommends redistribution to high-consumption ward B3.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LaboratoryScreen() {
-  return (
-    <div className="space-y-3">
-      {/* Active samples */}
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-ink font-semibold uppercase tracking-wider">Sample Pipeline</span>
-        <div className="flex items-center gap-1">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-40" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-          </span>
-          <span className="font-mono text-[8px] text-emerald-600 font-semibold">8 Active</span>
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        {[
-          { test: 'Troponin I (High-Sensitivity)', patient: 'Liam Vance', id: 'S-4891', status: 'processing', urgent: true },
-          { test: 'Complete Blood Count', patient: 'Sarah Lin', id: 'S-4892', status: 'completed', urgent: false },
-          { test: 'Lipid Panel', patient: 'Marcus Brody', id: 'S-4893', status: 'collected', urgent: false },
-        ].map((s, i) => (
-          <div key={i} className={`bg-white p-2 rounded-lg border flex items-center justify-between ${s.urgent ? 'border-alert-danger/15' : 'border-gray-100/80'}`}>
-            <div className="flex items-center gap-2">
-              <FlaskConical className={`w-3.5 h-3.5 ${s.urgent ? 'text-alert-danger' : s.status === 'completed' ? 'text-emerald-600' : 'text-muted-grey'}`} />
-              <div>
-                <div className="flex items-center gap-1">
-                  <p className="font-semibold text-[10px] text-ink">{s.test}</p>
-                  {s.urgent && <AlertTriangle className="w-2.5 h-2.5 text-alert-danger" />}
-                </div>
-                <p className="font-mono text-[8px] text-muted-grey">{s.patient} • {s.id}</p>
-              </div>
-            </div>
-            <span className={`text-[7px] font-mono font-bold px-1.5 py-0.5 rounded border uppercase ${
-              s.status === 'completed' ? 'text-emerald-600 bg-emerald-50/50 border-emerald-100/30' :
-              s.status === 'processing' ? 'text-amber-600 bg-amber-50/50 border-amber-100/30' :
-              'text-muted-grey bg-bg-light border-gray-100'
-            }`}>
-              {s.status}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* AI flagged result */}
-      <div className="bg-alert-danger/[0.03] border border-alert-danger/10 rounded-lg p-2.5 flex items-start gap-2">
-        <AlertTriangle className="w-3 h-3 text-alert-danger shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-alert-danger font-bold uppercase tracking-wider">Critical Value Detected</p>
-          <p className="text-[10px] text-ink/80 font-medium mt-0.5">Troponin I: <strong className="text-alert-danger">2.4 ng/mL</strong> (ref: &lt;0.04) — Auto-notification sent to Dr. Vance, ER-04 attending physician.</p>
-        </div>
-      </div>
-
-      {/* AI trend note */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2.5 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-steel-teal font-bold uppercase tracking-wider">Trend Intelligence</p>
-          <p className="text-[10px] text-ink/80 font-medium mt-0.5">Sarah Lin's WBC count shows 3-visit downward trend — AI suggests follow-up immunology panel.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BillingScreen() {
-  return (
-    <div className="space-y-3">
-      {/* Revenue summary */}
-      <div className="grid grid-cols-3 gap-1.5">
-        {[
-          { label: 'Today Revenue', value: '$48,250', trend: '+12%' },
-          { label: 'Leakage', value: '0.00%', trend: 'Zero' },
-          { label: 'Claims Filed', value: '184', trend: '98.4% clean' },
-        ].map((s, i) => (
-          <div key={i} className="bg-white p-2 rounded-lg border border-gray-100/80 text-center">
-            <p className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-bold">{s.label}</p>
-            <p className="font-display text-sm font-bold text-ink mt-0.5">{s.value}</p>
-            <p className="font-mono text-[7px] text-steel-teal font-semibold mt-0.5">{s.trend}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Auto-captured charges */}
-      <div>
-        <span className="font-mono text-[9px] text-ink font-semibold uppercase tracking-wider">Auto-Captured Charges</span>
-        <div className="mt-1.5 space-y-1">
-          {[
-            { item: 'OPD Consultation — Dr. Rao', amount: '$150.00', source: 'EHR' },
-            { item: 'Hematology Panel (CBC)', amount: '$85.00', source: 'LIS' },
-            { item: 'Ceftriaxone IV (2g)', amount: '$42.50', source: 'Pharmacy' },
-            { item: 'IPD Bed — Room 402 (6h)', amount: '$600.00', source: 'ADT' },
-          ].map((c, i) => (
-            <div key={i} className="flex items-center justify-between bg-white p-1.5 rounded border border-gray-100/60">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" />
-                <span className="text-[9px] text-ink font-medium">{c.item}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[7px] font-mono text-muted-grey bg-bg-light px-1 py-0.5 rounded border border-gray-100">{c.source}</span>
-                <span className="text-[9px] font-mono text-ink font-bold">{c.amount}</span>
+              <div className="col-span-3 font-mono text-[11px] text-slate-600">{o.batch}</div>
+              <div className="col-span-3 text-right">
+                <span
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                    o.check === 'Cleared' ? 'bg-clinical-mint/15 text-clinical-mint' : 'bg-amber-500/10 text-amber-700'
+                  }`}
+                >
+                  {o.check === 'Cleared' && <ShieldCheck className="w-3 h-3" />}
+                  {o.check}
+                </span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* AI insight */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2.5 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[9px] font-mono text-steel-teal font-bold uppercase tracking-wider">Revenue Recovery</p>
-          <p className="text-[10px] text-ink/80 font-medium mt-0.5">Detected 2 unlogged bed-hours for Room 402 — auto-reconciled <strong className="text-steel-teal">+$200.00</strong> to patient ledger.</p>
+      <div className="rounded-xl bg-amber-50/70 border border-amber-200/70 px-4 py-3 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-2 text-amber-900">
+          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+          <span>
+            <strong>FIFO Expiry Alert:</strong> 12 Amoxicillin batches expire in 28d — suggested transfer to Ward B3.
+          </span>
         </div>
       </div>
     </div>
   );
 }
 
-function AnalyticsScreen() {
+/* ─── 4. Laboratory: Realistic LIS Accession & Critical Value Workbench ─── */
+function LaboratoryApp() {
+  const samples = [
+    { id: 'S-4891', test: 'Troponin I (High-Sens)', patient: 'Liam Vance · ER-04', result: '2.4 ng/mL', flag: 'Critical' },
+    { id: 'S-4892', test: 'Complete Blood Count', patient: 'Sarah Lin · OPD-A3', result: '6.8 ×10⁹/L', flag: 'Normal' },
+    { id: 'S-4893', test: 'Lipid Panel', patient: 'Marcus Brody · ICU-12', result: 'Pending', flag: 'Processing' },
+  ];
+
   return (
-    <div className="space-y-2">
-      {/* KPI row */}
-      <div className="grid grid-cols-4 gap-1">
+    <div className="space-y-4">
+      <div className="rounded-2xl bg-alert-danger/[0.04] border border-alert-danger/20 p-3.5 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-2.5">
+          <AlertTriangle className="w-4 h-4 text-alert-danger shrink-0 mt-0.5" />
+          <div className="text-xs">
+            <p className="font-bold text-alert-danger">Critical Value Escalated · S-4891</p>
+            <p className="text-slate-700 mt-0.5">
+              Troponin I measured at <strong>2.4 ng/mL</strong> (Ref &lt;0.04). Attending physician notified automatically.
+            </p>
+          </div>
+        </div>
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white border border-alert-danger/20 text-alert-danger shrink-0">
+          STAT
+        </span>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2.5 bg-bg-light border-b border-slate-200/70 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="col-span-2">Accession</div>
+          <div className="col-span-5">Assay &amp; Patient</div>
+          <div className="col-span-3">Result</div>
+          <div className="col-span-2 text-right">Flag</div>
+        </div>
+        <div className="divide-y divide-slate-100">
+          {samples.map((s) => (
+            <div key={s.id} className="grid grid-cols-12 gap-2 px-4 py-3 items-center text-xs">
+              <div className="col-span-2 font-mono font-bold text-ink">{s.id}</div>
+              <div className="col-span-5">
+                <p className="font-semibold text-ink">{s.test}</p>
+                <p className="text-[10px] text-muted-grey">{s.patient}</p>
+              </div>
+              <div className="col-span-3 font-mono font-semibold text-ink">{s.result}</div>
+              <div className="col-span-2 text-right">
+                <span
+                  className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                    s.flag === 'Critical'
+                      ? 'bg-alert-danger/10 text-alert-danger'
+                      : s.flag === 'Normal'
+                        ? 'bg-clinical-mint/15 text-clinical-mint'
+                        : 'bg-slate-100 text-slate-600'
+                  }`}
+                >
+                  {s.flag}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── 5. Billing: Realistic RCM Ledger & Claim Scrubber ────────────────── */
+function BillingApp() {
+  const items = [
+    { code: '99214', service: 'OPD Consultation — Dr. Rao', source: 'EHR', amount: '$150.00' },
+    { code: '85025', service: 'Hematology Panel (CBC)', source: 'LIS', amount: '$85.00' },
+    { code: 'J0696', service: 'Ceftriaxone IV (2g)', source: 'Pharmacy', amount: '$42.50' },
+    { code: '0120', service: 'IPD Ward Bed — Room 402 (6h)', source: 'ADT', amount: '$600.00' },
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-3 gap-3">
+        <div className="rounded-xl bg-bg-light border border-slate-200/70 p-3">
+          <p className="text-[11px] text-muted-grey">Today&apos;s Captured</p>
+          <p className="font-display text-lg font-extrabold text-ink mt-0.5">$48,250</p>
+        </div>
+        <div className="rounded-xl bg-bg-light border border-slate-200/70 p-3">
+          <p className="text-[11px] text-muted-grey">Clean Claim Rate</p>
+          <p className="font-display text-lg font-extrabold text-steel-teal mt-0.5">98.4%</p>
+        </div>
+        <div className="rounded-xl bg-clinical-mint/10 border border-clinical-mint/25 p-3">
+          <p className="text-[11px] text-clinical-mint font-semibold">Revenue Leakage</p>
+          <p className="font-display text-lg font-extrabold text-ink mt-0.5">0.00%</p>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+        <div className="grid grid-cols-12 gap-2 px-4 py-2.5 bg-bg-light border-b border-slate-200/70 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="col-span-2">CPT</div>
+          <div className="col-span-6">Auto-Captured Line Item</div>
+          <div className="col-span-2">Source</div>
+          <div className="col-span-2 text-right">Amount</div>
+        </div>
+        <div className="divide-y divide-slate-100">
+          {items.map((c) => (
+            <div key={c.code} className="grid grid-cols-12 gap-2 px-4 py-2.5 items-center text-xs">
+              <div className="col-span-2 font-mono text-steel-teal font-bold">{c.code}</div>
+              <div className="col-span-6 font-medium text-ink truncate">{c.service}</div>
+              <div className="col-span-2 text-[11px] text-muted-grey">{c.source}</div>
+              <div className="col-span-2 text-right font-mono font-bold text-ink">{c.amount}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl bg-surface-tonal/70 border border-steel-teal/15 px-4 py-2.5 flex items-center justify-between text-xs">
+        <span className="flex items-center gap-2 text-ink font-medium">
+          <FileCheck2 className="w-4 h-4 text-steel-teal" />
+          Recovered 2 unlogged bed-hours on Room 402
+        </span>
+        <strong className="font-mono text-steel-teal">+$200.00</strong>
+      </div>
+    </div>
+  );
+}
+
+/* ─── 6. Analytics: Realistic Hospital Command Dashboard ──────────────── */
+function AnalyticsApp() {
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         {[
-          { label: 'Avg LOS', value: '3.2d', change: '-0.4d' },
-          { label: 'Bed Turn', value: '94%', change: '+2%' },
-          { label: 'OPD Wait', value: '6m', change: '-3m' },
-          { label: 'Rev/Bed', value: '$1,840', change: '+8%' },
-        ].map((k, i) => (
-          <div key={i} className="bg-white p-1.5 rounded border border-gray-100/80 text-center">
-            <p className="font-mono text-[7px] text-muted-grey uppercase tracking-wider font-bold">{k.label}</p>
-            <p className="font-display text-[10px] font-bold text-ink mt-0.5">{k.value}</p>
-            <p className="font-mono text-[7px] text-emerald-600 font-bold">{k.change}</p>
+          { label: 'Avg Stay', value: '3.2d', delta: '-0.4d' },
+          { label: 'Bed Turnover', value: '94%', delta: '+2.1%' },
+          { label: 'OPD Wait', value: '6m', delta: '-3m' },
+          { label: 'Rev / Bed', value: '$1,840', delta: '+8%' },
+        ].map((k) => (
+          <div key={k.label} className="rounded-xl bg-bg-light border border-slate-200/70 p-3">
+            <p className="text-[11px] text-muted-grey">{k.label}</p>
+            <div className="flex items-baseline justify-between mt-1">
+              <span className="font-display text-base font-extrabold text-ink">{k.value}</span>
+              <span className="text-[10px] font-semibold text-clinical-mint">{k.delta}</span>
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Forecast + Benchmarks side by side */}
-      <div className="grid grid-cols-2 gap-1.5">
-        {/* Occupancy forecast */}
-        <div className="bg-white rounded border border-gray-100/80 p-2">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="font-mono text-[7px] text-ink font-bold uppercase tracking-wider flex items-center gap-1">
-              <TrendingUp className="w-2.5 h-2.5 text-steel-teal" /> 72h Forecast
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <div className="rounded-2xl border border-slate-200/80 bg-white p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-bold text-ink flex items-center gap-1.5">
+              <TrendingUp className="w-3.5 h-3.5 text-steel-teal" />
+              72h Bed Occupancy
             </span>
-            <span className="font-mono text-[6.5px] text-steel-teal font-bold">AI</span>
+            <span className="text-[10px] text-steel-teal font-semibold">Forecast</span>
           </div>
-          <div className="flex items-end gap-0.5 h-8">
+          <div className="flex items-end gap-1.5 h-24">
             {[62, 68, 74, 78, 85, 88, 94, 91, 86, 82, 79, 75].map((h, i) => (
-              <div key={i} className="flex-1">
-                <div
-                  className={`w-full rounded-sm ${h > 90 ? 'bg-alert-danger/60' : h > 80 ? 'bg-amber-400/60' : 'bg-steel-teal/40'}`}
-                  style={{ height: `${(h / 100) * 32}px` }}
+              <div key={i} className="flex-1 h-full flex items-end">
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ duration: 0.45, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] }}
+                  className={`w-full rounded-t-sm ${
+                    h > 90 ? 'bg-alert-danger/75' : h > 80 ? 'bg-amber-400/80' : 'bg-steel-teal/60'
+                  }`}
                 />
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-0.5">
-            <span className="font-mono text-[6px] text-muted-grey">Now</span>
-            <span className="font-mono text-[6px] text-muted-grey">+72h</span>
-          </div>
         </div>
 
-        {/* Department benchmarks */}
-        <div className="bg-bg-light rounded border border-gray-100/60 p-2">
-          <span className="font-mono text-[7px] text-ink font-bold uppercase tracking-wider">Dept Performance</span>
-          <div className="mt-1.5 space-y-1">
+        <div className="rounded-2xl border border-slate-200/80 bg-white p-4">
+          <span className="text-xs font-bold text-ink block mb-3">Department SLA Score</span>
+          <div className="space-y-2.5">
             {[
-              { dept: 'Emergency', score: 96, color: 'bg-emerald-500' },
-              { dept: 'OPD', score: 91, color: 'bg-steel-teal' },
+              { dept: 'Emergency', score: 96, color: 'bg-clinical-mint' },
+              { dept: 'Outpatient', score: 91, color: 'bg-steel-teal' },
               { dept: 'Pharmacy', score: 88, color: 'bg-steel-teal' },
-              { dept: 'IPD', score: 85, color: 'bg-amber-400' },
+              { dept: 'Inpatient', score: 85, color: 'bg-amber-400' },
             ].map((d, i) => (
-              <div key={i} className="flex items-center gap-1.5">
-                <span className="font-mono text-[7px] text-muted-grey w-14 shrink-0">{d.dept}</span>
-                <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
-                  <div className={`h-full ${d.color} rounded-full`} style={{ width: `${d.score}%` }} />
+              <div key={d.dept} className="flex items-center gap-2 text-xs">
+                <span className="text-slate-600 w-20 shrink-0">{d.dept}</span>
+                <div className="flex-1 h-2 bg-bg-light rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${d.score}%` }}
+                    transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    className={`h-full ${d.color} rounded-full`}
+                  />
                 </div>
-                <span className="font-mono text-[7px] text-ink font-bold w-6 text-right">{d.score}%</span>
+                <span className="font-mono text-[11px] font-bold text-ink w-8 text-right">{d.score}%</span>
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* AI insight */}
-      <div className="bg-steel-teal/[0.03] border border-steel-teal/10 rounded-lg p-2 flex items-start gap-2">
-        <Sparkles className="w-3 h-3 text-steel-teal shrink-0 mt-0.5" />
-        <div>
-          <p className="text-[8px] font-mono text-steel-teal font-bold uppercase tracking-wider">Anomaly Detected</p>
-          <p className="text-[9px] text-ink/80 font-medium mt-0.5">IPD discharge rate dropped 18% — AI correlates with reduced discharge summary completion by night shift.</p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── Screen renderer map ─────────────────────────────────────────────── */
 const screenComponents: Record<string, React.FC> = {
-  reception: ReceptionScreen,
-  clinical: ClinicalScreen,
-  pharmacy: PharmacyScreen,
-  laboratory: LaboratoryScreen,
-  billing: BillingScreen,
-  analytics: AnalyticsScreen,
+  reception: ReceptionApp,
+  clinical: ClinicalApp,
+  pharmacy: PharmacyApp,
+  laboratory: LaboratoryApp,
+  billing: BillingApp,
+  analytics: AnalyticsApp,
 };
 
-/* ─── Main exported component ─────────────────────────────────────────── */
+const AUTO_SLIDE_MS = 3000;
 
 export default function ModuleScreens() {
   const [selectedId, setSelectedId] = useState('reception');
-  const active = modules.find(m => m.id === selectedId)!;
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setSelectedId((prev) => {
+        const idx = modules.findIndex((m) => m.id === prev);
+        return modules[(idx + 1) % modules.length].id;
+      });
+    }, AUTO_SLIDE_MS);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const active = modules.find((m) => m.id === selectedId)!;
   const ScreenComponent = screenComponents[selectedId];
 
   return (
-    <section id="module-screens" className="py-10 lg:py-12 bg-bg-light relative overflow-hidden">
-      {/* Soft background grid accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.25] pointer-events-none" />
-
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-
-        {/* Section Header */}
-        <div className="max-w-2xl mb-8 text-left">
-          <span className="font-mono text-[9px] text-steel-teal tracking-[0.1em] uppercase font-bold bg-steel-teal/[0.05] px-2 py-0.5 rounded">
-            Module Screens
-          </span>
-          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-ink mt-2">
-            Every department, one intelligent interface.
+    <section id="module-screens" className="py-14 sm:py-20 bg-bg-light relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10">
+        {/* Clean Editorial Header */}
+        <div className="max-w-2xl mb-8">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+            Every department, one interface.
           </h2>
-          <p className="font-sans text-xs text-muted-grey mt-1.5 leading-relaxed font-medium max-w-xl">
-            Experience each hospital module as your staff sees it — unified dashboards enhanced with embedded AI intelligence at every interaction point.
+          <p className="font-sans text-sm sm:text-base text-slate-600 mt-2.5 leading-relaxed font-medium">
+            Switch between live departmental workspaces to see how clinical teams interact with embedded intelligence in daily practice.
           </p>
         </div>
 
-        {/* Module Tab Selector - Enhanced for Mobile */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-8">
-          {modules.map((module) => {
-            const isActive = selectedId === module.id;
-            const IconComponent = module.icon;
-            return (
-              <button
-                key={module.id}
-                onClick={() => setSelectedId(module.id)}
-                className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border text-[11px] font-bold font-sans whitespace-nowrap transition-all duration-200 cursor-pointer select-none ${
-                  isActive
-                    ? 'bg-steel-teal border-steel-teal text-white shadow-[0_2px_12px_rgba(38,97,156,0.15)]'
-                    : 'bg-white border-gray-100 text-muted-grey hover:text-ink hover:border-gray-150 hover:bg-bg-light/30'
-                }`}
-                style={{ outline: 'none' }}
-              >
-                <IconComponent className={`h-3.5 w-3.5 ${isActive ? 'text-white' : 'text-muted-grey'}`} />
-                <span>{module.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Main Content: AI Features (Left) + Dashboard Mockup (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-
-          {/* Left Column: Module Info + AI Features */}
-          <div className="hidden lg:flex lg:col-span-7 lg:flex-col lg:gap-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedId}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col gap-4 h-auto lg:h-full"
-              >
-                {/* Unified Module Info + AI Features Card */}
-                {/* Unified Module Info + AI Features Card */}
-                <div className="bg-white rounded-2xl border border-gray-200/60 shadow-[0_12px_40px_rgba(0,0,0,0.04)] flex-1 flex flex-col overflow-hidden relative">
-                  
-                  {/* Module header strip */}
-                  <div className="px-6 pt-6 pb-5 border-b border-gray-100/80 bg-gradient-to-b from-gray-50/50 to-white relative">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-steel-teal/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                    <div className="flex items-center gap-4 relative">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-steel-teal to-steel-teal/90 flex items-center justify-center shadow-[0_4px_12px_rgba(38,97,156,0.25)] border border-white/20">
-                        <active.icon className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-display text-lg sm:text-xl font-extrabold text-ink leading-tight tracking-tight">{active.fullTitle}</h3>
-                        <p className="font-mono text-[9px] text-steel-teal uppercase tracking-[0.08em] font-bold mt-1.5">{active.tagline}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* AI Features section */}
-                  <div className="px-6 py-6 flex-1">
-                    <div className="flex items-center gap-2 mb-6">
-                      <div className="w-5 h-5 rounded bg-steel-teal/10 flex items-center justify-center">
-                        <Sparkles className="h-3 w-3 text-steel-teal" />
-                      </div>
-                      <span className="font-mono text-[10px] text-ink tracking-[0.1em] uppercase font-extrabold">
-                        AI Capabilities
-                      </span>
-                    </div>
-
-                    <div className="space-y-0 relative">
-                      {active.aiFeatures.map((feature, i) => (
-                        <div key={i} className="flex items-stretch gap-4 relative">
-                          {/* Numbered step with dashed connecting line */}
-                          <div className="flex flex-col items-center">
-                            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 border-2 border-steel-teal/10 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative z-10">
-                              <span className="font-mono text-[10px] font-extrabold text-steel-teal">
-                                {String(i + 1).padStart(2, '0')}
-                              </span>
-                            </div>
-                            {i < active.aiFeatures.length - 1 && (
-                              <div className="w-px flex-1 border-l-2 border-dashed border-gray-150/60 my-1" />
-                            )}
-                          </div>
-                          {/* Content */}
-                          <div className="pb-6 pt-0.5">
-                            <p className="font-display text-[15px] font-bold text-ink leading-tight">{feature.title}</p>
-                            <p className="font-sans text-xs text-muted-grey leading-relaxed mt-1.5 font-medium">{feature.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Footer CTA */}
-                  <div className="px-6 py-4 bg-gray-50/50 border-t border-gray-100/80 flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 text-xs font-sans text-steel-teal font-bold group cursor-pointer hover:text-black transition-colors">
-                      <span>Explore full documentation</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse" />
-                      <span className="font-mono text-[9px] text-muted-grey font-bold uppercase tracking-wider">
-                        System Active
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+        {/* Full-Width Clinical Application Window (Distinct from CoreModules) */}
+        <div
+          className="m3-surface-elevated rounded-3xl overflow-hidden bg-white relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Auto-slide progress bar */}
+          <div className="h-[2px] w-full bg-slate-100 overflow-hidden">
+            <motion.div
+              key={`${selectedId}-${isPaused ? 'paused' : 'running'}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: isPaused ? 0 : 1 }}
+              transition={{ duration: AUTO_SLIDE_MS / 1000, ease: 'linear' }}
+              style={{ transformOrigin: 'left' }}
+              className="h-full bg-gradient-to-r from-steel-teal to-clinical-mint"
+            />
+          </div>
+          {/* App Window Title Bar */}
+          <div className="px-5 py-3 bg-bg-light border-b border-slate-200/80 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+              </div>
+              <span className="text-xs font-semibold text-slate-600">
+                Endomatics OS · {active.fullTitle}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[11px] font-medium text-clinical-mint">
+              <span className="w-2 h-2 rounded-full bg-clinical-mint" />
+              <span>Synchronized</span>
+            </div>
           </div>
 
-          {/* Right Column: Interactive Dashboard Mockup */}
-          <div className="col-span-1 lg:col-span-5">
-            <div className="bg-white rounded-xl shadow-[0_24px_70px_rgba(0,0,0,0.04)] border border-gray-100/90 overflow-hidden h-auto lg:h-full flex flex-col">
-              {/* Mockup window header */}
-              <div className="bg-steel-teal px-4 py-2 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <div className="w-2 h-2 rounded-full bg-white/30" />
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={selectedId}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      className="font-mono text-[9px] text-white/70 uppercase tracking-wider ml-2"
-                    >
-                      Console // {active.id}-panel
-                    </motion.span>
-                  </AnimatePresence>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 px-2.5 py-0.5 rounded border border-white/15 text-[9px] font-mono text-white">
-                  <Sparkles className="h-2.5 w-2.5 text-white/90" />
-                  <span>AI Active</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[470px]">
+            {/* Left OS Sidebar */}
+            <aside className="lg:col-span-4 xl:col-span-3 bg-bg-light/60 border-b lg:border-b-0 lg:border-r border-slate-200/80 p-4 sm:p-5 flex flex-col justify-between gap-6">
+              <div>
+                <p className="text-[11px] font-semibold text-slate-400 px-2.5 mb-2">Departments</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-1">
+                  {modules.map((module) => {
+                    const isActive = selectedId === module.id;
+                    const IconComponent = module.icon;
+                    return (
+                      <button
+                        key={module.id}
+                        type="button"
+                        onClick={() => setSelectedId(module.id)}
+                        className={`relative flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer text-left ${
+                          isActive ? 'text-steel-teal' : 'text-slate-600 hover:text-ink hover:bg-white/70'
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.span
+                            layoutId="app-sidebar-pill"
+                            transition={{ type: 'spring', stiffness: 440, damping: 34 }}
+                            className="absolute inset-0 rounded-xl bg-white border border-slate-200/80 shadow-2xs -z-0"
+                          />
+                        )}
+                        <IconComponent className="w-4 h-4 relative z-10 shrink-0" />
+                        <span className="relative z-10">{module.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Mockup content area */}
-              <div className="p-3 lg:p-4 flex-1">
+              {/* Embedded AI Context for Selected Module */}
+              <div className="hidden lg:block pt-4 border-t border-slate-200/80 space-y-2.5">
+                <p className="text-[11px] font-semibold text-steel-teal flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Active AI Assist</span>
+                </p>
+                {active.aiCapabilities.map((cap) => (
+                  <div key={cap.title} className="rounded-xl bg-white border border-slate-200/70 p-3">
+                    <p className="text-xs font-bold text-ink">{cap.title}</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{cap.summary}</p>
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            {/* Right Main Application Canvas */}
+            <div className="lg:col-span-8 xl:col-span-9 p-5 sm:p-7 bg-white flex flex-col justify-between">
+              <div>
+                <div className="mb-5 pb-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-ink">{active.fullTitle}</h3>
+                    <p className="text-xs text-muted-grey mt-0.5">{active.subtitle}</p>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-tonal text-steel-teal text-[11px] font-semibold">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>HIPAA Audited</span>
+                  </div>
+                </div>
+
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedId}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <ScreenComponent />
                   </motion.div>
@@ -685,7 +685,6 @@ export default function ModuleScreens() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

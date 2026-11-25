@@ -5,19 +5,33 @@ import { StatItem } from '../types';
 
 export default function StatsBar() {
   return (
-    <section id="stats-bar-section" className="w-full bg-[#0B1628] py-10 overflow-hidden relative border-y border-white/[0.06]">
-      <div className="max-w-[1400px] mx-auto px-6">
+    <section
+      id="stats-bar-section"
+      className="w-full bg-[#0B1628] py-10 sm:py-12 overflow-hidden relative border-y border-white/[0.06]"
+    >
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-7 gap-6 md:gap-4 items-center">
           {STATS_DATA.map((stat, idx) => (
             <React.Fragment key={stat.id}>
-              <div className="flex flex-col items-center text-center px-4" itemScope itemType="https://schema.org/PropertyValue">
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col items-center text-center px-3"
+                itemScope
+                itemType="https://schema.org/PropertyValue"
+              >
                 <Counter stat={stat} />
-                <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#8A8F9E] font-semibold mt-2" itemProp="name">
+                <p
+                  className="font-sans text-[11px] uppercase tracking-[0.16em] text-slate-400 font-semibold mt-2"
+                  itemProp="name"
+                >
                   {stat.label}
                 </p>
-              </div>
+              </motion.div>
               {idx < STATS_DATA.length - 1 && (
-                <div className="hidden md:block h-12 w-[1px] bg-white/[0.06] self-center" />
+                <div className="hidden md:block h-12 w-[1px] bg-white/[0.08] self-center justify-self-center" />
               )}
             </React.Fragment>
           ))}
@@ -33,54 +47,44 @@ function Counter({ stat }: { stat: StatItem }) {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || stat.id === 'stat-leakage') return;
 
-    // Handle string values (like 'Zero' leakage) separately from numerical counters
-    if (stat.id === 'stat-leakage') {
-      return; // remains 'Zero' as a static text representation
-    }
-
-    let start = 0;
     const end = stat.value;
-    const duration = 1500; // ms
-    const stepTime = 16; // approx 60fps
-    const totalSteps = Math.ceil(duration / stepTime);
-    let step = 0;
+    const duration = 1200;
+    let startTime: number | null = null;
+    let rafId = 0;
 
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / totalSteps;
-      // Smooth easeOutQuad
-      const easedProgress = progress * (2 - progress);
-      const currentVal = start + (end - start) * easedProgress;
+    const tick = (now: number) => {
+      if (startTime === null) startTime = now;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayValue(end * eased);
 
-      setDisplayValue(currentVal);
-
-      if (step >= totalSteps) {
+      if (progress < 1) {
+        rafId = requestAnimationFrame(tick);
+      } else {
         setDisplayValue(end);
-        clearInterval(timer);
       }
-    }, stepTime);
+    };
 
-    return () => clearInterval(timer);
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [isInView, stat.value, stat.id]);
 
   const renderValue = () => {
-    if (stat.id === 'stat-leakage') {
-      return 'Zero';
-    }
-
-    // Check if float (accuracy has decimal)
-    if (stat.value % 1 !== 0) {
-      return displayValue.toFixed(1);
-    }
+    if (stat.id === 'stat-leakage') return 'Zero';
+    if (stat.value % 1 !== 0) return displayValue.toFixed(1);
     return Math.floor(displayValue).toString();
   };
 
   return (
-    <div ref={ref} className="font-mono text-3xl sm:text-4xl lg:text-[46px] font-bold text-white tracking-tighter flex items-baseline justify-center">
+    <div
+      ref={ref}
+      className="font-mono text-3xl sm:text-4xl lg:text-[44px] font-bold text-white tracking-tight flex items-baseline justify-center tabular-nums"
+    >
       <span itemProp="value">{renderValue()}</span>
-      <span className="text-steel-teal font-sans ml-1 text-2xl lg:text-3xl" itemProp="unitText">
+      <span className="text-clinical-mint font-sans ml-1 text-xl lg:text-2xl font-bold" itemProp="unitText">
         {stat.suffix}
       </span>
     </div>

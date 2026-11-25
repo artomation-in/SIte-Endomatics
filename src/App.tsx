@@ -13,6 +13,10 @@ import InsightsIndexPage from './pages/InsightsIndexPage';
 import ArticlePage from './pages/ArticlePage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import HmsIndiaPage from './pages/HmsIndiaPage';
+import AbdmIntegrationPage from './pages/AbdmIntegrationPage';
+import ComparePage from './pages/ComparePage';
+import ClinicIndiaPage from './pages/ClinicIndiaPage';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -38,6 +42,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage onOpenDemo={openDemo} />} />
         <Route path="/features" element={<HomePage onOpenDemo={openDemo} initialSection="features" />} />
+        <Route path="/hms-india" element={<HmsIndiaPage onOpenDemo={openDemo} />} />
+        <Route path="/hms-india/:city" element={<HmsIndiaPage onOpenDemo={openDemo} />} />
+        <Route path="/abdm-integration" element={<AbdmIntegrationPage onOpenDemo={openDemo} />} />
+        <Route path="/compare" element={<ComparePage onOpenDemo={openDemo} />} />
+        <Route path="/clinic-management-software-india" element={<ClinicIndiaPage onOpenDemo={openDemo} />} />
         <Route path="/insights" element={<InsightsIndexPage />} />
         <Route path="/insights/:slug" element={<ArticlePage onOpenDemo={openDemo} />} />
         <Route path="/privacy" element={<PrivacyPage />} />

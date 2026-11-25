@@ -5,7 +5,6 @@ import {
   BookOpen,
   Clock,
   ArrowUpRight,
-  Sparkles,
   DollarSign,
   Activity,
   ShieldCheck,
@@ -13,16 +12,17 @@ import {
   CreditCard,
 } from 'lucide-react';
 import { getMDXArticles, MDXArticle } from '../lib/cms';
+import { ClinicalReveal } from './motion/ClinicalMotion';
 
 const categoryConfig: Record<string, { icon: React.ElementType; color: string; bg: string }> = {
-  'Revenue Cycle Management': { icon: DollarSign, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  'Clinical Operations': { icon: Activity, color: 'text-steel-teal', bg: 'bg-steel-teal/[0.06]' },
-  'Clinical Safety': { icon: ShieldCheck, color: 'text-rose-500', bg: 'bg-rose-50' },
+  'Revenue Cycle Management': { icon: DollarSign, color: 'text-clinical-mint', bg: 'bg-clinical-mint/10' },
+  'Clinical Operations': { icon: Activity, color: 'text-steel-teal', bg: 'bg-surface-tonal' },
+  'Clinical Safety': { icon: ShieldCheck, color: 'text-rose-600', bg: 'bg-rose-50' },
   'Hospital Systems': { icon: Server, color: 'text-purple-600', bg: 'bg-purple-50' },
-  'Medical Billing': { icon: CreditCard, color: 'text-amber-500', bg: 'bg-amber-50' },
+  'Medical Billing': { icon: CreditCard, color: 'text-amber-600', bg: 'bg-amber-50' },
 };
 
-const defaultConfig = { icon: BookOpen, color: 'text-slate-500', bg: 'bg-slate-50' };
+const defaultConfig = { icon: BookOpen, color: 'text-slate-600', bg: 'bg-slate-100' };
 
 export default function KnowledgeHub() {
   const [articles, setArticles] = useState<MDXArticle[]>([]);
@@ -34,7 +34,7 @@ export default function KnowledgeHub() {
       try {
         setIsLoading(true);
         const fetched = await getMDXArticles();
-        if (!cancelled) setArticles(fetched);
+        if (!cancelled) setArticles(fetched.slice(0, 5));
       } catch (err) {
         console.error('[CMS] Error fetching MDX articles:', err);
       } finally {
@@ -48,103 +48,127 @@ export default function KnowledgeHub() {
   }, []);
 
   return (
-    <section id="knowledge" className="py-10 lg:py-20 bg-bg-light relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-steel-teal/[0.03] to-transparent rounded-full blur-[140px] pointer-events-none select-none" />
+    <section id="knowledge" className="py-16 sm:py-24 bg-bg-light relative overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute top-0 right-0 w-[520px] h-[520px] bg-[radial-gradient(circle,rgba(38,97,156,0.05)_0%,transparent_70%)] blur-2xl pointer-events-none select-none"
+      />
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        <div className="max-w-2xl mb-6 lg:mb-12">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-steel-teal/[0.06] border border-steel-teal/10 rounded-full mb-6">
-            <Sparkles className="h-3 w-3 text-steel-teal animate-pulse" />
-            <span className="font-mono text-[9px] font-bold tracking-wider text-steel-teal uppercase">Knowledge Base</span>
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[52px] font-extrabold tracking-[-0.03em] text-ink leading-[1.06]">
-            Authoritative Insights on<br />Clinical Operating Systems
-          </h2>
-          <p className="font-sans text-sm sm:text-[15px] text-muted-grey mt-5 leading-relaxed font-medium max-w-[500px]">
-            Verified research briefs on hospital automation, revenue leakage, and emergency triage optimizations.
-          </p>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 relative z-10">
+        {/* Editorial Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <ClinicalReveal className="max-w-2xl">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-[-0.03em] text-ink leading-[1.1]">
+              Authoritative Insights on{' '}
+              <span className="bg-gradient-to-r from-steel-teal via-[#2B7A9E] to-clinical-mint bg-clip-text text-transparent">
+                Clinical Operating Systems
+              </span>
+            </h2>
+            <p className="font-sans text-sm sm:text-base text-slate-600 mt-3 leading-relaxed font-medium max-w-xl">
+              Research briefs on hospital automation, zero-leakage revenue cycles, and predictive triage workflows.
+            </p>
+          </ClinicalReveal>
+
+          <Link
+            to="/insights"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200/80 shadow-2xs text-xs font-semibold text-ink hover:text-steel-teal hover:border-steel-teal/30 transition-all shrink-0 w-fit"
+          >
+            <span>All Research Briefs</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
+        {/* Balanced Editorial Grid (Featured 2-col Lead + Standard Cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {isLoading
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100/80 animate-pulse">
-                  <div className="h-9 w-9 bg-gray-50 rounded-xl mb-4" />
-                  <div className="h-3.5 w-4/5 bg-gray-100 rounded-full mb-2" />
-                  <div className="h-3.5 w-2/5 bg-gray-100 rounded-full mb-4" />
-                  <div className="h-2.5 w-full bg-gray-50 rounded-full mb-1.5" />
-                  <div className="h-2.5 w-3/4 bg-gray-50 rounded-full" />
+            ? Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`m3-surface rounded-3xl p-6 animate-pulse ${i === 0 ? 'lg:col-span-2' : ''}`}
+                >
+                  <div className="h-7 w-32 bg-slate-100 rounded-full mb-5" />
+                  <div className="h-5 w-4/5 bg-slate-100 rounded-full mb-2.5" />
+                  <div className="h-5 w-2/3 bg-slate-100 rounded-full mb-5" />
+                  <div className="h-3 w-full bg-slate-50 rounded-full mb-2" />
+                  <div className="h-3 w-3/4 bg-slate-50 rounded-full" />
                 </div>
               ))
             : articles.length > 0
               ? articles.map((article, index) => {
                   const cfg = categoryConfig[article.category] || defaultConfig;
                   const Icon = cfg.icon;
+                  const isFeatured = index === 0 && articles.length === 5;
+
                   return (
                     <motion.div
                       key={article.id}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.45, delay: 0.1 + index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                      className={isFeatured ? 'md:col-span-2 lg:col-span-2' : ''}
                     >
                       <Link
                         to={`/insights/${article.slug}`}
-                        className="group bg-white rounded-2xl p-5 border border-gray-100/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] cursor-pointer transition-all duration-300 hover:shadow-[0_16px_48px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 block h-full"
+                        className={`group rounded-3xl p-6 sm:p-7 flex flex-col justify-between h-full transition-all duration-300 hover:-translate-y-1 ${
+                          isFeatured
+                            ? 'bg-gradient-to-br from-white via-white to-surface-tonal/80 border border-steel-teal/20 shadow-[0_12px_36px_rgba(38,97,156,0.08)] hover:shadow-[0_18px_44px_rgba(38,97,156,0.13)]'
+                            : 'm3-surface hover:border-steel-teal/25 hover:shadow-[0_14px_34px_rgba(38,97,156,0.08)]'
+                        }`}
                       >
-                        <div className="flex items-center gap-3 mb-3.5">
-                          <div className={`p-2 rounded-xl ${cfg.bg} ${cfg.color} transition-transform duration-300 group-hover:scale-110`}>
-                            <Icon className="h-4 w-4" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <span className={`font-mono text-[9px] font-bold tracking-wider uppercase ${cfg.color}`}>
-                              {article.category}
+                        <div>
+                          <div className="flex items-center justify-between gap-3 mb-5">
+                            <span
+                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold ${cfg.bg} ${cfg.color}`}
+                            >
+                              <Icon className="h-3.5 w-3.5" />
+                              <span>{article.category}</span>
+                            </span>
+                            <span className="font-mono text-[11px] text-muted-grey flex items-center gap-1 shrink-0">
+                              <Clock className="h-3 w-3" />
+                              {article.readTime}
                             </span>
                           </div>
-                          <span className="font-mono text-[10px] text-muted-grey/50 flex items-center gap-1 shrink-0">
-                            <Clock className="h-3 w-3" />
-                            {article.readTime}
-                          </span>
+
+                          <h3
+                            className={`font-display font-bold text-ink leading-snug mb-2.5 group-hover:text-steel-teal transition-colors tracking-tight ${
+                              isFeatured ? 'text-xl sm:text-2xl' : 'text-base sm:text-[17px] line-clamp-2'
+                            }`}
+                          >
+                            {article.title}
+                          </h3>
+
+                          <p
+                            className={`font-sans text-slate-600 leading-relaxed mb-6 ${
+                              isFeatured ? 'text-sm sm:text-[15px] max-w-2xl line-clamp-3' : 'text-[13px] line-clamp-2'
+                            }`}
+                          >
+                            {article.summary}
+                          </p>
                         </div>
 
-                        <h3 className="font-display text-[15px] font-bold text-ink leading-snug mb-2 group-hover:text-steel-teal transition-colors duration-200 line-clamp-2 tracking-tight">
-                          {article.title}
-                        </h3>
-
-                        <p className="font-sans text-[13px] text-muted-grey/70 leading-relaxed line-clamp-2 mb-4">
-                          {article.summary}
-                        </p>
-
-                        <div className="flex items-center gap-1.5 text-[12px] font-semibold text-steel-teal opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
-                          Read article
-                          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-steel-teal">
+                            <span>Read research brief</span>
+                            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </span>
+                          {isFeatured && (
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-clinical-mint bg-clinical-mint/10 px-2.5 py-0.5 rounded-full">
+                              Featured Brief
+                            </span>
+                          )}
                         </div>
                       </Link>
                     </motion.div>
                   );
                 })
               : (
-                <div className="col-span-full bg-white rounded-2xl p-12 border border-gray-100/80 text-center">
+                <div className="col-span-full m3-surface rounded-3xl p-12 text-center">
                   <BookOpen className="h-7 w-7 text-muted-grey/40 mx-auto mb-4" />
                   <h3 className="font-display text-base font-bold text-ink mb-1.5">No articles found</h3>
-                  <p className="font-sans text-sm text-muted-grey/70">Check back soon for new research briefs.</p>
+                  <p className="font-sans text-sm text-muted-grey">Check back soon for new research briefs.</p>
                 </div>
               )}
-        </motion.div>
-
-        <div className="mt-10 text-center">
-          <Link
-            to="/insights"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-steel-teal hover:text-ink transition-colors"
-          >
-            View all insights
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
         </div>
       </div>
     </section>

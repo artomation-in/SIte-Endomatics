@@ -28,11 +28,15 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
   el.setAttribute('content', content);
 }
 
-function upsertCanonical(href: string) {
-  let el = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+function upsertLink(rel: string, href: string, hreflang?: string) {
+  const selector = hreflang
+    ? `link[rel="${rel}"][hreflang="${hreflang}"]`
+    : `link[rel="${rel}"]:not([hreflang])`;
+  let el = document.head.querySelector<HTMLLinkElement>(selector);
   if (!el) {
     el = document.createElement('link');
-    el.setAttribute('rel', 'canonical');
+    el.setAttribute('rel', rel);
+    if (hreflang) el.setAttribute('hreflang', hreflang);
     document.head.appendChild(el);
   }
   el.setAttribute('href', href);
@@ -58,7 +62,9 @@ export function applyHead(head: RenderedHead) {
   upsertMeta('property', 'og:url', url);
   upsertMeta('name', 'twitter:title', head.title);
   upsertMeta('name', 'twitter:description', head.description);
-  upsertCanonical(url);
+  upsertLink('canonical', url);
+  upsertLink('alternate', url, 'en-IN');
+  upsertLink('alternate', url, 'x-default');
   if (head.jsonLd) {
     upsertJsonLd(head.jsonLd);
   }
