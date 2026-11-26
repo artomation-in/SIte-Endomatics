@@ -96,9 +96,14 @@ export default function Hero({ onOpenDemo }: HeroProps) {
               id="hero-headline"
               className="font-display text-[42px] sm:text-[54px] lg:text-[66px] leading-[1.03] font-extrabold tracking-[-0.035em] text-ink mb-6"
             >
+              <span
+                itemProp="name"
+                className="block font-mono text-[11px] sm:text-xs font-bold uppercase tracking-[0.22em] text-steel-teal mb-2.5"
+              >
+                ENDOMATICS · Cloud HMS
+              </span>
               <motion.span
                 className="block"
-                itemProp="name"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}

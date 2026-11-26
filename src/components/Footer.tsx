@@ -82,7 +82,7 @@ export default function Footer({ onOpenDemo }: FooterProps) {
                 to="/hms-india"
                 className="text-left text-slate-600 hover:text-steel-teal transition-colors cursor-pointer font-medium"
               >
-                HMS India (ABDM &amp; NABH)
+                ENDOMATICS India (ABDM &amp; NABH)
               </Link>
               <Link
                 to="/abdm-integration"

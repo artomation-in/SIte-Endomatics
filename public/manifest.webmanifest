@@ -1,0 +1,16 @@
+{
+  "name": "ENDOMATICS — AI Hospital Management System & Medical Billing Software",
+  "short_name": "ENDOMATICS",
+  "description": "AI-native cloud Hospital Management System (HMS) and medical billing software for Indian hospitals and clinics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F6F8FB",
+  "theme_color": "#26619C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

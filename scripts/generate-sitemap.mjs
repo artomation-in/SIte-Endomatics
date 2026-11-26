@@ -49,7 +49,7 @@ const PAGES = [
     images: [
       {
         loc: `${SITE_URL}/og-image.svg`,
-        title: `Hospital Management System Software in ${city.toUpperCase()} | ENDOMATICS`,
+        title: `ENDOMATICS — Hospital Management System Software in ${city.toUpperCase()}`,
       },
     ],
   })),

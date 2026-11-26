@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://endomatics.com/</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/features</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -23,7 +23,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/hms-india</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
     <image:image>
@@ -33,87 +33,87 @@
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/hyderabad</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in HYDERABAD | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in HYDERABAD</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/bengaluru</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in BENGALURU | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in BENGALURU</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/mumbai</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in MUMBAI | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in MUMBAI</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/delhi-ncr</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in DELHI-NCR | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in DELHI-NCR</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/chennai</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in CHENNAI | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in CHENNAI</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/pune</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in PUNE | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in PUNE</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/ahmedabad</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in AHMEDABAD | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in AHMEDABAD</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/hms-india/kolkata</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://endomatics.com/og-image.svg</image:loc>
-      <image:title>Hospital Management System Software in KOLKATA | ENDOMATICS</image:title>
+      <image:title>ENDOMATICS — Hospital Management System Software in KOLKATA</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://endomatics.com/abdm-integration</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -123,7 +123,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/compare</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -133,7 +133,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/clinic-management-software-india</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -143,7 +143,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -153,7 +153,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/eliminating-revenue-leakage-indian-hospitals-tpa-pmjay</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -163,7 +163,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/abdm-nabh-digital-readiness-checklist-india</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -173,7 +173,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/best-cloud-based-hospital-management-system-software</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -183,7 +183,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/best-medical-billing-and-coding-software-rcm</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -193,7 +193,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/eliminating-hospital-revenue-leakage-via-realtime-reconciliation</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -203,7 +203,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/optimizing-emergency-room-throughput-with-predictive-triage</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -213,7 +213,7 @@
   </url>
   <url>
     <loc>https://endomatics.com/insights/reducing-clinical-prescription-errors-via-automated-cross-verification</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -223,13 +223,13 @@
   </url>
   <url>
     <loc>https://endomatics.com/privacy</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://endomatics.com/terms</loc>
-    <lastmod>2026-11-25</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

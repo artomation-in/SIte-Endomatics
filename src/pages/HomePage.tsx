@@ -41,8 +41,8 @@ export default function HomePage({ onOpenDemo, initialSection }: HomePageProps) 
       <Seo
         title={
           isFeaturesPage
-            ? "Hospital Management Software Modules & Clinical Features | ENDOMATICS"
-            : "Cloud-Based Hospital Management System & Medical Billing Software | ENDOMATICS"
+            ? "ENDOMATICS Features — Hospital Management Software Modules & Clinical AI"
+            : "ENDOMATICS — AI Hospital Management System & Medical Billing Software (India)"
         }
         description={
           isFeaturesPage
